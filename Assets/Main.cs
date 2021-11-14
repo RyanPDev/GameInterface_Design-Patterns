@@ -6,10 +6,8 @@ using Firebase.Extensions;
 using System;
 
 
-public class MainV2 : MonoBehaviour
+public class Main : MonoBehaviour
 {
-    private Firebase.FirebaseApp app;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +18,7 @@ public class MainV2 : MonoBehaviour
             {
                 // Create and hold a reference to your FirebaseApp,
                 // where app is a Firebase.FirebaseApp property of your application class.
-                app = Firebase.FirebaseApp.DefaultInstance;
+                var app = Firebase.FirebaseApp.DefaultInstance;
 
                 // Set a flag here to indicate whether Firebase is ready to use by your app.
                 Debug.Log("Firebase ok");
@@ -29,14 +27,24 @@ public class MainV2 : MonoBehaviour
             }
             else
             {
+                UnityEngine.Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                //Firebase Unity SDK is not safe to use here.
                 Debug.LogError("Firebase error");
-                // Firebase Unity SDK is not safe to use here.
             }
         });
     }
 
     void Login()
     {
+        //if (Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null)
+        //{
+        //    Debug.Log("Entras");
+        //    //Ya esta autentificado
+        //    SetData();
+        //    Debug.Log("Entras tambien");
+        //    return;
+        //}
+
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         auth.SignInAnonymouslyAsync().ContinueWith(task =>
         {
@@ -52,32 +60,28 @@ public class MainV2 : MonoBehaviour
             }
 
             Firebase.Auth.FirebaseUser newUser = task.Result;
-            Debug.LogFormat("User signed in successfully: {0} ({1})",
-                newUser.DisplayName, newUser.UserId);
+            Debug.LogFormat("User signed in successfully: {0} ({1})", newUser.DisplayName, newUser.UserId);
             SetData();
         });
     }
 
     void SetData()
     {
+        Debug.Log("SetData");
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-
-        // DocumentReference docRef = db.Collection("users").Document("alovelace");
+        var user = new User("Ramis", 1);
         DocumentReference docRef = db.Collection("users").Document(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId);
-        Dictionary<string, object> user = new Dictionary<string, object>
-{
-        { "First", "Ada" },
-        { "Last", "Lovelace" },
-        { "Born", 1815 },
-};
-        //var user = new User("Dani", 1);
+
         docRef.SetAsync(user).ContinueWithOnMainThread(task =>
         {
+            Debug.Log("taskCompleted");
             if (task.IsCompleted)
-                Debug.Log("Added data to the alovelace document in the users collection.");
+            {
+                LoadData();
+                Debug.Log("Added data in the users collection.");
+            }
             else
                 Debug.LogError(task.Exception);
-
         });
     }
 
@@ -92,15 +96,10 @@ public class MainV2 : MonoBehaviour
             foreach (DocumentSnapshot document in snapshot.Documents)
             {
                 Debug.Log(String.Format("User: {0}", document.Id));
-                Dictionary<string, object> documentDictionary = document.ToDictionary();
-                Debug.Log(String.Format("First: {0}", documentDictionary["First"]));
-                if (documentDictionary.ContainsKey("Middle"))
-                {
-                    Debug.Log(String.Format("Middle: {0}", documentDictionary["Middle"]));
-                }
+                var user = document.ConvertTo<User>();
 
-                Debug.Log(String.Format("Last: {0}", documentDictionary["Last"]));
-                Debug.Log(String.Format("Born: {0}", documentDictionary["Born"]));
+                Debug.Log(String.Format("Name: {0}", user.Name));
+                Debug.Log(String.Format("Level: {0}", user.Level));
             }
 
             Debug.Log("Read all data from the users collection.");
@@ -110,10 +109,11 @@ public class MainV2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 }
 
+
+[FirestoreData]
 public class User
 {
     [FirestoreProperty]
