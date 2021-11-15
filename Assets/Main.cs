@@ -36,14 +36,14 @@ public class Main : MonoBehaviour
 
     void Login()
     {
-        //if (Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null)
-        //{
-        //    Debug.Log("Entras");
-        //    //Ya esta autentificado
-        //    SetData();
-        //    Debug.Log("Entras tambien");
-        //    return;
-        //}
+        if (Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null)
+        {
+            Debug.Log("Entras");
+            //Ya esta autentificado
+            SetData();
+            Debug.Log("Entras tambien");
+            return;
+        }
 
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         auth.SignInAnonymouslyAsync().ContinueWith(task =>
@@ -69,7 +69,7 @@ public class Main : MonoBehaviour
     {
         Debug.Log("SetData");
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        var user = new User("Ramis", 1);
+        var user = new User("Ramis", 4);
         DocumentReference docRef = db.Collection("users").Document(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId);
 
         docRef.SetAsync(user).ContinueWithOnMainThread(task =>
