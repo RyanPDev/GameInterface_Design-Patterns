@@ -69,7 +69,7 @@ public class Main : MonoBehaviour
     {
         Debug.Log("SetData");
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        var user = new User("Ramis", 4);
+        var user = new User("Ramis", 5);
         DocumentReference docRef = db.Collection("users").Document(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId);
 
         docRef.SetAsync(user).ContinueWithOnMainThread(task =>
