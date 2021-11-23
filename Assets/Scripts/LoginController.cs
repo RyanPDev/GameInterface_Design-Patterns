@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UniRx;
 
-public class LoginController : MonoBehaviour
+public class LoginController
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    LoginModelView _loginPanelViewModel;
 
-    // Update is called once per frame
-    void Update()
+    public LoginController(LoginModelView loginPanelViewModel)
     {
-        
+        _loginPanelViewModel = loginPanelViewModel;
+        _loginPanelViewModel.IsVisible.Value = true;
+
+        loginPanelViewModel.LoginButtonPressed.Subscribe((_) =>
+        {
+            loginPanelViewModel.IsVisible.Value = false;
+            //_loginPanelViewModel.TextID.SetValueAndForceNotify(_textId);
+        });
     }
 }

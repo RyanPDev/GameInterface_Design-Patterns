@@ -23,7 +23,6 @@ public class Main : MonoBehaviour
                 // Set a flag here to indicate whether Firebase is ready to use by your app.
                 Debug.Log("Firebase ok");
                 Login();
-
             }
             else
             {
@@ -38,10 +37,8 @@ public class Main : MonoBehaviour
     {
         if (Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null)
         {
-            Debug.Log("Entras");
             //Ya esta autentificado
             SetData();
-            Debug.Log("Entras tambien");
             return;
         }
 
@@ -67,14 +64,12 @@ public class Main : MonoBehaviour
 
     void SetData()
     {
-        Debug.Log("SetData");
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         var user = new User("Ramis", 5);
         DocumentReference docRef = db.Collection("users").Document(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId);
 
         docRef.SetAsync(user).ContinueWithOnMainThread(task =>
         {
-            Debug.Log("taskCompleted");
             if (task.IsCompleted)
             {
                 LoadData();

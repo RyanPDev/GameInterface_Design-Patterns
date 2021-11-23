@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+//using Code;
 using UnityEngine;
 
 public class Installer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private RectTransform _canvasParent;
+    [SerializeField] private LoginView _loginPanelPrefab;
+    
+    private void Awake()
     {
-        
-    }
+        var loginPanelView = Instantiate(_loginPanelPrefab, _canvasParent);
+        var loginPanelViewModel = new LoginModelView();
 
-    // Update is called once per frame
-    void Update()
-    {
+        loginPanelView.SetViewModel(loginPanelViewModel);
+        new LoginController(loginPanelViewModel);
+        // aqui va el presenter
         
+        //taskRespoitory
+        //var eventDispatcher = new EventDispatcherService();
     }
 }

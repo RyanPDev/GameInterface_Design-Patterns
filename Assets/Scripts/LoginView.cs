@@ -1,18 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using UniRx;
 
 public class LoginView : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Button _loginButton;
+    //[SerializeField] private TextMeshProUGUI _loginID;
 
-    // Update is called once per frame
-    void Update()
+    private LoginModelView _viewModel;
+
+    public void SetViewModel(LoginModelView viewModel)
     {
-        
+        _viewModel = viewModel;
+
+        _viewModel
+            .IsVisible
+            .Subscribe((isVisible) =>
+            {
+                gameObject.SetActive(isVisible);
+            });
+
+        _loginButton.onClick.AddListener(() =>
+        {
+            Debug.Log("Listener");
+            _viewModel.LoginButtonPressed.Execute();
+        }
+    );
     }
 }

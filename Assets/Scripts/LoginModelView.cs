@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UniRx;
 
-public class LoginModelView : MonoBehaviour
+public class LoginModelView
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public readonly ReactiveCommand LoginButtonPressed;
+    public readonly ReactiveProperty<bool> IsVisible;
+    //public readonly ReactiveProperty<string> TextID;
 
-    // Update is called once per frame
-    void Update()
+    public LoginModelView(/*string _textId*/)
     {
-        
+        LoginButtonPressed = new ReactiveCommand();
+        IsVisible = new ReactiveProperty<bool>();
+        //TextID = new ReactiveProperty<string>(_textId);
     }
 }
