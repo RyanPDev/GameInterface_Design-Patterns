@@ -1,21 +1,32 @@
-//using Code;
 using UnityEngine;
 
 public class Installer : MonoBehaviour
 {
-    [SerializeField] private RectTransform _canvasParent;
-    [SerializeField] private LoginView _loginPanelPrefab;
-    
+    [SerializeField] private RectTransform canvasParent;
+    [SerializeField] private LoginView loginPrefab;
+
     private void Awake()
     {
-        var loginPanelView = Instantiate(_loginPanelPrefab, _canvasParent);
-        var loginPanelViewModel = new LoginModelView();
+        var loginView = Instantiate(loginPrefab, canvasParent);
 
-        loginPanelView.SetViewModel(loginPanelViewModel);
-        new LoginController(loginPanelViewModel);
-        // aqui va el presenter
-        
-        //taskRespoitory
-        //var eventDispatcher = new EventDispatcherService();
+        var loginViewModel = new LoginViewModel();
+        loginView.SetViewModel(loginViewModel);
+
+        var firebaseLoginService = new FirebaseLoginService();
+        var eventDispatcherService = new EventDispatcherService();
+
+        var loginUseCase = new LoginUseCase(firebaseLoginService, eventDispatcherService);
+
+        //if (loginUseCase.UserExists())
+        //{
+        //    firebaseLoginService.SetData();
+        //}
+
+        //if (doLoginUseCase.UserExists()) { loginViewModel.IsVisible.Value = false; }
+        //else { loginViewModel.IsVisible.Value = true; }    
+
+        new LoginController(loginViewModel, loginUseCase);
+
+        new LoginPresenter(loginViewModel, loginUseCase, eventDispatcherService);
     }
 }

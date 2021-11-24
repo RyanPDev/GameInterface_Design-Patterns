@@ -1,11 +1,8 @@
 using System;
 
-namespace Code
+public interface IEventDispatcherService
 {
-    public interface IEventDispatcherService
-    {
-        void Subscribe<T>(Action<T> callback);
-        void Unsubscribe<T>(Action<T> callback);
-        void Dispatch<T>(T arg = default);
-    }
+    void Subscribe<T>(Action<T> callback);
+    void Unsubscribe<T>(Action<T> callback);
+    void Dispatch<T>(T arg = default);
 }

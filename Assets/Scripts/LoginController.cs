@@ -2,17 +2,19 @@ using UniRx;
 
 public class LoginController
 {
-    LoginModelView _loginPanelViewModel;
+    private readonly LoginViewModel loginPanelViewModel;
+    private readonly ILoginUseCase loginUseCase;
 
-    public LoginController(LoginModelView loginPanelViewModel)
+    public LoginController(LoginViewModel _loginPanelViewModel, ILoginUseCase _loginUseCase)
     {
-        _loginPanelViewModel = loginPanelViewModel;
-        _loginPanelViewModel.IsVisible.Value = true;
+        loginPanelViewModel = _loginPanelViewModel;
+        loginUseCase = _loginUseCase;
+        loginPanelViewModel.IsVisible.Value = true;
 
         loginPanelViewModel.LoginButtonPressed.Subscribe((_) =>
         {
+            loginUseCase.Login();
             loginPanelViewModel.IsVisible.Value = false;
-            //_loginPanelViewModel.TextID.SetValueAndForceNotify(_textId);
         });
     }
 }

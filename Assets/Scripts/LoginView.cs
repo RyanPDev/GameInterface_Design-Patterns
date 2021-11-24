@@ -5,25 +5,32 @@ using UniRx;
 
 public class LoginView : MonoBehaviour
 {
-    [SerializeField] private Button _loginButton;
-    //[SerializeField] private TextMeshProUGUI _loginID;
+    [SerializeField] private Button loginButton;
+    [SerializeField] private TextMeshProUGUI ID;
 
-    private LoginModelView _viewModel;
+    private LoginViewModel viewModel;
 
-    public void SetViewModel(LoginModelView viewModel)
+    public void SetViewModel(LoginViewModel _viewModel)
     {
-        _viewModel = viewModel;
+        viewModel = _viewModel;
 
-        _viewModel
+        viewModel
             .IsVisible
             .Subscribe((isVisible) =>
             {
-                gameObject.SetActive(isVisible);
+                loginButton.gameObject.SetActive(isVisible);
+                ID.gameObject.SetActive(!isVisible);
             });
 
-        _loginButton.onClick.AddListener(() =>
+        viewModel
+            .TextID
+            .Subscribe((textID) =>
+            {
+                ID.SetText(textID);
+            });
+
+        loginButton.onClick.AddListener(() =>
         {
-            Debug.Log("Listener");
             _viewModel.LoginButtonPressed.Execute();
         }
     );
