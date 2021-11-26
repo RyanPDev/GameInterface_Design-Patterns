@@ -1,24 +1,30 @@
 using Firebase.Firestore;
 using Firebase.Extensions;
+using UnityEngine;
 
 public class FirebaseLoginService : IFirebaseLoginService
 {
-    public FirebaseLoginService()
+    IEventDispatcherService eventDispatcher;
+
+    public FirebaseLoginService(IEventDispatcherService _eventDispatcher)
+    {
+        eventDispatcher = _eventDispatcher;
+    }
+
+    public void Init()
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
             var dependencyStatus = task.Result;
+            bool connection = false;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
+                connection = true;
                 // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.
+                // where app is a Firebase.FirebaseApp property of your application class.º
                 var app = Firebase.FirebaseApp.DefaultInstance;
-
-                if (Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null)
-                {
-                    SetData();
-                    return;
-                }
+                Debug.Log(dependencyStatus == Firebase.DependencyStatus.Available);
+                eventDispatcher.Dispatch(new FirebaseConnection(connection));
             }
             else
             {
@@ -39,7 +45,7 @@ public class FirebaseLoginService : IFirebaseLoginService
             }
 
             Firebase.Auth.FirebaseUser newUser = task.Result;
-            SetData();
+            //SetData();
         });
     }
 

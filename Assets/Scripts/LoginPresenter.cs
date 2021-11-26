@@ -1,3 +1,4 @@
+using UnityEngine;
 public class LoginPresenter
 {
     private readonly IEventDispatcherService eventDispatcherService;
@@ -10,12 +11,12 @@ public class LoginPresenter
         eventDispatcherService = _eventDispatcherService;
         loginUseCase = _loginUseCase;
 
-        _eventDispatcherService.Subscribe<LogEvent>(OnLogID);
+        eventDispatcherService.Subscribe<LogEvent>(OnLogID);
     }
 
     private void OnLogID(LogEvent data)
     {
-        viewModel.TextID.SetValueAndForceNotify("User ID: " + data.Text);
         viewModel.IsVisible.Value = false;
+        viewModel.TextID.SetValueAndForceNotify("User ID: " + data.Text);
     }
 }
