@@ -13,23 +13,23 @@ public class FirebaseLoginService : IFirebaseLoginService
 
     public void Init()
     {
-        //Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-        //{
-        //    var dependencyStatus = task.Result;
-        //    if (dependencyStatus == Firebase.DependencyStatus.Available)
-        //    {
-        //        // Create and hold a reference to your FirebaseApp,
-        //        // where app is a Firebase.FirebaseApp property of your application class.º
-        //        var app = Firebase.FirebaseApp.DefaultInstance;
-        //        //Check(connection);
-        //    }
-        //    else
-        //    {
-        //        UnityEngine.Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-        //        return;
-        //        //Firebase Unity SDK is not safe to use here.
-        //    }
-        //});
+        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        {
+            var dependencyStatus = task.Result;
+            if (dependencyStatus == Firebase.DependencyStatus.Available)
+            {
+                // Create and hold a reference to your FirebaseApp,
+                // where app is a Firebase.FirebaseApp property of your application class.º
+                var app = Firebase.FirebaseApp.DefaultInstance;
+                //Check(connection);
+            }
+            else
+            {
+                UnityEngine.Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                return;
+                //Firebase Unity SDK is not safe to use here.
+            }
+        });
 
         eventDispatcher.Dispatch(new FirebaseConnection(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
     }
@@ -81,10 +81,5 @@ public class FirebaseLoginService : IFirebaseLoginService
     public string GetID()
     {
         return Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId;
-    }
-
-    public bool IDAppExist()
-    {
-        return Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null;
     }
 }

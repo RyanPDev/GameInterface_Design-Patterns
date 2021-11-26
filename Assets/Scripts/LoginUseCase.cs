@@ -32,11 +32,6 @@ public class LoginUseCase : ILoginUseCase
         }
     }
 
-    public bool UserExists()
-    {
-        return firebaseLoginService.IDAppExist();
-    }
-
     public void SetUserID()
     {
         Debug.Log("SetUserID");
