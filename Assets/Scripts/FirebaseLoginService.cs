@@ -1,6 +1,5 @@
 using Firebase.Firestore;
 using Firebase.Extensions;
-using UnityEngine;
 
 public class FirebaseLoginService : IFirebaseLoginService
 {
@@ -11,6 +10,7 @@ public class FirebaseLoginService : IFirebaseLoginService
         eventDispatcher = _eventDispatcher;
     }
 
+    //Authentifcation
     public void Init()
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
@@ -21,7 +21,7 @@ public class FirebaseLoginService : IFirebaseLoginService
                 // Create and hold a reference to your FirebaseApp,
                 // where app is a Firebase.FirebaseApp property of your application class.º
                 var app = Firebase.FirebaseApp.DefaultInstance;
-                //Check(connection);
+                eventDispatcher.Dispatch(new UserInFirebase(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
             }
             else
             {
@@ -30,14 +30,12 @@ public class FirebaseLoginService : IFirebaseLoginService
                 //Firebase Unity SDK is not safe to use here.
             }
         });
-
-        eventDispatcher.Dispatch(new FirebaseConnection(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
     }
 
     public void Login()
     {
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-        auth.SignInAnonymouslyAsync().ContinueWith(task =>
+        auth.SignInAnonymouslyAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
             {
@@ -45,10 +43,17 @@ public class FirebaseLoginService : IFirebaseLoginService
             }
 
             Firebase.Auth.FirebaseUser newUser = task.Result;
-            SetData();
+            eventDispatcher.Dispatch(new LoginEvent(GetID()));
+            //SetData();
         });
     }
 
+    public string GetID()
+    {
+        return Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId;
+    }
+
+    //Database
     public void SetData()
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
@@ -76,10 +81,5 @@ public class FirebaseLoginService : IFirebaseLoginService
                 var user = document.ConvertTo<User>();
             }
         });
-    }
-
-    public string GetID()
-    {
-        return Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId;
     }
 }

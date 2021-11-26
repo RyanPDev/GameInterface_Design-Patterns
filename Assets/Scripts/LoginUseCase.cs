@@ -1,4 +1,3 @@
-using UnityEngine;
 public class LoginUseCase : ILoginUseCase
 {
     private readonly IFirebaseLoginService firebaseLoginService;
@@ -8,36 +7,16 @@ public class LoginUseCase : ILoginUseCase
     {
         firebaseLoginService = _firebaseLoginService;
         eventDispatcherService = _eventDispatcherService;
-        eventDispatcherService.Subscribe<FirebaseConnection>(AlreadyExists);
+        eventDispatcherService.Subscribe<UserInFirebase>(AlreadyExists);
     }
 
     public void Login()
     {
         firebaseLoginService.Login();
-
-        eventDispatcherService.Dispatch(new LogEvent(firebaseLoginService.GetID()));
     }
 
-    public void AlreadyExists(FirebaseConnection firebase)
+    public void AlreadyExists(UserInFirebase userExists)
     {
-        Debug.Log("Entra");
-        if (firebase.isConnected)
-        {
-            {
-                Debug.Log("Entra tambien");
-                eventDispatcherService.Dispatch(new LogEvent(firebaseLoginService.GetID()));
-                //SetUserID();
-                Debug.Log("UserExists");
-            }
-        }
-    }
-
-    public void SetUserID()
-    {
-        Debug.Log("SetUserID");
-        Debug.Log("logevent");
-        //var logEvent = new LogEvent(firebaseLoginService.GetID());
-        //eventDispatcherService.Dispatch(logEvent);
-        Debug.Log("dispatcher");
+        if (userExists.existsInFirebase) eventDispatcherService.Dispatch(new LoginEvent(firebaseLoginService.GetID()));
     }
 }

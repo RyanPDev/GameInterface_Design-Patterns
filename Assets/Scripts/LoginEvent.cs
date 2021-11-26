@@ -1,9 +1,9 @@
-public class LogEvent
+public class LoginEvent
 {
     public readonly string Text;
     public readonly bool isLogged;
 
-    public LogEvent(string text)
+    public LoginEvent(string text)
     {
         Text = text;
     }
