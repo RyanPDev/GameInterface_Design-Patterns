@@ -9,9 +9,7 @@ public class User
     [FirestoreProperty]
     public int Level { get; set; }
 
-    public User()
-    {
-    }
+    public User() { }
 
     public User(string name, int level)
     {

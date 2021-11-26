@@ -20,7 +20,7 @@ public class Installer : MonoBehaviour
 
         new LoginController(loginViewModel, loginUseCase);
 
-        new LoginPresenter(loginViewModel, loginUseCase, eventDispatcherService);
+        new LoginPresenter(loginViewModel, eventDispatcherService);
     }
 
     private void Start()
