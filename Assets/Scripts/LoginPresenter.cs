@@ -1,5 +1,5 @@
 using UnityEngine;
-public class LoginPresenter
+public class LoginPresenter : Presenter
 {
     private readonly IEventDispatcherService eventDispatcherService;
     private readonly ILoginUseCase loginUseCase;
@@ -13,7 +13,11 @@ public class LoginPresenter
 
         eventDispatcherService.Subscribe<LogEvent>(OnLogID);
     }
-
+    public override void Dispose()
+    {
+        base.Dispose();
+        eventDispatcherService.Unsubscribe<LogEvent>(OnLogID);
+    }
     private void OnLogID(LogEvent data)
     {
         viewModel.IsVisible.Value = false;

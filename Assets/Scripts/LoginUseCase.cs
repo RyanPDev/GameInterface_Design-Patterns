@@ -1,5 +1,5 @@
 using UnityEngine;
-public class LoginUseCase : ILoginUseCase
+public class LoginUseCase : UseCase, ILoginUseCase
 {
     private readonly IFirebaseLoginService firebaseLoginService;
     private readonly IEventDispatcherService eventDispatcherService;
@@ -17,7 +17,11 @@ public class LoginUseCase : ILoginUseCase
 
         eventDispatcherService.Dispatch(new LogEvent(firebaseLoginService.GetID()));
     }
-
+    public override void Dispose()
+    {
+        base.Dispose();
+        eventDispatcherService.Unsubscribe<FirebaseConnection>(AlreadyExists);
+    }
     public void AlreadyExists(FirebaseConnection firebase)
     {
         Debug.Log("Entra");

@@ -1,6 +1,6 @@
 using UniRx;
 
-public class LoginController
+public class LoginController : Controller
 {
     private readonly LoginViewModel loginPanelViewModel;
     private readonly ILoginUseCase loginUseCase;
@@ -16,6 +16,6 @@ public class LoginController
         {
             loginUseCase.Login();
             loginPanelViewModel.IsVisible.Value = false;
-        });
+        }).AddTo(_disposables);
     }
 }

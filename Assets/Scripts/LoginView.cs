@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UniRx;
 
-public class LoginView : MonoBehaviour
+public class LoginView : View
 {
     [SerializeField] private Button loginButton;
     [SerializeField] private TextMeshProUGUI ID;
@@ -20,14 +20,14 @@ public class LoginView : MonoBehaviour
             {
                 loginButton.gameObject.SetActive(isVisible);
                 ID.gameObject.SetActive(!isVisible);
-            });
+            }).AddTo(_disposables);
 
         viewModel
             .TextID
             .Subscribe((textID) =>
             {
                 ID.SetText(textID);
-            });
+            }).AddTo(_disposables);
 
         loginButton.onClick.AddListener(() =>
         {

@@ -1,6 +1,6 @@
 using UniRx;
 
-public class LoginViewModel
+public class LoginViewModel : ViewModel
 {
     public readonly ReactiveCommand LoginButtonPressed;
     public readonly ReactiveProperty<bool> IsVisible;
@@ -8,8 +8,8 @@ public class LoginViewModel
 
     public LoginViewModel()
     {
-        LoginButtonPressed = new ReactiveCommand();
-        IsVisible = new ReactiveProperty<bool>();
-        TextID = new ReactiveProperty<string>(string.Empty);
+        LoginButtonPressed = new ReactiveCommand().AddTo(_disposables);
+        IsVisible = new ReactiveProperty<bool>().AddTo(_disposables);
+        TextID = new ReactiveProperty<string>(string.Empty).AddTo(_disposables);
     }
 }
