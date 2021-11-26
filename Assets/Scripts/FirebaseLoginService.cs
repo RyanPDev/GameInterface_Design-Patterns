@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FirebaseLoginService : IFirebaseLoginService
 {
-    IEventDispatcherService eventDispatcher;
+    readonly IEventDispatcherService eventDispatcher;
 
     public FirebaseLoginService(IEventDispatcherService _eventDispatcher)
     {
@@ -13,25 +13,25 @@ public class FirebaseLoginService : IFirebaseLoginService
 
     public void Init()
     {
-        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-        {
-            var dependencyStatus = task.Result;
-            bool connection = false;
-            if (dependencyStatus == Firebase.DependencyStatus.Available)
-            {
-                connection = true;
-                // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.º
-                var app = Firebase.FirebaseApp.DefaultInstance;
-                Debug.Log(dependencyStatus == Firebase.DependencyStatus.Available);
-                eventDispatcher.Dispatch(new FirebaseConnection(connection));
-            }
-            else
-            {
-                UnityEngine.Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                //Firebase Unity SDK is not safe to use here.
-            }
-        });
+        //Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        //{
+        //    var dependencyStatus = task.Result;
+        //    if (dependencyStatus == Firebase.DependencyStatus.Available)
+        //    {
+        //        // Create and hold a reference to your FirebaseApp,
+        //        // where app is a Firebase.FirebaseApp property of your application class.º
+        //        var app = Firebase.FirebaseApp.DefaultInstance;
+        //        //Check(connection);
+        //    }
+        //    else
+        //    {
+        //        UnityEngine.Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+        //        return;
+        //        //Firebase Unity SDK is not safe to use here.
+        //    }
+        //});
+
+        eventDispatcher.Dispatch(new FirebaseConnection(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
     }
 
     public void Login()
@@ -45,7 +45,7 @@ public class FirebaseLoginService : IFirebaseLoginService
             }
 
             Firebase.Auth.FirebaseUser newUser = task.Result;
-            //SetData();
+            SetData();
         });
     }
 

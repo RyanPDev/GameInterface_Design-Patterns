@@ -23,11 +23,9 @@ public class LoginUseCase : ILoginUseCase
         Debug.Log("Entra");
         if (firebase.isConnected)
         {
-            if (UserExists())
             {
                 Debug.Log("Entra tambien");
-                string id = firebaseLoginService.GetID();
-                eventDispatcherService.Dispatch(new LogEvent(id));
+                eventDispatcherService.Dispatch(new LogEvent(firebaseLoginService.GetID()));
                 //SetUserID();
                 Debug.Log("UserExists");
             }
