@@ -15,6 +15,7 @@ public class LoginPresenter : Presenter
     {
         base.Dispose();
         eventDispatcherService.Unsubscribe<LoginEvent>(OnLogID);
+        eventDispatcherService.Unsubscribe<UserInFirebase>(ButtonVisibility);
     }
     private void OnLogID(LoginEvent data)
     {
