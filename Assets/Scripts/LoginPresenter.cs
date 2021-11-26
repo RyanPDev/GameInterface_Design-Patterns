@@ -14,9 +14,9 @@ public class LoginPresenter : Presenter
     public override void Dispose()
     {
         base.Dispose();
-        eventDispatcherService.Unsubscribe<LogEvent>(OnLogID);
+        eventDispatcherService.Unsubscribe<LoginEvent>(OnLogID);
     }
-    private void OnLogID(LogEvent data)
+    private void OnLogID(LoginEvent data)
     {
         viewModel.IsVisible.Value = false;
         viewModel.TextID.SetValueAndForceNotify("User ID: " + data.Text);

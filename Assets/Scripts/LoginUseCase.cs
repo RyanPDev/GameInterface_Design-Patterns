@@ -17,9 +17,9 @@ public class LoginUseCase : UseCase, ILoginUseCase
     public override void Dispose()
     {
         base.Dispose();
-        eventDispatcherService.Unsubscribe<FirebaseConnection>(AlreadyExists);
+        eventDispatcherService.Unsubscribe<UserInFirebase>(AlreadyExists);
     }
-    public void AlreadyExists(FirebaseConnection firebase)
+    public void AlreadyExists(UserInFirebase userExists)
     {
         if (userExists.existsInFirebase) eventDispatcherService.Dispatch(new LoginEvent(firebaseLoginService.GetID()));
     }
