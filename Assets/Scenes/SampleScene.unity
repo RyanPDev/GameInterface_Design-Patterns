@@ -220,6 +220,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasParent: {fileID: 971723126}
   loginPrefab: {fileID: 6421731171583621673, guid: 551c01761369d404d9618813d5adea38, type: 3}
+  _homePanelPrefab: {fileID: 6038599004563940132, guid: 9b5d3befdd4046140a84afbe39dd9c0b, type: 3}
+  _scorePanelPrefab: {fileID: 1127696892479574647, guid: 205f16c9ac8a3f245b74614d249a98b8, type: 3}
+  _settingsPanelPrefab: {fileID: 2407594000224533187, guid: b4f2ad35d9e0a3245b84a14bf9c7e598, type: 3}
+  _buttonsPrefab: {fileID: 7638967507440500868, guid: 90ec59aba61700d4f8474f7dc6f0c8ea, type: 3}
 --- !u!4 &456509606
 Transform:
   m_ObjectHideFlags: 0
