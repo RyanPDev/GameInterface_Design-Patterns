@@ -21,6 +21,9 @@ public class LoginUseCase : UseCase, ILoginUseCase
     }
     public void AlreadyExists(UserInFirebase userExists)
     {
-        if (userExists.existsInFirebase) eventDispatcherService.Dispatch(new LoginEvent(firebaseLoginService.GetID()));
+        if (userExists.existsInFirebase)
+        {
+            eventDispatcherService.Dispatch(new LoginEvent(firebaseLoginService.GetID()));
+        }
     }
 }

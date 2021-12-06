@@ -14,22 +14,15 @@ public class LoginView : View
     public void SetViewModel(LoginViewModel _viewModel)
     {
         viewModel = _viewModel;
-
+        loginButton.gameObject.SetActive(true);
         viewModel
-            .IsVisible
-            .Subscribe((isVisible) =>
+            .IsLogged
+            .Subscribe((IsLogged) =>
             {
-                loginButton.gameObject.SetActive(isVisible);
-                ID.gameObject.SetActive(!isVisible);
+                if(IsLogged)
+                    SceneManager.LoadScene(1);
             }).AddTo(_disposables);
 
-        viewModel
-            .TextID
-            .Subscribe((textID) =>
-            {
-                ID.SetText(textID);
-                SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(1));
-            }).AddTo(_disposables);
 
         loginButton.onClick.AddListener(() =>
         {

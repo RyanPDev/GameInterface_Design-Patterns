@@ -19,12 +19,12 @@ public class LoginPresenter : Presenter
     }
     private void OnLogID(LoginEvent data)
     {
-        viewModel.IsVisible.Value = false;
-        viewModel.TextID.SetValueAndForceNotify("User ID: " + data.Text);
+        viewModel.IsLogged.Value = true;
     }
 
     private void ButtonVisibility(UserInFirebase userExists)
     {  
-        viewModel.IsVisible.Value = !userExists.existsInFirebase;
+        if (userExists.existsInFirebase)
+            viewModel.IsLogged.Value = true;
     }
 }

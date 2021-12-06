@@ -13,6 +13,7 @@ public class InitInstaller : MonoBehaviour
         var loginView = Instantiate(loginPrefab, canvasParent);
 
         var loginViewModel = new LoginViewModel();
+
         loginView.SetViewModel(loginViewModel);
 
         var eventDispatcherService = new EventDispatcherService();
