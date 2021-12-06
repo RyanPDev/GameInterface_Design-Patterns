@@ -1,14 +1,8 @@
 using UnityEngine;
 
-public class Installer : MonoBehaviour
+public class MenuInstaller : MonoBehaviour
 {
     [SerializeField] private RectTransform canvasParent;
-    [SerializeField] private LoginView loginPrefab;
-
-    FirebaseLoginService firebaseLoginService;
-
-
-
     [SerializeField] private HomePanelView _homePanelPrefab;
     [SerializeField] private ScorePanelView _scorePanelPrefab;
     [SerializeField] private SettingsPanelView _settingsPanelPrefab;
@@ -16,22 +10,6 @@ public class Installer : MonoBehaviour
 
     private void Awake()
     {
-        var loginView = Instantiate(loginPrefab, canvasParent);
-
-        var loginViewModel = new LoginViewModel();
-        loginView.SetViewModel(loginViewModel);
-
-        var eventDispatcherService = new EventDispatcherService();
-        firebaseLoginService = new FirebaseLoginService(eventDispatcherService);
-
-        var loginUseCase = new LoginUseCase(firebaseLoginService, eventDispatcherService);
-
-        new LoginController(loginViewModel, loginUseCase);
-
-        new LoginPresenter(loginViewModel, eventDispatcherService);
-
-
-        //Menu
 
         var _homePanelView = Instantiate(_homePanelPrefab, canvasParent);
         var _scorePanelView = Instantiate(_scorePanelPrefab, canvasParent);
@@ -51,10 +29,7 @@ public class Installer : MonoBehaviour
         new ButtonsController(homePanelViewModel, scorePanelViewModel, settingsPanelViewModel, buttonsViewModel);
     }
 
-    private void Start()
-    {
-        firebaseLoginService.Init();
-    }
 
-    
+
+
 }

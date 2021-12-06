@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UniRx;
+using UnityEngine.SceneManagement;
 
 public class LoginView : View
 {
@@ -27,6 +28,7 @@ public class LoginView : View
             .Subscribe((textID) =>
             {
                 ID.SetText(textID);
+                SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(1));
             }).AddTo(_disposables);
 
         loginButton.onClick.AddListener(() =>
