@@ -6,14 +6,13 @@ public class User
     [FirestoreProperty]
     public string Name { get; set; }
 
-    [FirestoreProperty]
-    public int Level { get; set; }
+    //[FirestoreProperty]
+    //public int Level { get; set; }
 
     public User() { }
 
-    public User(string name, int level)
+    public User( string name)
     {
         Name = name;
-        Level = level;
     }
 }
