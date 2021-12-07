@@ -1,34 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UniRx;
 
 public class ButtonsController
 {
-    public ButtonsController(HomePanelViewModel homePanelViewModel, ScorePanelViewModel scorePanelViewModel,
-        SettingsPanelViewModel settingsPanelViewModel, ButtonsViewModel buttonsViewModel)
+    private readonly HomePanelViewModel homePanelViewModel;
+    private readonly ScorePanelViewModel scorePanelViewModel;
+    private readonly SettingsPanelViewModel settingsPanelViewModel;
+    private readonly ButtonsViewModel buttonsViewModel;
+
+    public ButtonsController(HomePanelViewModel _homePanelViewModel, ScorePanelViewModel _scorePanelViewModel,
+        SettingsPanelViewModel _settingsPanelViewModel, ButtonsViewModel _buttonsViewModel)
     {
+        homePanelViewModel = _homePanelViewModel;
+        scorePanelViewModel = _scorePanelViewModel;
+        settingsPanelViewModel = _settingsPanelViewModel;
+        buttonsViewModel = _buttonsViewModel;
+
         homePanelViewModel.IsVisible.Value = true;
 
         buttonsViewModel.OnHomeButtonPressed.Subscribe((_) =>
         {
-            homePanelViewModel.IsVisible.Value = true;
-            scorePanelViewModel.IsVisible.Value = false;
-            settingsPanelViewModel.IsVisible.Value = false;
+            SetPanelVisibility(true, false, false);
         });
 
         buttonsViewModel.OnScoreButtonPressed.Subscribe((_) =>
         {
-            homePanelViewModel.IsVisible.Value = false;
-            scorePanelViewModel.IsVisible.Value = true;
-            settingsPanelViewModel.IsVisible.Value = false;
+            SetPanelVisibility(false, true, false);
         });
 
         buttonsViewModel.OnSettingsButtonPressed.Subscribe((_) =>
         {
-            homePanelViewModel.IsVisible.Value = false;
-            scorePanelViewModel.IsVisible.Value = false;
-            settingsPanelViewModel.IsVisible.Value = true;
+            SetPanelVisibility(false, false, true);
         });
+    }
+
+    private void SetPanelVisibility(bool homeVisibility, bool scoreVisibility, bool settingsVisibility)
+    {
+        homePanelViewModel.IsVisible.Value = homeVisibility;
+        scorePanelViewModel.IsVisible.Value = scoreVisibility;
+        settingsPanelViewModel.IsVisible.Value = settingsVisibility;
     }
 }
