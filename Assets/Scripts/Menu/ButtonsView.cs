@@ -6,40 +6,39 @@ using DG.Tweening;
 
 public class ButtonsView : MonoBehaviour
 {
-    private ButtonsViewModel _viewModel;
+    private ButtonsViewModel viewModel;
 
     [SerializeField] private Button homeButton;
     [SerializeField] private Button scoreButton;
     [SerializeField] private Button settingsButton;
 
-    public void SetViewModel(ButtonsViewModel viewModel)
+    public void SetViewModel(ButtonsViewModel _viewModel)
     {
-        _viewModel = viewModel;
+        viewModel = _viewModel;
 
-        homeButton.GetComponent<Image>().DOColor(new Color(0, 0.25f, 1), 0);
-        scoreButton.GetComponent<Image>().DOColor(new Color(0.64706f, 0.93725f, 0.98039f), 0);
-        settingsButton.GetComponent<Image>().DOColor(new Color(0.64706f, 0.93725f, 0.98039f), 0);
+        SetColor(new Color(0, 0.25f, 1), new Color(0.64706f, 0.93725f, 0.98039f), new Color(0.64706f, 0.93725f, 0.98039f), 0f);
 
         homeButton.onClick.AddListener(() =>
         {
-            homeButton.GetComponent<Image>().DOColor(new Color(0, 0.25f, 1), .2f);
-            scoreButton.GetComponent<Image>().DOColor(new Color(0.64706f, 0.93725f, 0.98039f), .2f);
-            settingsButton.GetComponent<Image>().DOColor(new Color(0.64706f, 0.93725f, 0.98039f), .2f);
-            _viewModel.OnHomeButtonPressed.Execute();
+            SetColor(new Color(0, 0.25f, 1), new Color(0.64706f, 0.93725f, 0.98039f), new Color(0.64706f, 0.93725f, 0.98039f), .2f);
+            viewModel.OnHomeButtonPressed.Execute();
         });
         scoreButton.onClick.AddListener(() =>
         {
-            homeButton.GetComponent<Image>().DOColor(new Color(0.64706f, 0.93725f, 0.98039f), .2f);
-            scoreButton.GetComponent<Image>().DOColor(new Color(0, 0.25f, 1), .2f);
-            settingsButton.GetComponent<Image>().DOColor(new Color(0.64706f, 0.93725f, 0.98039f), .2f);
-            _viewModel.OnScoreButtonPressed.Execute();
+            SetColor(new Color(0.64706f, 0.93725f, 0.98039f), new Color(0, 0.25f, 1), new Color(0.64706f, 0.93725f, 0.98039f), .2f);
+            viewModel.OnScoreButtonPressed.Execute();
         });
         settingsButton.onClick.AddListener(() =>
         {
-            homeButton.GetComponent<Image>().DOColor(new Color(0.64706f, 0.93725f, 0.98039f), .2f);
-            scoreButton.GetComponent<Image>().DOColor(new Color(0.64706f, 0.93725f, 0.98039f), .2f);
-            settingsButton.GetComponent<Image>().DOColor(new Color(0, 0.25f, 1), .2f);
-            _viewModel.OnSettingsButtonPressed.Execute();
+            SetColor(new Color(0.64706f, 0.93725f, 0.98039f), new Color(0.64706f, 0.93725f, 0.98039f), new Color(0, 0.25f, 1), .2f);
+            viewModel.OnSettingsButtonPressed.Execute();
         });
+    }
+
+    private void SetColor(Color homeColor, Color scoreColor, Color settingsColor, float lerpSpeed)
+    {
+        homeButton.GetComponent<Image>().DOColor(homeColor, lerpSpeed);
+        scoreButton.GetComponent<Image>().DOColor(scoreColor, lerpSpeed);
+        settingsButton.GetComponent<Image>().DOColor(settingsColor, lerpSpeed);
     }
 }
