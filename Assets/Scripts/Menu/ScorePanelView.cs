@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using DG.Tweening;
 
 public class ScorePanelView : MonoBehaviour
 {
-    private ScorePanelViewModel _viewModel;
+    private ScorePanelViewModel viewModel;
 
-    public void SetViewModel(ScorePanelViewModel viewModel)
+    public void SetViewModel(ScorePanelViewModel _viewModel)
     {
-        _viewModel = viewModel;
+        viewModel = _viewModel;
 
-        _viewModel.IsVisible.Subscribe((isVisible) =>
+        viewModel.IsVisible.Subscribe((isVisible) =>
         {
             gameObject.SetActive(isVisible);
             gameObject.GetComponent<RectTransform>().DOLocalMoveX(5, 0f);

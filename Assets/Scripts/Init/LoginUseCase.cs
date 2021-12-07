@@ -14,11 +14,13 @@ public class LoginUseCase : UseCase, ILoginUseCase
     {
         firebaseLoginService.Login();
     }
+
     public override void Dispose()
     {
         base.Dispose();
         eventDispatcherService.Unsubscribe<UserInFirebase>(AlreadyExists);
     }
+
     public void AlreadyExists(UserInFirebase userExists)
     {
         if (userExists.existsInFirebase)

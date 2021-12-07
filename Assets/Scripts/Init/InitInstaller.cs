@@ -7,7 +7,6 @@ public class InitInstaller : MonoBehaviour
 
     FirebaseLoginService firebaseLoginService;
 
-
     private void Awake()
     {
         var loginView = Instantiate(loginPrefab, canvasParent);
@@ -26,14 +25,10 @@ public class InitInstaller : MonoBehaviour
         new LoginController(loginViewModel, loginUseCase);
 
         new LoginPresenter(loginViewModel, eventDispatcherService);
-
-
     }
 
     private void Start()
     {
         firebaseLoginService.Init();
     }
-
-
 }

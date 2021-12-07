@@ -10,7 +10,6 @@ public class MenuInstaller : MonoBehaviour
 
     private void Awake()
     {
-
         var _homePanelView = Instantiate(_homePanelPrefab, canvasParent);
         var _scorePanelView = Instantiate(_scorePanelPrefab, canvasParent);
         var _settingsPanelView = Instantiate(_settingsPanelPrefab, canvasParent);
@@ -28,8 +27,4 @@ public class MenuInstaller : MonoBehaviour
 
         new ButtonsController(homePanelViewModel, scorePanelViewModel, settingsPanelViewModel, buttonsViewModel);
     }
-
-
-
-
 }

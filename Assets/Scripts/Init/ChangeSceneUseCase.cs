@@ -1,9 +1,9 @@
-﻿
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
+
 public class ChangeSceneUseCase : UseCase, IChangeSceneUseCase
 {
     private readonly IEventDispatcherService eventDispatcherService;
-  
+
     public ChangeSceneUseCase(IEventDispatcherService _eventDispatcherService)
     {
         eventDispatcherService = _eventDispatcherService;
@@ -12,12 +12,12 @@ public class ChangeSceneUseCase : UseCase, IChangeSceneUseCase
 
     public void ChangeScene(LoginEvent logged)
     {
-          SceneManager.LoadScene(1);
+        SceneManager.LoadScene(1);
     }
+
     public override void Dispose()
     {
         base.Dispose();
         eventDispatcherService.Unsubscribe<LoginEvent>(ChangeScene);
     }
-  
 }
