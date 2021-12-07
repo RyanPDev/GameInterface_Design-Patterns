@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UniRx;
-using UnityEngine.SceneManagement;
 
 public class LoginView : View
 {
@@ -19,8 +18,7 @@ public class LoginView : View
             .IsLogged
             .Subscribe((IsLogged) =>
             {
-                if(IsLogged)
-                    SceneManager.LoadScene(1);
+                
             }).AddTo(_disposables);
 
 

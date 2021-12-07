@@ -21,6 +21,8 @@ public class InitInstaller : MonoBehaviour
 
         var loginUseCase = new LoginUseCase(firebaseLoginService, eventDispatcherService);
 
+        new ChangeSceneUseCase(eventDispatcherService);
+
         new LoginController(loginViewModel, loginUseCase);
 
         new LoginPresenter(loginViewModel, eventDispatcherService);
