@@ -1,20 +1,30 @@
 using UnityEngine;
 using UniRx;
 using DG.Tweening;
+using UnityEngine.UI;
+using System.Linq;
+using System.Collections.Generic;
 
 public class HomePanelView : MonoBehaviour
 {
-    private HomePanelViewModel _viewModel;
+    private HomePanelViewModel viewModel;
 
-    public void SetViewModel(HomePanelViewModel viewModel)
+    [SerializeField] private Button profileButton;
+
+    public void SetViewModel(HomePanelViewModel _viewModel)
     {
-        _viewModel = viewModel;
+        viewModel = _viewModel;
 
-        _viewModel.IsVisible.Subscribe((isVisible) =>
+        viewModel.IsVisible.Subscribe((isVisible) =>
         {
             gameObject.SetActive(isVisible);
             gameObject.GetComponent<RectTransform>().DOLocalMoveX(5, 0f);
             gameObject.GetComponent<RectTransform>().DOMoveX(0, .2f);
         });
+
+        profileButton.onClick.AddListener(() =>
+        {
+            viewModel.ProfileButtonPressed.Execute();
+        });        
     }
 }
