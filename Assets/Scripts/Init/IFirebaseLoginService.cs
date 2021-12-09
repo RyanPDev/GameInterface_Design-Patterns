@@ -2,6 +2,7 @@ public interface IFirebaseLoginService
 {
     void Login();
     string GetID();
-    void SetData();
+    void SetData(User user);
+    void InitUserData();
     void LoadData();
 }

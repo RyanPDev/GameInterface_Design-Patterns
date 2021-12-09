@@ -4,11 +4,11 @@ using Firebase.Extensions;
 public class FirebaseLoginService : IFirebaseLoginService
 {
     readonly IEventDispatcherService eventDispatcher;
-   // private bool firstLogin;
 
     public FirebaseLoginService(IEventDispatcherService _eventDispatcher)
     {
         eventDispatcher = _eventDispatcher;
+        eventDispatcher.Subscribe<UserEntity>(UpdateData);
     }
 
     //Authentifcation
@@ -23,8 +23,7 @@ public class FirebaseLoginService : IFirebaseLoginService
                 // where app is a Firebase.FirebaseApp property of your application class.º
                 var app = Firebase.FirebaseApp.DefaultInstance;
                 eventDispatcher.Dispatch(new UserInFirebase(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
-                //eventDispatcher.Dispatch(new UserInFirebase(false));
-                //firstLogin = !(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null);
+               // eventDispatcher.Dispatch(new UserInFirebase(false));
             }
             else
             {
@@ -46,7 +45,6 @@ public class FirebaseLoginService : IFirebaseLoginService
             }
 
             Firebase.Auth.FirebaseUser newUser = task.Result;
-            //if (firstLogin) SetData();
             SetDataIfUserExists();
             eventDispatcher.Dispatch(new LoginEvent(GetID()));
         });
@@ -57,37 +55,47 @@ public class FirebaseLoginService : IFirebaseLoginService
         return Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId;
     }
 
-   public void SetDataIfUserExists()
-   {
-       FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-   
-       CollectionReference usersRef = db.Collection("users");
-   
-       usersRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
-       {
-           QuerySnapshot snapshot = task.Result;
-           foreach (DocumentSnapshot document in snapshot.Documents)
-           {
-               if  (document.Id == Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId)
-               {
-                   return;
-               }
-           }
-           SetData();
-       });
-   }
-
-    //Database
-    public void SetData()
+    public void SetDataIfUserExists()
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        var user = new User(GetID());
+
+        CollectionReference usersRef = db.Collection("users");
+
+        usersRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            QuerySnapshot snapshot = task.Result;
+            foreach (DocumentSnapshot document in snapshot.Documents)
+            {
+                if (document.Id == Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId)
+                {                    
+                    LoadData();
+                    return;
+                }
+            }
+            InitUserData();
+        });
+    }
+
+    public void UpdateData(UserEntity userEntity)
+    {
+        SetData(new User(userEntity.Name));
+    }
+
+    //Database
+    public void InitUserData()
+    {
+        SetData(new User(GetID()));
+    }
+
+    public void SetData(User user)
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("users").Document(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId);
-    
+
         docRef.SetAsync(user).ContinueWithOnMainThread(task =>
         {
-            //if (task.IsCompleted)
-            //    LoadData();
+            if (task.IsCompleted)
+                LoadData();
         });
     }
 

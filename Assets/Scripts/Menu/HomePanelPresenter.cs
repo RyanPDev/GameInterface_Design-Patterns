@@ -11,14 +11,17 @@ class HomePanelPresenter : Presenter
 
         eventDispatcherService = _eventDispatcherService;
 
-        //_eventDispatcherService.Subscribe<NewTaskCreatedEvent>(OnNewTaskCreated);
-        //_eventDispatcherService.Subscribe<TaskDeletedEvent>(OnTaskDeleted);
+        eventDispatcherService.Subscribe<UserEntity>(UpdateName);
     }
 
     public override void Dispose()
     {
         base.Dispose();
-        //_eventDispatcherService.Unsubscribe<NewTaskCreatedEvent>(OnNewTaskCreated);
-        //_eventDispatcherService.Unsubscribe<TaskDeletedEvent>(OnTaskDeleted);
+        eventDispatcherService.Unsubscribe<UserEntity>(UpdateName);
+    }
+
+    public void UpdateName(UserEntity user)
+    {
+        viewModel.Username.Value = user.Name;
     }
 }

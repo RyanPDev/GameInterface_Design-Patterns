@@ -11,7 +11,7 @@ public class MenuInstaller : MonoBehaviour
 
     private void Awake()
     {
-        var userRepository = ServiceLocator.Instance.GetService<UserDataAccess>();   
+        var userRepository = ServiceLocator.Instance.GetService<IUserDataAccess>();   
         var eventDispatcher = ServiceLocator.Instance.GetService<IEventDispatcherService>();   
 
         var _homePanelView = Instantiate(_homePanelPrefab, canvasParent);
@@ -38,6 +38,7 @@ public class MenuInstaller : MonoBehaviour
 
         new HomePanelController(homePanelViewModel, profilePanelViewModel);
         new ProfileController(profilePanelViewModel, updateUserUseCase);
+        new HomePanelPresenter(homePanelViewModel, eventDispatcher);
     }
 
     //private static ITaskRepository GetTaskRepository()

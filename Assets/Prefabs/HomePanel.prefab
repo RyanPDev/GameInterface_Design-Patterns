@@ -368,8 +368,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 423.07068, y: 767.0825}
-  m_SizeDelta: {x: 341.5954, y: 181.6883}
+  m_AnchoredPosition: {x: 5.856201, y: 767.0825}
+  m_SizeDelta: {x: 1176.0242, y: 181.6883}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7229101976079086351
 CanvasRenderer:
@@ -850,6 +850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profileButton: {fileID: 6119511680049529386}
+  userNameText: {fileID: 8414311103190872798}
 --- !u!1 &8364562668052706806
 GameObject:
   m_ObjectHideFlags: 0

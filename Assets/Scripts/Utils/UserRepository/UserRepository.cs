@@ -1,4 +1,6 @@
-﻿public class UserRepository : UserDataAccess
+﻿using System.Collections.Generic;
+using UnityEngine;
+public class UserRepository : IUserDataAccess
 {
     private UserEntity _userEntity;
 
@@ -11,4 +13,8 @@
     {
         _userEntity = userEntity;
     }
+  //  private void SaveLocalUserOnPlayerPrefs()
+  //  {
+  //      var json = JsonUtility.ToJson(new )
+  //  }
 }

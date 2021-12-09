@@ -21,13 +21,13 @@ class ProfileView : View
                 gameObject.SetActive(isVisible);
             })
             .AddTo(_disposables);
-        _viewModel
-            .UserName
-            .Subscribe(taskName =>
-            {
-                inputField.SetTextWithoutNotify(taskName);
-            })
-            .AddTo(_disposables);
+       //_viewModel
+       //    .UserName
+       //    .Subscribe(taskName =>
+       //    {
+       //        inputField.SetTextWithoutNotify(taskName);
+       //    })
+       //    .AddTo(_disposables);
 
         backButton.onClick.AddListener(() =>
         {
@@ -39,6 +39,4 @@ class ProfileView : View
             _viewModel.OnSaveButtonPressed.Execute(inputField.text);
         });
     }
-
 }
-

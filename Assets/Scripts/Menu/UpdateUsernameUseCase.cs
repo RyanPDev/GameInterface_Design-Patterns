@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 class UpdateUsernameUseCase : IUpdateUsernameUseCase
 {
-    UserDataAccess userRepository;
+    IUserDataAccess userRepository;
     IEventDispatcherService eventDispatcher;
-    public UpdateUsernameUseCase(UserDataAccess _userRepository, IEventDispatcherService _eventDispatcherService)
+
+    public UpdateUsernameUseCase(IUserDataAccess _userRepository, IEventDispatcherService _eventDispatcherService)
     {
         userRepository = _userRepository;
         eventDispatcher = _eventDispatcherService;
@@ -17,9 +18,8 @@ class UpdateUsernameUseCase : IUpdateUsernameUseCase
     public void UpdateUsername(string userName)
     {
         // Make the Update with a service;
-
-        var userEntity = new UserEntity("id", userName);
+        var userEntity = new UserEntity(userName);
+        userRepository.SetLocalUser(userEntity);
         eventDispatcher.Dispatch(userEntity);
-    }
+    }  
 }
-

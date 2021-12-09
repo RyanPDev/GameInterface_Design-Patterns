@@ -16,7 +16,7 @@ public class InitInstaller : MonoBehaviour
         firebaseLoginService = new FirebaseLoginService(eventDispatcherService);
 
 
-        ServiceLocator.Instance.RegisterService<UserDataAccess>(userRepository);
+        ServiceLocator.Instance.RegisterService<IUserDataAccess>(userRepository);
         ServiceLocator.Instance.RegisterService<IEventDispatcherService>(eventDispatcherService);
         //ServiceLocator.Instance.RegisterService<SceneHandlerService>(sceneHandlerService);
         //ServiceLocator.Instance.RegisterService<DatabaseService>(databaseService);
