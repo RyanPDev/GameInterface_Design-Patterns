@@ -220,6 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasParent: {fileID: 971723126}
   _homePanelPrefab: {fileID: 6038599004563940132, guid: 9b5d3befdd4046140a84afbe39dd9c0b, type: 3}
+  _profileViewPrefab: {fileID: 4009655013447862129, guid: fd5596ee16c37dc469cbfd53c8573641, type: 3}
   _scorePanelPrefab: {fileID: 1127696892479574647, guid: 205f16c9ac8a3f245b74614d249a98b8, type: 3}
   _settingsPanelPrefab: {fileID: 2407594000224533187, guid: b4f2ad35d9e0a3245b84a14bf9c7e598, type: 3}
   _buttonsPrefab: {fileID: 7638967507440500868, guid: 90ec59aba61700d4f8474f7dc6f0c8ea, type: 3}

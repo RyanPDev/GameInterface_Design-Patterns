@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-    class UpdateUsernameUseCase : IUpdateUsernameUseCase
+class UpdateUsernameUseCase : IUpdateUsernameUseCase
 {
-  // private readonly ITaskRepository _taskRepository;
-  // private readonly IEventDispatcherService _eventDispatcherService;
-  //
-  // public CreateTaskUseCase(ITaskRepository taskRepository,
-  //     IEventDispatcherService eventDispatcherService)
-  // {
-  //     _taskRepository = taskRepository;
-  //     _eventDispatcherService = eventDispatcherService;
-  // }
-  //
-    public void UpdateUsername(string userName)
-        {
-            // Make the Update with a service
-        }
-
+    UserDataAccess userRepository;
+    IEventDispatcherService eventDispatcher;
+    public UpdateUsernameUseCase(UserDataAccess _userRepository, IEventDispatcherService _eventDispatcherService)
+    {
+        userRepository = _userRepository;
+        eventDispatcher = _eventDispatcherService;
     }
+
+    public void UpdateUsername(string userName)
+    {
+        // Make the Update with a service;
+
+        var userEntity = new UserEntity("id", userName);
+        eventDispatcher.Dispatch(userEntity);
+    }
+}
 
