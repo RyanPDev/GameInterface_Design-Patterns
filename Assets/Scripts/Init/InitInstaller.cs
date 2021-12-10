@@ -7,6 +7,8 @@ public class InitInstaller : MonoBehaviour
 
     FirebaseLoginService firebaseLoginService;
 
+    LoginUseCase loginUseCase;
+
     private void Awake()
     {
         //var sceneHandlerService = new UnitySceneHandler();
@@ -15,13 +17,11 @@ public class InitInstaller : MonoBehaviour
         //var firebaseAuthenticationService = new FirebaseAuthenticationService();
         firebaseLoginService = new FirebaseLoginService(eventDispatcherService);
 
-
         ServiceLocator.Instance.RegisterService<IUserDataAccess>(userRepository);
         ServiceLocator.Instance.RegisterService<IEventDispatcherService>(eventDispatcherService);
         //ServiceLocator.Instance.RegisterService<SceneHandlerService>(sceneHandlerService);
         //ServiceLocator.Instance.RegisterService<DatabaseService>(databaseService);
         //ServiceLocator.Instance.RegisterService<AuthenticationService>(firebaseAuthenticationService);
-
 
         var loginView = Instantiate(loginPrefab, canvasParent);
         var loginViewModel = new LoginViewModel();
@@ -30,7 +30,9 @@ public class InitInstaller : MonoBehaviour
         //var eventDispatcherService = new EventDispatcherService();
         //firebaseLoginService = new FirebaseLoginService(eventDispatcherService);
 
-        var loginUseCase = new LoginUseCase(firebaseLoginService, eventDispatcherService);
+        loginUseCase = new LoginUseCase(firebaseLoginService, eventDispatcherService);
+
+        new UpdateUsernameUseCase(userRepository, eventDispatcherService);
 
         new ChangeSceneUseCase(eventDispatcherService);
         new LoginController(loginViewModel, loginUseCase);

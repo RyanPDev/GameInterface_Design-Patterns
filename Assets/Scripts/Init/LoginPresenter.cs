@@ -23,8 +23,10 @@ public class LoginPresenter : Presenter
     }
 
     private void ButtonVisibility(UserInFirebase userExists)
-    {  
+    {
         if (userExists.existsInFirebase)
-            viewModel.IsLogged.Value = true;
+        {
+            viewModel.isVisible.Value = false;
+        }
     }
 }

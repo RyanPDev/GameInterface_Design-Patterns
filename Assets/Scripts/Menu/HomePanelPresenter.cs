@@ -5,12 +5,12 @@ class HomePanelPresenter : Presenter
     private readonly IEventDispatcherService eventDispatcherService;
     private readonly HomePanelViewModel viewModel;
 
-    public HomePanelPresenter(HomePanelViewModel _viewModel, IEventDispatcherService _eventDispatcherService)
+    public HomePanelPresenter(HomePanelViewModel _viewModel, IEventDispatcherService _eventDispatcherService, UserEntity user)
     {
         viewModel = _viewModel;
 
         eventDispatcherService = _eventDispatcherService;
-
+        UpdateName(user);
         eventDispatcherService.Subscribe<UserEntity>(UpdateName);
     }
 
@@ -21,7 +21,7 @@ class HomePanelPresenter : Presenter
     }
 
     public void UpdateName(UserEntity user)
-    {
+    {   
         viewModel.Username.Value = user.Name;
     }
 }

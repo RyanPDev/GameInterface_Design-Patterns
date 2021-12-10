@@ -1,5 +1,7 @@
 using Firebase.Firestore;
 using Firebase.Extensions;
+using System.Threading.Tasks;
+
 
 public class FirebaseLoginService : IFirebaseLoginService
 {
@@ -23,7 +25,7 @@ public class FirebaseLoginService : IFirebaseLoginService
                 // where app is a Firebase.FirebaseApp property of your application class.º
                 var app = Firebase.FirebaseApp.DefaultInstance;
                 eventDispatcher.Dispatch(new UserInFirebase(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
-               // eventDispatcher.Dispatch(new UserInFirebase(false));
+                //eventDispatcher.Dispatch(new UserInFirebase(false));
             }
             else
             {
@@ -46,7 +48,6 @@ public class FirebaseLoginService : IFirebaseLoginService
 
             Firebase.Auth.FirebaseUser newUser = task.Result;
             SetDataIfUserExists();
-            eventDispatcher.Dispatch(new LoginEvent(GetID()));
         });
     }
 
@@ -67,7 +68,7 @@ public class FirebaseLoginService : IFirebaseLoginService
             foreach (DocumentSnapshot document in snapshot.Documents)
             {
                 if (document.Id == Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId)
-                {                    
+                {
                     LoadData();
                     return;
                 }
@@ -84,17 +85,18 @@ public class FirebaseLoginService : IFirebaseLoginService
     //Database
     public void InitUserData()
     {
-        SetData(new User(GetID()));
+        SetData(new User(GetID()), true);
+        // LoadData();
     }
 
-    public void SetData(User user)
+    public void SetData(User user, bool saveInRepo = false)
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("users").Document(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId);
 
         docRef.SetAsync(user).ContinueWithOnMainThread(task =>
         {
-            if (task.IsCompleted)
+            if (task.IsCompleted && saveInRepo)
                 LoadData();
         });
     }
@@ -110,8 +112,23 @@ public class FirebaseLoginService : IFirebaseLoginService
             QuerySnapshot snapshot = task.Result;
             foreach (DocumentSnapshot document in snapshot.Documents)
             {
-                var user = document.ConvertTo<User>();
+                if (document.Id == Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId)
+                {
+                    // toda tu info
+                    User user = document.ConvertTo<User>();
+
+                    eventDispatcher.Dispatch(new UserDto(user.Name));
+                    eventDispatcher.Dispatch(new LoginEvent(user.Name));
+
+                    // Dispatch para cambiar de escena <--- DATOS DE USUARIO CARGADOS
+                    break;
+                }
             }
         });
+    }
+
+    public void GetName()
+    {
+        LoadData();
     }
 }

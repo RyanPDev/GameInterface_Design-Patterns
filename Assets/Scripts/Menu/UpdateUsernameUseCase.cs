@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class UpdateUsernameUseCase : IUpdateUsernameUseCase
+class UpdateUsernameUseCase : UseCase, IUpdateUsernameUseCase
 {
     IUserDataAccess userRepository;
     IEventDispatcherService eventDispatcher;
@@ -13,6 +13,12 @@ class UpdateUsernameUseCase : IUpdateUsernameUseCase
     {
         userRepository = _userRepository;
         eventDispatcher = _eventDispatcherService;
+        eventDispatcher.Subscribe<UserDto>(UpdateOnLogin);
+    }
+    public void UpdateOnLogin(UserDto userData)
+    {
+        var userEntity = new UserEntity(userData.Name);
+        userRepository.SetLocalUser(userEntity);
     }
 
     public void UpdateUsername(string userName)
@@ -21,5 +27,10 @@ class UpdateUsernameUseCase : IUpdateUsernameUseCase
         var userEntity = new UserEntity(userName);
         userRepository.SetLocalUser(userEntity);
         eventDispatcher.Dispatch(userEntity);
-    }  
+    }
+    public override void Dispose()
+    {
+        base.Dispose();
+        eventDispatcher.Unsubscribe<UserDto>(UpdateOnLogin);
+    }
 }

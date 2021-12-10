@@ -13,14 +13,22 @@ public class LoginView : View
     public void SetViewModel(LoginViewModel _viewModel)
     {
         viewModel = _viewModel;
-        loginButton.gameObject.SetActive(true);
+        viewModel.isVisible.Value = true;
+        //loginButton.gameObject.SetActive(true);
+        //viewModel
+        //    .IsLogged
+        //    .Subscribe((IsLogged) =>
+        //    {
+        //        loginButton.gameObject.SetActive(!IsLogged);
+        //    }).AddTo(_disposables);
+
         viewModel
-            .IsLogged
+            .isVisible
             .Subscribe((IsLogged) =>
             {
-                
-            }).AddTo(_disposables);
+                loginButton.gameObject.SetActive(IsLogged);
 
+            }).AddTo(_disposables);
 
         loginButton.onClick.AddListener(() =>
         {

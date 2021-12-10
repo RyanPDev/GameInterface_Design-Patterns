@@ -38,11 +38,10 @@ public class MenuInstaller : MonoBehaviour
 
         new HomePanelController(homePanelViewModel, profilePanelViewModel);
         new ProfileController(profilePanelViewModel, updateUserUseCase);
-        new HomePanelPresenter(homePanelViewModel, eventDispatcher);
+        new HomePanelPresenter(homePanelViewModel, eventDispatcher, userRepository.GetLocalUser());
     }
 
-    //private static ITaskRepository GetTaskRepository()
-    //{
-    //    return new LocalTaskRepository();
-    //}
+    public void Start()
+    {        
+    }
 }
