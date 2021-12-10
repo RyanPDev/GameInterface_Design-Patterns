@@ -25,7 +25,7 @@ public class FirebaseLoginService : IFirebaseLoginService
                 // where app is a Firebase.FirebaseApp property of your application class.º
                 var app = Firebase.FirebaseApp.DefaultInstance;
                 eventDispatcher.Dispatch(new UserInFirebase(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
-                //eventDispatcher.Dispatch(new UserInFirebase(false));
+               // eventDispatcher.Dispatch(new UserInFirebase(false));
             }
             else
             {

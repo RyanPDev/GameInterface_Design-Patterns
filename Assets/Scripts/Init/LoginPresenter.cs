@@ -20,6 +20,7 @@ public class LoginPresenter : Presenter
     private void OnLogID(LoginEvent data)
     {
         viewModel.IsLogged.Value = true;
+        viewModel.isVisible.Value = false;
     }
 
     private void ButtonVisibility(UserInFirebase userExists)
