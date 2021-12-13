@@ -2,7 +2,6 @@
 
 class ProfileController : Controller
 {
-    private readonly IEventDispatcherService _eventDispatcherService;
     public ProfileController(ProfileViewModel viewModel, UpdateUsernameUseCase updateUserUseCase)
     {
         viewModel.OnBackButtonPressed.Subscribe((_) => 

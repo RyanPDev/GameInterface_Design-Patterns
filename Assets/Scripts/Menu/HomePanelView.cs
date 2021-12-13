@@ -6,7 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using TMPro;
 
-public class HomePanelView : MonoBehaviour
+public class HomePanelView : View
 {
     private HomePanelViewModel viewModel;
 

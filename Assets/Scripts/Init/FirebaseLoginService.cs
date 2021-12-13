@@ -1,9 +1,10 @@
 using Firebase.Firestore;
 using Firebase.Extensions;
 using System.Threading.Tasks;
+using UnityEngine;
 
 
-public class FirebaseLoginService : IFirebaseLoginService
+public class FirebaseLoginService : Service, IFirebaseLoginService
 {
     readonly IEventDispatcherService eventDispatcher;
 
@@ -34,6 +35,11 @@ public class FirebaseLoginService : IFirebaseLoginService
                 //Firebase Unity SDK is not safe to use here.
             }
         });
+    }
+    public override void Dispose()
+    {
+        base.Dispose();
+        eventDispatcher.Unsubscribe<UserEntity>(UpdateData);
     }
 
     public void Login()
@@ -105,8 +111,12 @@ public class FirebaseLoginService : IFirebaseLoginService
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
-        CollectionReference usersRef = db.Collection("users");
 
+        if (PlayerPrefs.HasKey("UserEmail"))
+        {
+            eventDispatcher.Dispatch(new SignInEvent(PlayerPrefs.GetString("UserEmail"), PlayerPrefs.GetString("UserPassword")));
+        }
+        CollectionReference usersRef = db.Collection("users");
         usersRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
             QuerySnapshot snapshot = task.Result;
@@ -116,7 +126,6 @@ public class FirebaseLoginService : IFirebaseLoginService
                 {
                     // toda tu info
                     User user = document.ConvertTo<User>();
-
                     eventDispatcher.Dispatch(new UserDto(user.Name));
                     eventDispatcher.Dispatch(new LoginEvent(user.Name));
 
