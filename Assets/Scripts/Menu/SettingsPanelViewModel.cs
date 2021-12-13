@@ -7,11 +7,10 @@ public class SettingsPanelViewModel : ViewModel
 
     public SettingsPanelViewModel()
     {
-        IsVisible = new ReactiveProperty<bool>()
-             .AddTo(_disposables); ;
-        OnSignInButtonPressed = new ReactiveCommand()
-            .AddTo(_disposables);
-        OnCreateAccountButtonPressed = new ReactiveCommand()
-            .AddTo(_disposables);
+        IsVisible = new ReactiveProperty<bool>().AddTo(_disposables);
+
+        OnSignInButtonPressed = new ReactiveCommand().AddTo(_disposables);
+
+        OnCreateAccountButtonPressed = new ReactiveCommand().AddTo(_disposables);
     }
 }

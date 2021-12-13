@@ -1,7 +1,7 @@
 ﻿using UniRx;
 
 public class SignInPanelViewModel : ViewModel
-    {
+{
     public readonly ReactiveCommand OnBackButtonPressed;
     public readonly ReactiveCommand<SignInEvent> OnSignInButtonPressed;
 

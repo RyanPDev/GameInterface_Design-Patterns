@@ -22,27 +22,30 @@ class SignInPanelView : View
         errorText.color = Color.red;
         viewModel
             .IsVisible
-            .Subscribe((isVisible) => {
+            .Subscribe((isVisible) =>
+            {
                 gameObject.SetActive(isVisible);
             })
             .AddTo(_disposables);
+
         viewModel
            .signInAction
-           .Subscribe((_signInAction) => {
-              
+           .Subscribe((_signInAction) =>
+           {
                if (_signInAction)
                    ButtonText.SetText("SIGN IN");
                else
                    ButtonText.SetText("REGISTER");
            })
            .AddTo(_disposables);
+
         viewModel
          .eText
-         .Subscribe((_eText) => {
+         .Subscribe((_eText) =>
+         {
              errorText.text = _eText;
          })
          .AddTo(_disposables);
-      
 
         backButton.onClick.AddListener(() =>
         {
@@ -51,7 +54,7 @@ class SignInPanelView : View
 
         signInButton.onClick.AddListener(() =>
         {
-            _viewModel.OnSignInButtonPressed.Execute(new SignInEvent(inputFieldMail.text,inputFieldPassword.text));
+            _viewModel.OnSignInButtonPressed.Execute(new SignInEvent(inputFieldMail.text, inputFieldPassword.text));
         });
     }
 }

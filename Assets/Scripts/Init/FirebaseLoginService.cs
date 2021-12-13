@@ -26,7 +26,7 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
                 // where app is a Firebase.FirebaseApp property of your application class.º
                 var app = Firebase.FirebaseApp.DefaultInstance;
                 eventDispatcher.Dispatch(new UserInFirebase(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
-               // eventDispatcher.Dispatch(new UserInFirebase(false));
+                //eventDispatcher.Dispatch(new UserInFirebase(false));
             }
             else
             {
@@ -92,7 +92,6 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
     public void InitUserData()
     {
         SetData(new User(GetID()), true);
-        // LoadData();
     }
 
     public void SetData(User user, bool saveInRepo = false)
@@ -111,11 +110,11 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
-
         if (PlayerPrefs.HasKey("UserEmail"))
         {
             eventDispatcher.Dispatch(new SignInEvent(PlayerPrefs.GetString("UserEmail"), PlayerPrefs.GetString("UserPassword")));
         }
+
         CollectionReference usersRef = db.Collection("users");
         usersRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
@@ -124,6 +123,7 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
             {
                 if (document.Id == Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId)
                 {
+
                     // toda tu info
                     User user = document.ConvertTo<User>();
                     eventDispatcher.Dispatch(new UserDto(user.Name));

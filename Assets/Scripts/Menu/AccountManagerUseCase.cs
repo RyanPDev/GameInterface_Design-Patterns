@@ -3,7 +3,7 @@
     private readonly IEventDispatcherService eventDispatcherService;
 
 
-    public AccountManagerUseCase( IEventDispatcherService _eventDispatcherService)
+    public AccountManagerUseCase(IEventDispatcherService _eventDispatcherService)
     {
         eventDispatcherService = _eventDispatcherService;
     }
@@ -17,7 +17,5 @@
     {
         eventDispatcherService.Dispatch(new CreateAccountEvent(mail,pass));
 
-    }
-
-    
+    }    
 }

@@ -29,10 +29,11 @@ class SignInPresenter : Presenter
         }
         else
         {
-            if(e.exception != null)
+            if (e.exception != null)
                 viewModel.eText.Value = e.exception;
         }
     }
+
     public void OnSigned(CreateAccountSuccessfully e)
     {
         if (e.createdAccountOk)

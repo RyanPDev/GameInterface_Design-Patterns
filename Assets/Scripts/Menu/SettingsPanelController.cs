@@ -12,15 +12,16 @@ class SettingsPanelController : Controller
 
         settingsPanelViewModel
             .OnSignInButtonPressed
-            .Subscribe((task) =>
+            .Subscribe((_) =>
             {
                 signInViewModel.IsVisible.Value = true;
                 signInViewModel.signInAction.Value = true;
             })
             .AddTo(_disposables);
+
         settingsPanelViewModel
             .OnCreateAccountButtonPressed
-            .Subscribe((task) =>
+            .Subscribe((_) =>
             {
                 signInViewModel.IsVisible.Value = true;
                 signInViewModel.signInAction.Value = false;

@@ -11,15 +11,14 @@ class SignInController : Controller
 
         viewModel.OnSignInButtonPressed.Subscribe((taskText) =>
         {
-           if(viewModel.signInAction.Value)
+            if (viewModel.signInAction.Value)
             {
-                ManageAccountUseCase.SignIn(taskText.mail,taskText.password);
+                ManageAccountUseCase.SignIn(taskText.mail, taskText.password);
             }
             else
             {
                 ManageAccountUseCase.CreateAccount(taskText.mail, taskText.password);
             }
-            //viewModel.IsVisible.Value = false;
         }).AddTo(_disposables);
     }
 }
