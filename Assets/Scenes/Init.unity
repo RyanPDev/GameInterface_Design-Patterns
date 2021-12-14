@@ -220,10 +220,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasParent: {fileID: 971723126}
   loginPrefab: {fileID: 6421731171583621673, guid: 551c01761369d404d9618813d5adea38, type: 3}
-  _homePanelPrefab: {fileID: 6038599004563940132, guid: 9b5d3befdd4046140a84afbe39dd9c0b, type: 3}
-  _scorePanelPrefab: {fileID: 1127696892479574647, guid: 205f16c9ac8a3f245b74614d249a98b8, type: 3}
-  _settingsPanelPrefab: {fileID: 2407594000224533187, guid: b4f2ad35d9e0a3245b84a14bf9c7e598, type: 3}
-  _buttonsPrefab: {fileID: 7638967507440500868, guid: 90ec59aba61700d4f8474f7dc6f0c8ea, type: 3}
 --- !u!4 &456509606
 Transform:
   m_ObjectHideFlags: 0
@@ -420,3 +416,46 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1609774952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1609774954}
+  - component: {fileID: 1609774953}
+  m_Layer: 0
+  m_Name: PushNotif
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1609774953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609774952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c5aebaa32e52624fa6f640c23fbd8aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1609774954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609774952}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
