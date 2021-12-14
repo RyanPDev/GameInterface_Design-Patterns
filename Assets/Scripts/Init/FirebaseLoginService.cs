@@ -23,7 +23,7 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
                 // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.º
+                // where app is a Firebase.FirebaseApp property of your application class.
                 var app = Firebase.FirebaseApp.DefaultInstance;
                 eventDispatcher.Dispatch(new UserInFirebase(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
                 //eventDispatcher.Dispatch(new UserInFirebase(false));
@@ -123,7 +123,6 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
             {
                 if (document.Id == Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId)
                 {
-
                     // toda tu info
                     User user = document.ConvertTo<User>();
                     eventDispatcher.Dispatch(new UserDto(user.Name));
@@ -135,6 +134,7 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
             }
         });
     }
+
 
     public void GetName()
     {
