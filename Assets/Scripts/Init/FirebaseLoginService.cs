@@ -32,10 +32,10 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
             {
                 UnityEngine.Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
                 return;
-                //Firebase Unity SDK is not safe to use here.
             }
         });
     }
+
     public override void Dispose()
     {
         base.Dispose();
@@ -126,18 +126,11 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
                     // toda tu info
                     User user = document.ConvertTo<User>();
                     eventDispatcher.Dispatch(new UserDto(user.Name));
-                    eventDispatcher.Dispatch(new LoginEvent(user.Name));
-
                     // Dispatch para cambiar de escena <--- DATOS DE USUARIO CARGADOS
+                    eventDispatcher.Dispatch(new LoginEvent(user.Name));
                     break;
                 }
             }
         });
-    }
-
-
-    public void GetName()
-    {
-        LoadData();
     }
 }

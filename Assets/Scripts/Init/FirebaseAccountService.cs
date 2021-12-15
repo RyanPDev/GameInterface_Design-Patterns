@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System;
 
-
 public class FirebaseAccountService : Service, IFirebaseAccountService
 {
     readonly IEventDispatcherService eventDispatcher;
@@ -31,25 +30,38 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
         {
             if (task.IsCanceled || task.IsFaulted)
             {
-                //   Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
-
-                eventDispatcher.Dispatch(new SignInSuccessfully(false, task.Exception.ToString()));
-                //   Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                eventDispatcher.Dispatch(new SignInSuccessfully(false, "Invalid mail or password"));
                 return;
             }
             eventDispatcher.Dispatch(new SignInSuccessfully(true));
             Firebase.Auth.FirebaseUser newUser = task.Result;
-            Debug.LogFormat(newUser.Email, "  ", newUser.DisplayName);
+            Debug.LogFormat(newUser.Email);
             PlayerPrefs.SetString("UserEmail", user.mail);
             PlayerPrefs.SetString("UserPassword", user.password);
-
             PlayerPrefs.Save();
-
-            // Debug.LogFormat("User signed in successfully: {0} ({1})",
-            //newUser.DisplayName, newUser.UserId);
+            LoadUserName();
         });
-
     }
+
+    public void LoadUserName()
+    {
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        CollectionReference usersRef = db.Collection("users");
+        usersRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            QuerySnapshot snapshot = task.Result;
+            foreach (DocumentSnapshot document in snapshot.Documents)
+            {
+                if (document.Id == Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId)
+                {
+                    User user = document.ConvertTo<User>();
+                    userRepository.SetLocalUser(new UserEntity(user.Name));
+                    break;
+                }
+            }
+        });
+    }
+
     public void Create(CreateAccountEvent newUser)
     {
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
@@ -60,14 +72,9 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
                 eventDispatcher.Dispatch(new CreateAccountSuccessfully(false, task.Exception.ToString()));
                 return;
             }
-            
+
             SetData(new User(userRepository.GetLocalUser().Name));
             eventDispatcher.Dispatch(new CreateAccountSuccessfully(true));
-            // Firebase user has been created.
-            //Firebase.Auth.FirebaseUser newUser = task.Result;
-
-            //   Debug.LogFormat("Firebase user created successfully: {0} ({1})",
-            //     newUser.DisplayName, newUser.UserId);
         });
     }
 
@@ -78,7 +85,7 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
 
         docRef.SetAsync(user).ContinueWithOnMainThread(task =>
         {
+
         });
     }
 }
-
