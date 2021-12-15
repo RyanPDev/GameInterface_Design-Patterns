@@ -6,7 +6,13 @@ public class FirebasePushUpService : Service
     {
         Firebase.Messaging.FirebaseMessaging.TokenReceived += OnTokenReceived;
         Firebase.Messaging.FirebaseMessaging.MessageReceived += OnMessageReceived;
+        Notifications(false);
     }
+    public void Notifications(bool n)
+    { 
+        Firebase.Messaging.FirebaseMessaging.TokenRegistrationOnInitEnabled = n;
+    }
+
     public void OnTokenReceived(object sender, Firebase.Messaging.TokenReceivedEventArgs token)
     {
         UnityEngine.Debug.Log("Received Registration Token: " + token.Token);
