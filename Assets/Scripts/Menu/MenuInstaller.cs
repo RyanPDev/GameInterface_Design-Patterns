@@ -37,12 +37,12 @@ public class MenuInstaller : MonoBehaviour
         _scorePanelView.SetViewModel(scorePanelViewModel);
         _buttonsView.SetViewModel(buttonsViewModel);
 
-        var updateUserUseCase = new UpdateUsernameUseCase(userRepository, eventDispatcher);
+        var updateUserUseCase = new UpdateUserUseCase(userRepository, eventDispatcher);
         var accountManager = new AccountManagerUseCase(eventDispatcher);
 
         new ButtonsController(homePanelViewModel, scorePanelViewModel, settingsPanelViewModel, buttonsViewModel);
 
-        new SettingsPanelController(settingsPanelViewModel, signInPanelViewModel);
+        new SettingsPanelController(settingsPanelViewModel, signInPanelViewModel, updateUserUseCase);
         new SettingsPanelPresenter(settingsPanelViewModel, eventDispatcher);
         new SignInController(signInPanelViewModel, accountManager);
         new SignInPresenter(signInPanelViewModel, eventDispatcher);

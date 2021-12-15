@@ -13,8 +13,4 @@ public class UserRepository : IUserDataAccess
     {
         _userEntity = userEntity;
     }
-  //  private void SaveLocalUserOnPlayerPrefs()
-  //  {
-  //      var json = JsonUtility.ToJson(new )
-  //  }
 }

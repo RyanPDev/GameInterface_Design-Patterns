@@ -55,8 +55,8 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
                 if (document.Id == Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId)
                 {
                     User user = document.ConvertTo<User>();
-                    userRepository.SetLocalUser(new UserEntity(user.Name));
-                     eventDispatcher.Dispatch(new UserEntity(user.Name));
+                    userRepository.SetLocalUser(new UserEntity(user.Name, user.Audio, user.Notifications));
+                     eventDispatcher.Dispatch(new UserEntity(user.Name, user.Audio, user.Notifications));
                     break;
                 }
             }
@@ -74,7 +74,7 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
                 return;
             }
 
-            SetData(new User(userRepository.GetLocalUser().Name));
+            SetData(new User(userRepository.GetLocalUser().Name, userRepository.GetLocalUser().Audio, userRepository.GetLocalUser().Notifications));
             eventDispatcher.Dispatch(new SignInSuccessfully(true));
         });
     }

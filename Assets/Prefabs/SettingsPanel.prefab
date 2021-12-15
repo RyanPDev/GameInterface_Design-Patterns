@@ -1471,6 +1471,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createButton: {fileID: 6159266720158521089}
   signInButton: {fileID: 4912224205987906238}
+  notificationsToggle: {fileID: 885307910006561362}
+  audioToggle: {fileID: 2948275182304924232}
 --- !u!1 &8364562668052706806
 GameObject:
   m_ObjectHideFlags: 0

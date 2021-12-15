@@ -2,7 +2,7 @@
 
 class ProfileController : Controller
 {
-    public ProfileController(ProfileViewModel viewModel, UpdateUsernameUseCase updateUserUseCase)
+    public ProfileController(ProfileViewModel viewModel, UpdateUserUseCase updateUserUseCase)
     {
         viewModel.OnBackButtonPressed.Subscribe((_) => 
         {

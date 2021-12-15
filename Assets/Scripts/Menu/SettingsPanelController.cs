@@ -5,8 +5,11 @@ class SettingsPanelController : Controller
     private readonly SettingsPanelViewModel settingsPanelViewModel;
     private readonly SignInPanelViewModel signInViewModel;
 
-    public SettingsPanelController(SettingsPanelViewModel _viewModel, SignInPanelViewModel _signInViewModel)
+    private readonly IUpdateUserUseCase updateUserUseCase;
+
+    public SettingsPanelController(SettingsPanelViewModel _viewModel, SignInPanelViewModel _signInViewModel, IUpdateUserUseCase _updateUserUseCase)
     {
+        updateUserUseCase = _updateUserUseCase;
         settingsPanelViewModel = _viewModel;
         signInViewModel = _signInViewModel;
 
@@ -27,5 +30,19 @@ class SettingsPanelController : Controller
                 signInViewModel.signInAction.Value = false;
             })
             .AddTo(_disposables);
+
+        settingsPanelViewModel
+            .IsAudioOn
+            .Subscribe((isOn) =>
+            {
+                updateUserUseCase.UpdateAudio(isOn);
+            });
+
+        settingsPanelViewModel
+            .IsNotificationsOn
+            .Subscribe((isOn) =>
+            {
+                updateUserUseCase.UpdateNotifications(isOn);
+            });
     }
 }

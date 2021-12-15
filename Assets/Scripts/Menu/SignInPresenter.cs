@@ -32,6 +32,4 @@ class SignInPresenter : Presenter
                 viewModel.eText.Value = e.exception;
         }
     }
-
-    
 }

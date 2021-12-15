@@ -23,6 +23,7 @@ public class HomePanelView : View
             gameObject.GetComponent<RectTransform>().DOLocalMoveX(5, 0f);
             gameObject.GetComponent<RectTransform>().DOMoveX(0, .2f);
         });
+
         viewModel.Username.Subscribe((username) =>
         {
             userNameText.text = username;

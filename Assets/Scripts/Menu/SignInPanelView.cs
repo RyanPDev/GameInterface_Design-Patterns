@@ -3,7 +3,6 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 class SignInPanelView : View
 {
     [SerializeField] private Button backButton;
