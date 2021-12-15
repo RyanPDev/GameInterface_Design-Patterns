@@ -3,8 +3,6 @@ public class LoginUseCase : UseCase, ILoginUseCase
     private readonly IFirebaseLoginService firebaseLoginService;
     private readonly IEventDispatcherService eventDispatcherService;
 
-    private readonly IUserDataAccess userDataAccess;
-
     public LoginUseCase(IFirebaseLoginService _firebaseLoginService, IEventDispatcherService _eventDispatcherService)
     {
         firebaseLoginService = _firebaseLoginService;
@@ -28,7 +26,6 @@ public class LoginUseCase : UseCase, ILoginUseCase
         if (userExists.existsInFirebase)
         {
             firebaseLoginService.LoadData();
-            //eventDispatcherService.Dispatch(new LoginEvent(firebaseLoginService.GetID()));
         }
     }
 
