@@ -24,6 +24,7 @@ class SignInPanelView : View
             .Subscribe((isVisible) =>
             {
                 gameObject.SetActive(isVisible);
+                errorText.text = "";
             })
             .AddTo(_disposables);
 

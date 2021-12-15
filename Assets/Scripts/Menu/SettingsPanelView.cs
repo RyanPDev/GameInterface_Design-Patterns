@@ -3,6 +3,7 @@ using UniRx;
 using DG.Tweening;
 using UnityEngine.UI;
 
+
 public class SettingsPanelView : View
 {
     private SettingsPanelViewModel _viewModel;
@@ -12,9 +13,14 @@ public class SettingsPanelView : View
     [SerializeField] private Toggle notificationsToggle;
     [SerializeField] private Toggle audioToggle;
 
-    public void SetViewModel(SettingsPanelViewModel viewModel)
+    public void SetViewModel(SettingsPanelViewModel viewModel, IUserDataAccess user)
     {
+
         _viewModel = viewModel;
+        notificationsToggle.isOn = user.GetLocalUser().Notifications;
+        audioToggle.isOn = user.GetLocalUser().Audio;
+        _viewModel.IsLoginVisible.Value = !PlayerPrefs.HasKey("UserEmail");
+        _viewModel.IsCreateVisible.Value = !PlayerPrefs.HasKey("UserEmail");
 
         _viewModel.IsVisible.Subscribe((isVisible) =>
         {

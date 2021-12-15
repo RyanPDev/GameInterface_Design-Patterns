@@ -9,8 +9,6 @@ public class SettingsPanelViewModel : ViewModel
     public readonly ReactiveCommand OnSignInButtonPressed;
     public readonly ReactiveCommand OnCreateAccountButtonPressed;
 
-
-
     public readonly ReactiveProperty<bool> IsAudioOn;
     public readonly ReactiveProperty<bool> IsNotificationsOn;
 

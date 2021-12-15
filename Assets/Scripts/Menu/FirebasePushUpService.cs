@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Firebase.Messaging;
-using System;
 
-public class FirebasePushUpService : MonoBehaviour
+
+public class FirebasePushUpService : Service
 {
-    public void Start()
+    public FirebasePushUpService()
     {
         Firebase.Messaging.FirebaseMessaging.TokenReceived += OnTokenReceived;
         Firebase.Messaging.FirebaseMessaging.MessageReceived += OnMessageReceived;

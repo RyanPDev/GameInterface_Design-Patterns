@@ -126,6 +126,7 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
                 {
                     // toda tu info
                     User user = document.ConvertTo<User>();
+                    
                     eventDispatcher.Dispatch(new UserDto(user.Name, user.Audio, user.Notifications));
                     // Dispatch para cambiar de escena <--- DATOS DE USUARIO CARGADOS
                     eventDispatcher.Dispatch(new LoginEvent(user.Name));

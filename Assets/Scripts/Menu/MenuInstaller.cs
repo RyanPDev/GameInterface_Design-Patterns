@@ -30,7 +30,7 @@ public class MenuInstaller : MonoBehaviour
         var scorePanelViewModel = new ScorePanelViewModel();
         var buttonsViewModel = new ButtonsViewModel();
 
-        _settingsPanelView.SetViewModel(settingsPanelViewModel);
+        _settingsPanelView.SetViewModel(settingsPanelViewModel, userRepository);
         _signInPanelView.SetViewModel(signInPanelViewModel);
         _homePanelView.SetViewModel(homePanelViewModel);
         _profilePanelView.SetViewModel(profilePanelViewModel);
@@ -49,5 +49,6 @@ public class MenuInstaller : MonoBehaviour
         new HomePanelController(homePanelViewModel, profilePanelViewModel);
         new ProfileController(profilePanelViewModel, updateUserUseCase);
         new HomePanelPresenter(homePanelViewModel, eventDispatcher, userRepository.GetLocalUser());
+        new FirebasePushUpService();
     }
 }
