@@ -19,7 +19,15 @@ public class SettingsPanelView : View
             gameObject.GetComponent<RectTransform>().DOLocalMoveX(5, 0f);
             gameObject.GetComponent<RectTransform>().DOMoveX(0, .2f);
         });
-
+        _viewModel.IsLoginVisible.Subscribe((isVisible) =>
+        {
+            signInButton.gameObject.SetActive(isVisible);
+          
+        }); 
+        _viewModel.IsCreateVisible.Subscribe((isVisible) =>
+        {
+            createButton.gameObject.SetActive(isVisible);
+        });
         createButton.onClick.AddListener(() =>
         {
             _viewModel.OnCreateAccountButtonPressed.Execute();

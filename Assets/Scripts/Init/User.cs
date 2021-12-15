@@ -6,6 +6,7 @@ public class User
     [FirestoreProperty]
     public string Name { get; set; }
 
+
     //[FirestoreProperty]
     //public int Level { get; set; }
 

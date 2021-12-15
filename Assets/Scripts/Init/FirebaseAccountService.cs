@@ -39,11 +39,11 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
             PlayerPrefs.SetString("UserEmail", user.mail);
             PlayerPrefs.SetString("UserPassword", user.password);
             PlayerPrefs.Save();
-            LoadUserName();
+            LoadUserData();
         });
     }
 
-    public void LoadUserName()
+    public void LoadUserData()
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         CollectionReference usersRef = db.Collection("users");
@@ -56,6 +56,7 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
                 {
                     User user = document.ConvertTo<User>();
                     userRepository.SetLocalUser(new UserEntity(user.Name));
+                     eventDispatcher.Dispatch(new UserEntity(user.Name));
                     break;
                 }
             }
@@ -69,12 +70,12 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
         {
             if (task.IsCanceled || task.IsFaulted)
             {
-                eventDispatcher.Dispatch(new CreateAccountSuccessfully(false, task.Exception.ToString()));
+                eventDispatcher.Dispatch(new SignInSuccessfully(false, "Invalid mail or already in use or password to short"));
                 return;
             }
 
             SetData(new User(userRepository.GetLocalUser().Name));
-            eventDispatcher.Dispatch(new CreateAccountSuccessfully(true));
+            eventDispatcher.Dispatch(new SignInSuccessfully(true));
         });
     }
 

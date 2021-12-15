@@ -43,6 +43,7 @@ public class MenuInstaller : MonoBehaviour
         new ButtonsController(homePanelViewModel, scorePanelViewModel, settingsPanelViewModel, buttonsViewModel);
 
         new SettingsPanelController(settingsPanelViewModel, signInPanelViewModel);
+        new SettingsPanelPresenter(settingsPanelViewModel, eventDispatcher);
         new SignInController(signInPanelViewModel, accountManager);
         new SignInPresenter(signInPanelViewModel, eventDispatcher);
         new HomePanelController(homePanelViewModel, profilePanelViewModel);

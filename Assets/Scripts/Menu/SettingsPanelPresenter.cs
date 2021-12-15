@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 using UniRx;
-class SignInPresenter : Presenter
+
+class SettingsPanelPresenter : Presenter
 {
     private readonly IEventDispatcherService eventDispatcherService;
-    private readonly SignInPanelViewModel viewModel;
+    private readonly SettingsPanelViewModel viewModel;
 
-    public SignInPresenter(SignInPanelViewModel _viewModel, IEventDispatcherService _eventDispatcherService)
+    public SettingsPanelPresenter(SettingsPanelViewModel _viewModel, IEventDispatcherService _eventDispatcherService)
     {
         viewModel = _viewModel;
 
@@ -23,15 +24,8 @@ class SignInPresenter : Presenter
     {
         if (e.signInOk)
         {
-            viewModel.IsVisible.Value = false;
-
-        }
-        else
-        {
-            if (e.exception != null)
-                viewModel.eText.Value = e.exception;
+            viewModel.IsLoginVisible.Value = false;
+            viewModel.IsCreateVisible.Value = false;
         }
     }
-
-    
 }
