@@ -28,7 +28,7 @@ public class LoginView : View
     public void SetViewModel(LoginViewModel _viewModel)
     {
         viewModel = _viewModel;
-        viewModel.isVisible.Value = true;
+        //viewModel.isVisible.Value = true;
     
 
         viewModel

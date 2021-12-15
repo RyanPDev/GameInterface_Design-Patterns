@@ -25,9 +25,9 @@ public class LoginPresenter : Presenter
 
     private void ButtonVisibility(UserInFirebase userExists)
     {
-        if (userExists.existsInFirebase)
-        {
-            viewModel.isVisible.Value = false;
-        }
+        //if (userExists.existsInFirebase)
+        //{
+            viewModel.isVisible.Value = !userExists.existsInFirebase;
+        //}
     }
 }
