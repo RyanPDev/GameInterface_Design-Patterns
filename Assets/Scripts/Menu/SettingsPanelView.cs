@@ -55,12 +55,12 @@ public class SettingsPanelView : View
         //Toggles
         audioToggle.onValueChanged.AddListener((value) =>
         {
-            _viewModel.IsAudioOn.Value = value;
+            _viewModel.OnAudioClicked.Execute(value);
         });
 
         notificationsToggle.onValueChanged.AddListener((value) =>
         {
-            _viewModel.IsNotificationsOn.Value = value;
+            _viewModel.OnNotificationClicked.Execute(value);
         });
     }
 }

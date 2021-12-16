@@ -19,7 +19,7 @@ public class LoginPresenter : Presenter
     }
     private void OnLogID(LoginEvent data)
     {
-        viewModel.IsLogged.Value = true;
+       
         viewModel.isVisible.Value = false;
     }
 
@@ -29,5 +29,10 @@ public class LoginPresenter : Presenter
         {
             viewModel.isVisible.Value = false;
         }
+        else
+        {
+            viewModel.IsAuthenticated.Value = true;
+        }
+
     }
 }

@@ -9,8 +9,8 @@ public class SettingsPanelViewModel : ViewModel
     public readonly ReactiveCommand OnSignInButtonPressed;
     public readonly ReactiveCommand OnCreateAccountButtonPressed;
 
-    public readonly ReactiveProperty<bool> IsAudioOn;
-    public readonly ReactiveProperty<bool> IsNotificationsOn;
+    public readonly ReactiveCommand<bool> OnAudioClicked;
+    public readonly ReactiveCommand<bool> OnNotificationClicked;
 
     public SettingsPanelViewModel()
     {
@@ -21,7 +21,7 @@ public class SettingsPanelViewModel : ViewModel
         OnSignInButtonPressed = new ReactiveCommand().AddTo(_disposables);
         OnCreateAccountButtonPressed = new ReactiveCommand().AddTo(_disposables);
 
-        IsAudioOn = new ReactiveProperty<bool>().AddTo(_disposables);
-        IsNotificationsOn = new ReactiveProperty<bool>().AddTo(_disposables);
+        OnAudioClicked = new ReactiveCommand<bool>().AddTo(_disposables);
+        OnNotificationClicked = new ReactiveCommand<bool>().AddTo(_disposables);
     }
 }

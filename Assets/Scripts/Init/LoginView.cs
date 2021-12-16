@@ -29,13 +29,14 @@ public class LoginView : View
     {
         viewModel = _viewModel;
         viewModel.isVisible.Value = true;
+        viewModel.IsAuthenticated.Value = false;
         loginButton.gameObject.SetActive(false);
 
         viewModel
             .isVisible
             .Subscribe((IsVisible) =>
             {
-                loginButton.gameObject.SetActive(IsVisible);
+                //loginButton.gameObject.SetActive(IsVisible);
                 if (!IsVisible)
                 {
                     if (repeatTime < dots.Count * bounceTime)
@@ -47,6 +48,17 @@ public class LoginView : View
                 }
 
             }).AddTo(_disposables);
+        viewModel
+          .IsAuthenticated
+          .Subscribe((isAutheticated) =>
+          {
+              if (isAutheticated)
+              {
+              loginButton.gameObject.SetActive(isAutheticated);
+                 
+              }
+
+          }).AddTo(_disposables);
 
         loginButton.onClick.AddListener(() =>
         {
