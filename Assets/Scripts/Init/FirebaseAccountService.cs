@@ -36,9 +36,7 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
             eventDispatcher.Dispatch(new SignInSuccessfully(true));
             Firebase.Auth.FirebaseUser newUser = task.Result;
             Debug.LogFormat(newUser.Email);
-            PlayerPrefs.SetString("UserEmail", user.mail);
-            PlayerPrefs.SetString("UserPassword", user.password);
-            PlayerPrefs.Save();
+            SavePlayerPrefs(user);
             LoadUserData();
         });
     }
@@ -62,6 +60,12 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
             }
         });
     }
+    void SavePlayerPrefs(SignInEvent user)
+    {
+        PlayerPrefs.SetString("UserEmail", user.mail);
+        PlayerPrefs.SetString("UserPassword", user.password);
+        PlayerPrefs.Save();
+    }
 
     public void Create(CreateAccountEvent newUser)
     {
@@ -73,7 +77,7 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
                 eventDispatcher.Dispatch(new SignInSuccessfully(false, "Invalid mail or already in use or password to short"));
                 return;
             }
-
+            SavePlayerPrefs(new SignInEvent(newUser.mail, newUser.password));
             SetData(new User(userRepository.GetLocalUser().Name, userRepository.GetLocalUser().Audio, userRepository.GetLocalUser().Notifications));
             eventDispatcher.Dispatch(new SignInSuccessfully(true));
         });

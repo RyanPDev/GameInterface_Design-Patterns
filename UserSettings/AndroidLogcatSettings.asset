@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "VQTBB19121150627",
     "m_SelectedPackage": {
-        "deviceId": "VQTBB19121150627",
-        "name": "com.company",
-        "processId": 26443,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -12,6 +12,12 @@
             "deviceId": "VQTBB19121150627",
             "name": "com.company",
             "processId": 26443,
+            "exited": true
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.huawei.android.launcher",
+            "processId": 21831,
             "exited": false
         }
     ],

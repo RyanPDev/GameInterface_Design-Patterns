@@ -19,8 +19,10 @@ public class SettingsPanelView : View
         _viewModel = viewModel;
         notificationsToggle.isOn = user.GetLocalUser().Notifications;
         audioToggle.isOn = user.GetLocalUser().Audio;
+
         _viewModel.IsLoginVisible.Value = !PlayerPrefs.HasKey("UserEmail");
         _viewModel.IsCreateVisible.Value = !PlayerPrefs.HasKey("UserEmail");
+
 
         _viewModel.IsVisible.Subscribe((isVisible) =>
         {
