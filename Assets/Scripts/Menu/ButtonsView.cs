@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class ButtonsView : MonoBehaviour
+public class ButtonsView : View
 {
     private ButtonsViewModel viewModel;
 
@@ -14,21 +14,21 @@ public class ButtonsView : MonoBehaviour
     {
         viewModel = _viewModel;
 
-        SetColor(new Color(0, 0.25f, 1), new Color(0.64706f, 0.93725f, 0.98039f), new Color(0.64706f, 0.93725f, 0.98039f), 0f);
+        SetColor(new Color(0.8431373f, 0.6470588f, 0.05882353f), new Color(0.8196079f, 0.7921569f, 0.7803922f), new Color(0.8196079f, 0.7921569f, 0.7803922f), 0f);
 
         homeButton.onClick.AddListener(() =>
         {
-            SetColor(new Color(0, 0.25f, 1), new Color(0.64706f, 0.93725f, 0.98039f), new Color(0.64706f, 0.93725f, 0.98039f), .2f);
+            SetColor(new Color(0.8431373f, 0.6470588f, 0.05882353f), new Color(0.8196079f, 0.7921569f, 0.7803922f), new Color(0.8196079f, 0.7921569f, 0.7803922f), .2f);
             viewModel.OnHomeButtonPressed.Execute();
         });
         scoreButton.onClick.AddListener(() =>
         {
-            SetColor(new Color(0.64706f, 0.93725f, 0.98039f), new Color(0, 0.25f, 1), new Color(0.64706f, 0.93725f, 0.98039f), .2f);
+            SetColor(new Color(0.8196079f, 0.7921569f, 0.7803922f), new Color(0.8431373f, 0.6470588f, 0.05882353f), new Color(0.8196079f, 0.7921569f, 0.7803922f), .2f);
             viewModel.OnScoreButtonPressed.Execute();
         });
         settingsButton.onClick.AddListener(() =>
         {
-            SetColor(new Color(0.64706f, 0.93725f, 0.98039f), new Color(0.64706f, 0.93725f, 0.98039f), new Color(0, 0.25f, 1), .2f);
+            SetColor(new Color(0.8196079f, 0.7921569f, 0.7803922f), new Color(0.8196079f, 0.7921569f, 0.7803922f), new Color(0.8431373f, 0.6470588f, 0.05882353f), .2f);
             viewModel.OnSettingsButtonPressed.Execute();
         });
     }
