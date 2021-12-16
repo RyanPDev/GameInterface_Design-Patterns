@@ -1,16 +1,17 @@
-
-
 public class FirebasePushUpService : Service
 {
-    public FirebasePushUpService()
+    readonly IEventDispatcherService eventDispatcher;
+    public FirebasePushUpService(IEventDispatcherService _eventDispatcher)
     {
+        eventDispatcher = _eventDispatcher;
+
         Firebase.Messaging.FirebaseMessaging.TokenReceived += OnTokenReceived;
         Firebase.Messaging.FirebaseMessaging.MessageReceived += OnMessageReceived;
-        Notifications(false);
+        eventDispatcher.Subscribe<NotificationsHandler>(Notifications);
     }
-    public void Notifications(bool n)
-    { 
-        Firebase.Messaging.FirebaseMessaging.TokenRegistrationOnInitEnabled = n;
+    public void Notifications(NotificationsHandler n)
+    {
+        Firebase.Messaging.FirebaseMessaging.TokenRegistrationOnInitEnabled = n.isOn;
     }
 
     public void OnTokenReceived(object sender, Firebase.Messaging.TokenReceivedEventArgs token)

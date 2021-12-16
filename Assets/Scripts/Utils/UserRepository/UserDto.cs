@@ -1,12 +1,12 @@
-public class UserDto : Dto
+public class UserInfo
 {
     public string Name;
     public bool Audio;
     public bool Notifications;
 
-    public UserDto() { }
+    public UserInfo() { }
 
-    public UserDto(string name, bool audio, bool notifications)
+    public UserInfo(string name, bool audio, bool notifications)
     {
         Name = name;
         Audio = audio;

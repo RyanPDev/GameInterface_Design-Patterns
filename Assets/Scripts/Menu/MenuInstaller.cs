@@ -42,6 +42,7 @@ public class MenuInstaller : MonoBehaviour
 
         new ButtonsController(homePanelViewModel, scorePanelViewModel, settingsPanelViewModel, buttonsViewModel);
 
+        new FirebasePushUpService(eventDispatcher);
         new SettingsPanelController(settingsPanelViewModel, signInPanelViewModel, updateUserUseCase);
         new SettingsPanelPresenter(settingsPanelViewModel, eventDispatcher);
         new SignInController(signInPanelViewModel, accountManager);
@@ -49,6 +50,5 @@ public class MenuInstaller : MonoBehaviour
         new HomePanelController(homePanelViewModel, profilePanelViewModel);
         new ProfileController(profilePanelViewModel, updateUserUseCase);
         new HomePanelPresenter(homePanelViewModel, eventDispatcher, userRepository.GetLocalUser());
-        new FirebasePushUpService();
     }
 }

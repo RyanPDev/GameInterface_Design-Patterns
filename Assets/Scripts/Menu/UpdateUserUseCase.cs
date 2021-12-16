@@ -1,15 +1,16 @@
 ﻿class UpdateUserUseCase : UseCase, IUpdateUserUseCase
 {
-    IUserDataAccess userRepository;
-    IEventDispatcherService eventDispatcher;
+    readonly IUserDataAccess userRepository;
+    readonly IEventDispatcherService eventDispatcher;
 
     public UpdateUserUseCase(IUserDataAccess _userRepository, IEventDispatcherService _eventDispatcherService)
     {
         userRepository = _userRepository;
         eventDispatcher = _eventDispatcherService;
-        eventDispatcher.Subscribe<UserDto>(UpdateOnLogin);
+        eventDispatcher.Subscribe<UserInfo>(UpdateOnLogin);
     }
-    public void UpdateOnLogin(UserDto userData)
+
+    public void UpdateOnLogin(UserInfo userData)
     {
         var userEntity = new UserEntity(userData.Name, userData.Audio, userData.Notifications);
         userRepository.SetLocalUser(userEntity);
@@ -35,11 +36,13 @@
         var userEntity = new UserEntity(userRepository.GetLocalUser().Name, userRepository.GetLocalUser().Audio, notifications);
         userRepository.SetLocalUser(userEntity);
         eventDispatcher.Dispatch(userEntity);
+
+        eventDispatcher.Dispatch(new NotificationsHandler(userEntity.Notifications));
     }
 
     public override void Dispose()
     {
         base.Dispose();
-        eventDispatcher.Unsubscribe<UserDto>(UpdateOnLogin);
+        eventDispatcher.Unsubscribe<UserInfo>(UpdateOnLogin);
     }
 }

@@ -1,5 +1,4 @@
-﻿
-public class SignInEvent
+﻿public class SignInEvent
 {
     public readonly string mail;
     public readonly string password;
@@ -9,4 +8,3 @@ public class SignInEvent
         password = _pass;
     }
 }
-

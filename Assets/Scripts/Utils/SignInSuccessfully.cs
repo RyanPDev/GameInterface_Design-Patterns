@@ -1,5 +1,4 @@
-﻿
-public class SignInSuccessfully
+﻿public class SignInSuccessfully
 {
     public readonly bool signInOk;
     public readonly string exception;
@@ -10,4 +9,3 @@ public class SignInSuccessfully
     }
 
 }
-

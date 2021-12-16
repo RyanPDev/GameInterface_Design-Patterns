@@ -1,8 +1,6 @@
 using Firebase.Firestore;
 using Firebase.Extensions;
-using System.Threading.Tasks;
 using UnityEngine;
-
 
 public class FirebaseLoginService : Service, IFirebaseLoginService
 {
@@ -85,14 +83,14 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
 
     public void UpdateData(UserEntity userEntity)
     {
-        SetData(new User(userEntity.Name, userEntity.Audio, userEntity.Notifications));
+        SetData(new User(userEntity.Name, userEntity.Audio, userEntity.Notifications));        
     }
 
     //Database
     public void InitUserData()
     {
         //Initial user info, audio and notificiations set both initially to true        
-        SetData(new User(GetID(), true, true), true); //TODO---> Ask user at start for notifications
+        SetData(new User(GetID(), true, false), true); //TODO---> Ask user at start for notifications
     }
 
     public void SetData(User user, bool saveInRepo = false)
@@ -127,7 +125,7 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
                     // toda tu info
                     User user = document.ConvertTo<User>();
                     
-                    eventDispatcher.Dispatch(new UserDto(user.Name, user.Audio, user.Notifications));
+                    eventDispatcher.Dispatch(new UserInfo(user.Name, user.Audio, user.Notifications));
                     // Dispatch para cambiar de escena <--- DATOS DE USUARIO CARGADOS
                     eventDispatcher.Dispatch(new LoginEvent(user.Name));
                     break;

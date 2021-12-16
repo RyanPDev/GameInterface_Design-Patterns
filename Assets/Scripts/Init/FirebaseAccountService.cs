@@ -54,7 +54,8 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
                 {
                     User user = document.ConvertTo<User>();
                     userRepository.SetLocalUser(new UserEntity(user.Name, user.Audio, user.Notifications));
-                     eventDispatcher.Dispatch(new UserEntity(user.Name, user.Audio, user.Notifications));
+                    eventDispatcher.Dispatch(new UserEntity(user.Name, user.Audio, user.Notifications));
+                    eventDispatcher.Dispatch(new NotificationsHandler(user.Notifications));
                     break;
                 }
             }
@@ -90,7 +91,6 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
 
         docRef.SetAsync(user).ContinueWithOnMainThread(task =>
         {
-
         });
     }
 }
