@@ -24,7 +24,6 @@ class SignInPresenter : Presenter
         if (e.signInOk)
         {
             viewModel.IsVisible.Value = false;
-
         }
         else
         {

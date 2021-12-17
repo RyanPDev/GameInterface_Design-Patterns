@@ -10,12 +10,11 @@
 
     public void SignIn(string mail, string pass)
     {
-        eventDispatcherService.Dispatch(new SignInEvent(mail,pass));
-    
+        eventDispatcherService.Dispatch(new SignInEvent(mail,pass));    
     }
+
     public void CreateAccount(string mail, string pass)
     {
         eventDispatcherService.Dispatch(new CreateAccountEvent(mail,pass));
-
     }    
 }

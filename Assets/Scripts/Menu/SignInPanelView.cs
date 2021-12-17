@@ -43,7 +43,11 @@ class SignInPanelView : View
          .eText
          .Subscribe((_eText) =>
          {
-             errorText.text = _eText;
+             if (_eText != "")
+             {
+                 errorText.text = _eText;
+                 viewModel.eText.Value = "";
+             }
          })
          .AddTo(_disposables);
 

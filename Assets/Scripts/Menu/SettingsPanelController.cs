@@ -36,13 +36,15 @@ class SettingsPanelController : Controller
             .Subscribe((isOn) =>
             {
                 updateUserUseCase.UpdateAudio(isOn);
-            });
+            })
+            .AddTo(_disposables);
 
         settingsPanelViewModel
             .OnNotificationClicked
             .Subscribe((isOn) =>
             {
                 updateUserUseCase.UpdateNotifications(isOn);
-            });
+            })
+            .AddTo(_disposables);
     }
 }

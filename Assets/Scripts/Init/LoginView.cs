@@ -54,8 +54,7 @@ public class LoginView : View
           {
               if (isAutheticated)
               {
-              loginButton.gameObject.SetActive(isAutheticated);
-                 
+                  loginButton.gameObject.SetActive(isAutheticated);
               }
 
           }).AddTo(_disposables);
@@ -68,7 +67,7 @@ public class LoginView : View
     }
     void Animate() // Codigo de https://gist.github.com/reidscarboro/588911e7bc0e0ad82bfa8a1ad2397bd5
     {
-       
+
         for (int i = 0; i < dots.Count; i++)
         {
             int dotIndex = i;
