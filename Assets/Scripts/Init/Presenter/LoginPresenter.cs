@@ -18,20 +18,15 @@ public class LoginPresenter : Presenter
         eventDispatcherService.Unsubscribe<UserInFirebase>(ButtonVisibility);
     }
     private void OnLogID(LoginEvent data)
-    {       
+    {
         viewModel.isVisible.Value = false;
     }
 
     private void ButtonVisibility(UserInFirebase userExists)
     {
         if (userExists.existsInFirebase)
-        {
             viewModel.isVisible.Value = false;
-        }
         else
-        {
             viewModel.IsAuthenticated.Value = true;
-        }
-
     }
 }

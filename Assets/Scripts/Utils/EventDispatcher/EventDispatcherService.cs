@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public class EventDispatcherService : IEventDispatcherService
+public class EventDispatcherService : Service, IEventDispatcherService
 {
     private readonly Dictionary<Type, dynamic> _events;
 

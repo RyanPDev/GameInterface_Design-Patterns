@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using UniRx;
-class SignInPresenter : Presenter
+﻿class SignInPresenter : Presenter
 {
     private readonly IEventDispatcherService eventDispatcherService;
     private readonly SignInPanelViewModel viewModel;
@@ -22,13 +20,9 @@ class SignInPresenter : Presenter
     public void OnSigned(SignInSuccessfully e)
     {
         if (e.signInOk)
-        {
             viewModel.IsVisible.Value = false;
-        }
         else
-        {
             if (e.exception != null)
-                viewModel.eText.Value = e.exception;
-        }
+            viewModel.eText.Value = e.exception;
     }
 }

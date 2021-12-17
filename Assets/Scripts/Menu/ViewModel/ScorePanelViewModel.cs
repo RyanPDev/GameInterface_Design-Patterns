@@ -1,11 +1,11 @@
 using UniRx;
 
-public class ScorePanelViewModel
+public class ScorePanelViewModel : ViewModel
 {
     public readonly ReactiveProperty<bool> IsVisible;
 
     public ScorePanelViewModel()
     {
-        IsVisible = new ReactiveProperty<bool>();
+        IsVisible = new ReactiveProperty<bool>().AddTo(_disposables);
     }
 }

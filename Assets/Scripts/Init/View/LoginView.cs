@@ -36,7 +36,6 @@ public class LoginView : View
             .isVisible
             .Subscribe((IsVisible) =>
             {
-                //loginButton.gameObject.SetActive(IsVisible);
                 if (!IsVisible)
                 {
                     if (repeatTime < dots.Count * bounceTime)
@@ -48,6 +47,7 @@ public class LoginView : View
                 }
 
             }).AddTo(_disposables);
+
         viewModel
           .IsAuthenticated
           .Subscribe((isAutheticated) =>
@@ -62,12 +62,11 @@ public class LoginView : View
         loginButton.onClick.AddListener(() =>
         {
             _viewModel.LoginButtonPressed.Execute();
-        }
-    );
+        });
     }
+
     void Animate() // Codigo de https://gist.github.com/reidscarboro/588911e7bc0e0ad82bfa8a1ad2397bd5
     {
-
         for (int i = 0; i < dots.Count; i++)
         {
             int dotIndex = i;

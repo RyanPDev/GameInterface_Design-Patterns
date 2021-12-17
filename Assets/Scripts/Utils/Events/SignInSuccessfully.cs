@@ -7,5 +7,4 @@
         signInOk = b;
         exception = _exception;
     }
-
 }

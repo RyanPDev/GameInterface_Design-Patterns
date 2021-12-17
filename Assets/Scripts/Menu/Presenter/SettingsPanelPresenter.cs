@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using UniRx;
-
-class SettingsPanelPresenter : Presenter
+﻿class SettingsPanelPresenter : Presenter
 {
     private readonly IEventDispatcherService eventDispatcherService;
     private readonly SettingsPanelViewModel viewModel;

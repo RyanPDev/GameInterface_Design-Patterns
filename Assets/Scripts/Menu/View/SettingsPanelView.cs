@@ -3,7 +3,6 @@ using UniRx;
 using DG.Tweening;
 using UnityEngine.UI;
 
-
 public class SettingsPanelView : View
 {
     private SettingsPanelViewModel _viewModel;
@@ -15,7 +14,6 @@ public class SettingsPanelView : View
 
     public void SetViewModel(SettingsPanelViewModel viewModel, IUserDataAccess user)
     {
-
         _viewModel = viewModel;
         notificationsToggle.isOn = user.GetLocalUser().Notifications;
         audioToggle.isOn = user.GetLocalUser().Audio;
@@ -29,19 +27,22 @@ public class SettingsPanelView : View
             gameObject.SetActive(isVisible);
             gameObject.GetComponent<RectTransform>().DOLocalMoveX(5, 0f);
             gameObject.GetComponent<RectTransform>().DOMoveX(0, .2f);
-        });
+        })
+        .AddTo(_disposables);
 
         //Panels
         _viewModel.IsLoginVisible.Subscribe((isVisible) =>
         {
             signInButton.gameObject.SetActive(isVisible);
 
-        });
+        })
+        .AddTo(_disposables);
 
         _viewModel.IsCreateVisible.Subscribe((isVisible) =>
         {
             createButton.gameObject.SetActive(isVisible);
-        });
+        })
+        .AddTo(_disposables);
 
         //Buttons
         createButton.onClick.AddListener(() =>

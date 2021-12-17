@@ -8,8 +8,8 @@ public class HomePanelViewModel : ViewModel
 
     public HomePanelViewModel()
     {
-        IsVisible = new ReactiveProperty<bool>();
-        Username = new ReactiveProperty<string>(string.Empty);
+        IsVisible = new ReactiveProperty<bool>().AddTo(_disposables);
+        Username = new ReactiveProperty<string>(string.Empty).AddTo(_disposables);
         ProfileButtonPressed = new ReactiveCommand().AddTo(_disposables);
     }
 }

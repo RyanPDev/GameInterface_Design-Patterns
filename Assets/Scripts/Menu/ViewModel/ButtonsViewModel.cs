@@ -1,6 +1,6 @@
 using UniRx;
 
-public class ButtonsViewModel
+public class ButtonsViewModel : ViewModel
 {
     public readonly ReactiveCommand OnHomeButtonPressed;
     public readonly ReactiveCommand OnScoreButtonPressed;
@@ -8,8 +8,8 @@ public class ButtonsViewModel
 
     public ButtonsViewModel()
     {
-        OnHomeButtonPressed = new ReactiveCommand();
-        OnScoreButtonPressed = new ReactiveCommand();
-        OnSettingsButtonPressed = new ReactiveCommand();
+        OnHomeButtonPressed = new ReactiveCommand().AddTo(_disposables);
+        OnScoreButtonPressed = new ReactiveCommand().AddTo(_disposables);
+        OnSettingsButtonPressed = new ReactiveCommand().AddTo(_disposables);
     }
 }

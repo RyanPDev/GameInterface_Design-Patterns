@@ -2,8 +2,6 @@ using UnityEngine;
 using UniRx;
 using DG.Tweening;
 using UnityEngine.UI;
-using System.Linq;
-using System.Collections.Generic;
 using TMPro;
 
 public class HomePanelView : View
@@ -22,16 +20,18 @@ public class HomePanelView : View
             gameObject.SetActive(isVisible);
             gameObject.GetComponent<RectTransform>().DOLocalMoveX(5, 0f);
             gameObject.GetComponent<RectTransform>().DOMoveX(0, .2f);
-        });
+        })
+        .AddTo(_disposables);
 
         viewModel.Username.Subscribe((username) =>
         {
             userNameText.text = username;
-        });
+        })
+        .AddTo(_disposables);
 
         profileButton.onClick.AddListener(() =>
         {
             viewModel.ProfileButtonPressed.Execute();
-        });        
+        });
     }
 }

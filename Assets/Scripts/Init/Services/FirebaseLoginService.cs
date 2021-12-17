@@ -1,7 +1,6 @@
 using Firebase.Firestore;
 using Firebase.Extensions;
 using UnityEngine;
-using System.Threading.Tasks;
 
 public class FirebaseLoginService : Service, IFirebaseLoginService
 {
@@ -16,8 +15,7 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
     //Authentifcation
     public void InitAsync()
     {
-       
-            Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
@@ -26,11 +24,9 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
                 // where app is a Firebase.FirebaseApp property of your application class.
                 var app = Firebase.FirebaseApp.DefaultInstance;
                 eventDispatcher.Dispatch(new UserInFirebase(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
-               // eventDispatcher.Dispatch(new UserInFirebase(false));
             }
             else
             {
-                UnityEngine.Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
                 return;
             }
         });
@@ -85,10 +81,10 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
 
     public void UpdateData(UserEntity userEntity)
     {
-        SetData(new User(userEntity.Name, userEntity.Audio, userEntity.Notifications));        
+        SetData(new User(userEntity.Name, userEntity.Audio, userEntity.Notifications));
     }
 
-    //Database
+    //Database 
     public void InitUserData()
     {
         //Initial user info, audio and notificiations set both initially to true        
@@ -126,7 +122,7 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
                 {
                     // toda tu info
                     User user = document.ConvertTo<User>();
-                    
+
                     eventDispatcher.Dispatch(new UserInfo(user.Name, user.Audio, user.Notifications));
                     // Dispatch para cambiar de escena <--- DATOS DE USUARIO CARGADOS
                     eventDispatcher.Dispatch(new LoginEvent(user.Name));

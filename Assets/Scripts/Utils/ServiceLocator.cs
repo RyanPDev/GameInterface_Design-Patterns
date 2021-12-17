@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-public class ServiceLocator
+public class ServiceLocator : Service
 {
     public static ServiceLocator Instance => _instance ??= new ServiceLocator();
     private static ServiceLocator _instance;

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using UniRx;
-class HomePanelPresenter : Presenter
+﻿class HomePanelPresenter : Presenter
 {
     private readonly IEventDispatcherService eventDispatcherService;
     private readonly HomePanelViewModel viewModel;

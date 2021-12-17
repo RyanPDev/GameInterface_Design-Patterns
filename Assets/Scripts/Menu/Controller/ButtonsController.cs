@@ -1,6 +1,6 @@
 using UniRx;
 
-public class ButtonsController
+public class ButtonsController : Controller
 {
     private readonly HomePanelViewModel homePanelViewModel;
     private readonly ScorePanelViewModel scorePanelViewModel;
@@ -20,17 +20,20 @@ public class ButtonsController
         buttonsViewModel.OnHomeButtonPressed.Subscribe((_) =>
         {
             SetPanelVisibility(true, false, false);
-        });
+        })
+        .AddTo(_disposables);
 
         buttonsViewModel.OnScoreButtonPressed.Subscribe((_) =>
         {
             SetPanelVisibility(false, true, false);
-        });
+        })
+        .AddTo(_disposables); ;
 
         buttonsViewModel.OnSettingsButtonPressed.Subscribe((_) =>
         {
             SetPanelVisibility(false, false, true);
-        });
+        })
+        .AddTo(_disposables); ;
     }
 
     private void SetPanelVisibility(bool homeVisibility, bool scoreVisibility, bool settingsVisibility)

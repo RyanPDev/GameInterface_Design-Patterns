@@ -1,8 +1,6 @@
 ﻿using Firebase.Firestore;
 using Firebase.Extensions;
-using System.Threading.Tasks;
 using UnityEngine;
-using System;
 
 public class FirebaseAccountService : Service, IFirebaseAccountService
 {

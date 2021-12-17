@@ -1,19 +1,17 @@
-using UnityEngine;
 public class FirebasePushUpService : Service
 {
     readonly IEventDispatcherService eventDispatcher;
+
     public FirebasePushUpService(IEventDispatcherService _eventDispatcher)
     {
         eventDispatcher = _eventDispatcher;
         Firebase.Messaging.FirebaseMessaging.TokenRegistrationOnInitEnabled = false;
-
-        Debug.Log("Notis equal: "+Firebase.Messaging.FirebaseMessaging.TokenRegistrationOnInitEnabled);
-
         eventDispatcher.Subscribe<NotificationsHandler>(Notifications);
     }
+
     public void Notifications(NotificationsHandler n)
     {
-       if(n.isOn != Firebase.Messaging.FirebaseMessaging.TokenRegistrationOnInitEnabled)
+        if (n.isOn != Firebase.Messaging.FirebaseMessaging.TokenRegistrationOnInitEnabled)
         {
             Firebase.Messaging.FirebaseMessaging.TokenRegistrationOnInitEnabled = n.isOn;
             if (n.isOn)
@@ -26,8 +24,13 @@ public class FirebasePushUpService : Service
                 Firebase.Messaging.FirebaseMessaging.TokenReceived -= OnTokenReceived;
                 Firebase.Messaging.FirebaseMessaging.MessageReceived -= OnMessageReceived;
             }
-            Debug.Log("Notis equal change: "+Firebase.Messaging.FirebaseMessaging.TokenRegistrationOnInitEnabled);
         }
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        eventDispatcher.Unsubscribe<NotificationsHandler>(Notifications);
     }
 
     public void OnTokenReceived(object sender, Firebase.Messaging.TokenReceivedEventArgs token)

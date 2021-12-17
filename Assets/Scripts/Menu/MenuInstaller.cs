@@ -22,7 +22,6 @@ public class MenuInstaller : MonoBehaviour
         var _scorePanelView = Instantiate(_scorePanelPrefab, canvasParent);
         var _buttonsView = Instantiate(_buttonsPrefab, canvasParent);
 
-
         var signInPanelViewModel = new SignInPanelViewModel();
         var settingsPanelViewModel = new SettingsPanelViewModel();
         var homePanelViewModel = new HomePanelViewModel();

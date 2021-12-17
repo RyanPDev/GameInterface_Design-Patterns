@@ -3,12 +3,11 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 class ProfileView : View
-    {
-        [SerializeField] private Button backButton;
-        [SerializeField] private Button saveButton;
-        [SerializeField] private TMP_InputField inputField;
+{
+    [SerializeField] private Button backButton;
+    [SerializeField] private Button saveButton;
+    [SerializeField] private TMP_InputField inputField;
     private ProfileViewModel viewModel;
 
     public void SetViewModel(ProfileViewModel _viewModel)
@@ -17,17 +16,11 @@ class ProfileView : View
 
         viewModel
             .IsVisible
-            .Subscribe((isVisible) => {
+            .Subscribe((isVisible) =>
+            {
                 gameObject.SetActive(isVisible);
             })
             .AddTo(_disposables);
-       //_viewModel
-       //    .UserName
-       //    .Subscribe(taskName =>
-       //    {
-       //        inputField.SetTextWithoutNotify(taskName);
-       //    })
-       //    .AddTo(_disposables);
 
         backButton.onClick.AddListener(() =>
         {

@@ -2,7 +2,6 @@
 {
     private readonly IEventDispatcherService eventDispatcherService;
 
-
     public AccountManagerUseCase(IEventDispatcherService _eventDispatcherService)
     {
         eventDispatcherService = _eventDispatcherService;
