@@ -1,5 +1,5 @@
 {
-    "m_SelectedDeviceId": "VQTBB19121150627",
+    "m_SelectedDeviceId": "e7faa8619516",
     "m_SelectedPackage": {
         "deviceId": "",
         "name": "",
@@ -18,6 +18,30 @@
             "deviceId": "VQTBB19121150627",
             "name": "com.huawei.android.launcher",
             "processId": 21831,
+            "exited": false
+        },
+        {
+            "deviceId": "e7faa8619516",
+            "name": "com.android.launcher3",
+            "processId": 31840,
+            "exited": false
+        },
+        {
+            "deviceId": "e7faa8619516",
+            "name": "com.company",
+            "processId": 22755,
+            "exited": false
+        },
+        {
+            "deviceId": "e7faa8619516",
+            "name": "com.company",
+            "processId": 24257,
+            "exited": false
+        },
+        {
+            "deviceId": "e7faa8619516",
+            "name": "com.company",
+            "processId": 24719,
             "exited": false
         }
     ],
@@ -71,7 +95,7 @@
         "MemoryGroup": 2,
         "Behavior": 0
     },
-    "m_Filter": "",
+    "m_Filter": "fals",
     "m_FilterIsRegularExpression": false,
     "m_SymbolPaths": []
 }

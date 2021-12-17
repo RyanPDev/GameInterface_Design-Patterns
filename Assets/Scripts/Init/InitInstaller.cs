@@ -35,6 +35,6 @@ public class InitInstaller : MonoBehaviour
 
     private void Start()
     {
-        firebaseLoginService.Init();
+        firebaseLoginService.InitAsync();
     }
 }

@@ -1,6 +1,7 @@
 using Firebase.Firestore;
 using Firebase.Extensions;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class FirebaseLoginService : Service, IFirebaseLoginService
 {
@@ -13,9 +14,10 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
     }
 
     //Authentifcation
-    public void Init()
+    public void InitAsync()
     {
-        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+       
+            Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
@@ -24,7 +26,7 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
                 // where app is a Firebase.FirebaseApp property of your application class.
                 var app = Firebase.FirebaseApp.DefaultInstance;
                 eventDispatcher.Dispatch(new UserInFirebase(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
-                //eventDispatcher.Dispatch(new UserInFirebase(false));
+               // eventDispatcher.Dispatch(new UserInFirebase(false));
             }
             else
             {
