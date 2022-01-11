@@ -20,9 +20,15 @@
     public void OnSigned(SignInSuccessfully e)
     {
         if (e.signInOk)
+        {
             viewModel.IsVisible.Value = false;
+        }
         else
+        {
             if (e.exception != null)
-            viewModel.eText.Value = e.exception;
+            {
+                viewModel.eText.Value = e.exception;
+            }
+        }
     }
 }

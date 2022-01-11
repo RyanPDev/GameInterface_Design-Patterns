@@ -15,6 +15,11 @@
         //eventDispatcherService.Dispatch(new SignInEvent(mail,pass));    
     }
 
+    public void SignOut()
+    {
+        firebaseAccountService.SignOut();
+    }
+
     public void CreateAccount(string mail, string pass)
     {
         firebaseAccountService.Create(mail, pass);

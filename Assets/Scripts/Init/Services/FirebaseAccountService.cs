@@ -55,6 +55,13 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
         });
     }
 
+    public void SignOut()
+    {
+        Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        auth.SignOut();
+        PlayerPrefs.DeleteAll();
+    }
+
     public void LoadUserData()
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;

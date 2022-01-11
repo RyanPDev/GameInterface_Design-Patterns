@@ -56,7 +56,7 @@ public class MenuInstaller : MonoBehaviour
         new ButtonsController(homePanelViewModel, scorePanelViewModel, settingsPanelViewModel, buttonsViewModel).AddTo(_disposables);
 
         new FirebasePushUpService(eventDispatcher);
-        new SettingsPanelController(settingsPanelViewModel, signInPanelViewModel, updateUserUseCase).AddTo(_disposables);
+        new SettingsPanelController(settingsPanelViewModel, signInPanelViewModel, updateUserUseCase, accountManager).AddTo(_disposables);
         new SettingsPanelPresenter(settingsPanelViewModel, eventDispatcher).AddTo(_disposables);
         new SignInController(signInPanelViewModel, accountManager).AddTo(_disposables);
         new SignInPresenter(signInPanelViewModel, eventDispatcher).AddTo(_disposables);

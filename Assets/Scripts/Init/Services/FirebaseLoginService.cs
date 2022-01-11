@@ -101,6 +101,11 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
 
         docRef.SetAsync(user).ContinueWithOnMainThread(task =>
         {
+            if (task.IsCanceled || task.IsFaulted)
+            {
+                return;
+            }
+
             if (task.IsCompleted && saveInRepo)
             {
                 eventDispatcher.Dispatch(new UserInfo(user.Name, user.Audio, user.Notifications));
