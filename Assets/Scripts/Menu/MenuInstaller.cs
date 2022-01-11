@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public class MenuInstaller : MonoBehaviour
@@ -9,6 +12,15 @@ public class MenuInstaller : MonoBehaviour
     [SerializeField] private SignInPanelView _signInPanelPrefab;
     [SerializeField] private SettingsPanelView _settingsPanelPrefab;
     [SerializeField] private ButtonsView _buttonsPrefab;
+
+    private List<IDisposable> _disposables = new List<IDisposable>();
+    private void OnDestroy()
+    {
+        foreach (var disposable in _disposables)
+        {
+            disposable.Dispose();
+        }
+    }
 
     private void Awake()
     {
@@ -24,12 +36,12 @@ public class MenuInstaller : MonoBehaviour
         var _scorePanelView = Instantiate(_scorePanelPrefab, canvasParent);
         var _buttonsView = Instantiate(_buttonsPrefab, canvasParent);
 
-        var signInPanelViewModel = new SignInPanelViewModel();
-        var settingsPanelViewModel = new SettingsPanelViewModel();
-        var homePanelViewModel = new HomePanelViewModel();
-        var profilePanelViewModel = new ProfileViewModel();
-        var scorePanelViewModel = new ScorePanelViewModel();
-        var buttonsViewModel = new ButtonsViewModel();
+        var signInPanelViewModel = new SignInPanelViewModel().AddTo(_disposables);
+        var settingsPanelViewModel = new SettingsPanelViewModel().AddTo(_disposables);
+        var homePanelViewModel = new HomePanelViewModel().AddTo(_disposables);
+        var profilePanelViewModel = new ProfileViewModel().AddTo(_disposables);
+        var scorePanelViewModel = new ScorePanelViewModel().AddTo(_disposables);
+        var buttonsViewModel = new ButtonsViewModel().AddTo(_disposables);
 
         _settingsPanelView.SetViewModel(settingsPanelViewModel, userRepository);
         _signInPanelView.SetViewModel(signInPanelViewModel);
@@ -38,18 +50,18 @@ public class MenuInstaller : MonoBehaviour
         _scorePanelView.SetViewModel(scorePanelViewModel);
         _buttonsView.SetViewModel(buttonsViewModel);
 
-        var updateUserUseCase = new UpdateUserUseCase(firebaseLoginService, userRepository, eventDispatcher);
-        var accountManager = new AccountManagerUseCase(firebaseAccountService, eventDispatcher);
+        var updateUserUseCase = new UpdateUserUseCase(firebaseLoginService, userRepository, eventDispatcher).AddTo(_disposables);
+        var accountManager = new AccountManagerUseCase(firebaseAccountService, eventDispatcher).AddTo(_disposables);
 
-        new ButtonsController(homePanelViewModel, scorePanelViewModel, settingsPanelViewModel, buttonsViewModel);
+        new ButtonsController(homePanelViewModel, scorePanelViewModel, settingsPanelViewModel, buttonsViewModel).AddTo(_disposables);
 
         new FirebasePushUpService(eventDispatcher);
-        new SettingsPanelController(settingsPanelViewModel, signInPanelViewModel, updateUserUseCase);
-        new SettingsPanelPresenter(settingsPanelViewModel, eventDispatcher);
-        new SignInController(signInPanelViewModel, accountManager);
-        new SignInPresenter(signInPanelViewModel, eventDispatcher);
-        new HomePanelController(homePanelViewModel, profilePanelViewModel);
-        new ProfileController(profilePanelViewModel, updateUserUseCase);
-        new HomePanelPresenter(homePanelViewModel, eventDispatcher, userRepository.GetLocalUser());
+        new SettingsPanelController(settingsPanelViewModel, signInPanelViewModel, updateUserUseCase).AddTo(_disposables);
+        new SettingsPanelPresenter(settingsPanelViewModel, eventDispatcher).AddTo(_disposables);
+        new SignInController(signInPanelViewModel, accountManager).AddTo(_disposables);
+        new SignInPresenter(signInPanelViewModel, eventDispatcher).AddTo(_disposables);
+        new HomePanelController(homePanelViewModel, profilePanelViewModel).AddTo(_disposables);
+        new ProfileController(profilePanelViewModel, updateUserUseCase).AddTo(_disposables);
+        new HomePanelPresenter(homePanelViewModel, eventDispatcher, userRepository.GetLocalUser()).AddTo(_disposables);
     }
 }

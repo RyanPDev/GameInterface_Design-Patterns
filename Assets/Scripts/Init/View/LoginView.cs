@@ -28,25 +28,27 @@ public class LoginView : View
     public void SetViewModel(LoginViewModel _viewModel)
     {
         viewModel = _viewModel;
-        viewModel.isVisible.Value = true;
+        //viewModel.isVisible.Value = true;
         //viewModel.IsAuthenticated.Value = false;
         //loginButton.gameObject.SetActive(false);
 
-        viewModel
-            .isVisible
-            .Subscribe((IsVisible) =>
-            {
-                //if (!IsVisible)
-                {
-                    if (repeatTime < dots.Count * bounceTime)
-                    {
-                        repeatTime = dots.Count * bounceTime;
-                    }
-                    InvokeRepeating("Animate", 0, repeatTime);
-                    canvasGroup.DOFade(1, 0.2f);
-                }
+        if (repeatTime < dots.Count * bounceTime)
+        {
+            repeatTime = dots.Count * bounceTime;
+        }
+        InvokeRepeating("Animate", 0, repeatTime);
+        canvasGroup.DOFade(1, 0.2f);
 
-            }).AddTo(_disposables);
+        //viewModel
+        //    .isVisible
+        //    .Subscribe((IsVisible) =>
+        //    {
+        //        //if (!IsVisible)
+        //        {
+                    
+        //        }
+
+        //    }).AddTo(_disposables);
 
         //viewModel
         //  .IsAuthenticated

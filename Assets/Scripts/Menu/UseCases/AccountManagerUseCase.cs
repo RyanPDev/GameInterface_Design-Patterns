@@ -12,12 +12,12 @@
     public void SignIn(string mail, string pass)
     {
         firebaseAccountService.SignIn(mail, pass);
-        eventDispatcherService.Dispatch(new SignInEvent(mail,pass));    
+        //eventDispatcherService.Dispatch(new SignInEvent(mail,pass));    
     }
 
     public void CreateAccount(string mail, string pass)
     {
         firebaseAccountService.Create(mail, pass);
-        eventDispatcherService.Dispatch(new CreateAccountEvent(mail,pass));
+        //eventDispatcherService.Dispatch(new CreateAccountEvent(mail,pass));
     }    
 }

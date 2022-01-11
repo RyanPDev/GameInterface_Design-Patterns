@@ -52,7 +52,6 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
             Firebase.Auth.FirebaseUser newUser = task.Result;
             SetData(new User(GetID(), true, false), true); //-->Set init data to user on data base
             eventDispatcher.Dispatch(new UserInfo(GetID(), true, false));
-
             eventDispatcher.Dispatch(new LoginEvent(""));// Dispatch para cambiar de escena
         });
     }

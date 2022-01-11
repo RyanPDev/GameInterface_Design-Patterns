@@ -35,16 +35,16 @@ public class InitInstaller : MonoBehaviour
         ServiceLocator.Instance.RegisterService<IFirebaseAccountService>(firebaseAccountService);
 
         var loginView = Instantiate(loginPrefab, canvasParent);
-        var loginViewModel = new LoginViewModel();
+        var loginViewModel = new LoginViewModel().AddTo(_disposables);
         loginView.SetViewModel(loginViewModel);
 
-        loginUseCase = new LoginUseCase(firebaseLoginService, eventDispatcherService);
+        loginUseCase = new LoginUseCase(firebaseLoginService, eventDispatcherService).AddTo(_disposables);
 
-        new UpdateUserUseCase(firebaseLoginService, userRepository, eventDispatcherService);
+        new UpdateUserUseCase(firebaseLoginService, userRepository, eventDispatcherService).AddTo(_disposables);
 
-        new ChangeSceneUseCase(eventDispatcherService);
-        new LoginController(loginViewModel, loginUseCase);
-        new LoginPresenter(loginViewModel, eventDispatcherService);//.AddTo(_disposables);
+        new ChangeSceneUseCase(eventDispatcherService).AddTo(_disposables);
+        new LoginController(loginViewModel, loginUseCase).AddTo(_disposables);
+        new LoginPresenter(loginViewModel, eventDispatcherService).AddTo(_disposables);
     }
 
     private void Start()
