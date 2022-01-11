@@ -7,30 +7,34 @@ public class LoginUseCase : UseCase, ILoginUseCase
     {
         firebaseLoginService = _firebaseLoginService;
         eventDispatcherService = _eventDispatcherService;
-        eventDispatcherService.Subscribe<UserInFirebase>(AlreadyExists);
+        eventDispatcherService.Subscribe<UserInFirebase>(CheckUser);
     }
 
-    public void Login()
-    {
-        firebaseLoginService.Login();
-    }
+    //public void Login()
+    //{
+    //    firebaseLoginService.Login();
+    //}
 
     public override void Dispose()
     {
         base.Dispose();
-        eventDispatcherService.Unsubscribe<UserInFirebase>(AlreadyExists);
+        eventDispatcherService.Unsubscribe<UserInFirebase>(CheckUser);
     }
 
-    public void AlreadyExists(UserInFirebase userExists)
+    public void CheckUser(UserInFirebase userExists)
     {
         if (userExists.existsInFirebase)
         {
             firebaseLoginService.LoadData();
         }
+        else
+        {
+            firebaseLoginService.Login();
+        }
     }
 
-    public void Init()
-    {
-        firebaseLoginService.LoadData();
-    }
+    //public void Init()
+    //{
+    //    firebaseLoginService.LoadData();
+    //}
 }

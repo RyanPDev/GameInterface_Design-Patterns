@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 public class LoginView : View
 {
-    [SerializeField] private Button loginButton;
-    [SerializeField] private TextMeshProUGUI ID;
+    //[SerializeField] private Button loginButton;
+    //[SerializeField] private TextMeshProUGUI ID;
 
     private LoginViewModel viewModel;
 
@@ -29,14 +29,14 @@ public class LoginView : View
     {
         viewModel = _viewModel;
         viewModel.isVisible.Value = true;
-        viewModel.IsAuthenticated.Value = false;
-        loginButton.gameObject.SetActive(false);
+        //viewModel.IsAuthenticated.Value = false;
+        //loginButton.gameObject.SetActive(false);
 
         viewModel
             .isVisible
             .Subscribe((IsVisible) =>
             {
-                if (!IsVisible)
+                //if (!IsVisible)
                 {
                     if (repeatTime < dots.Count * bounceTime)
                     {
@@ -48,21 +48,21 @@ public class LoginView : View
 
             }).AddTo(_disposables);
 
-        viewModel
-          .IsAuthenticated
-          .Subscribe((isAutheticated) =>
-          {
-              if (isAutheticated)
-              {
-                  loginButton.gameObject.SetActive(isAutheticated);
-              }
+        //viewModel
+        //  .IsAuthenticated
+        //  .Subscribe((isAutheticated) =>
+        //  {
+        //      if (isAutheticated)
+        //      {
+        //          loginButton.gameObject.SetActive(isAutheticated);
+        //      }
 
-          }).AddTo(_disposables);
+        //  }).AddTo(_disposables);
 
-        loginButton.onClick.AddListener(() =>
-        {
-            _viewModel.LoginButtonPressed.Execute();
-        });
+        //loginButton.onClick.AddListener(() =>
+        //{
+        //    _viewModel.LoginButtonPressed.Execute();
+        //});
     }
 
     void Animate() // Codigo de https://gist.github.com/reidscarboro/588911e7bc0e0ad82bfa8a1ad2397bd5

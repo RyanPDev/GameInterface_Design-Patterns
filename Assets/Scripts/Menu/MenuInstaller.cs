@@ -14,6 +14,8 @@ public class MenuInstaller : MonoBehaviour
     {
         var userRepository = ServiceLocator.Instance.GetService<IUserDataAccess>();
         var eventDispatcher = ServiceLocator.Instance.GetService<IEventDispatcherService>();
+        var firebaseAccountService = ServiceLocator.Instance.GetService<IFirebaseAccountService>();
+        var firebaseLoginService = ServiceLocator.Instance.GetService<IFirebaseLoginService>();
 
         var _settingsPanelView = Instantiate(_settingsPanelPrefab, canvasParent);
         var _signInPanelView = Instantiate(_signInPanelPrefab, canvasParent);
@@ -36,8 +38,8 @@ public class MenuInstaller : MonoBehaviour
         _scorePanelView.SetViewModel(scorePanelViewModel);
         _buttonsView.SetViewModel(buttonsViewModel);
 
-        var updateUserUseCase = new UpdateUserUseCase(userRepository, eventDispatcher);
-        var accountManager = new AccountManagerUseCase(eventDispatcher);
+        var updateUserUseCase = new UpdateUserUseCase(firebaseLoginService, userRepository, eventDispatcher);
+        var accountManager = new AccountManagerUseCase(firebaseAccountService, eventDispatcher);
 
         new ButtonsController(homePanelViewModel, scorePanelViewModel, settingsPanelViewModel, buttonsViewModel);
 

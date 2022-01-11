@@ -21,7 +21,7 @@ public class HomePanelView : View
             gameObject.GetComponent<RectTransform>().DOLocalMoveX(5, 0f);
             gameObject.GetComponent<RectTransform>().DOMoveX(0, .2f);
         })
-        .AddTo(_disposables);
+        .AddTo(_disposables);        
 
         viewModel.Username.Subscribe((username) =>
         {

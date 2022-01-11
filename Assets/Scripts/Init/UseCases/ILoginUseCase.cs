@@ -1,4 +1,4 @@
 public interface ILoginUseCase
 {
-    void Login();
+    void CheckUser(UserInFirebase userExists);
 }
