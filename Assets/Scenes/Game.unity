@@ -238,6 +238,7 @@ MonoBehaviour:
   canvasParent: {fileID: 1966848039}
   _gamePanelPrefab: {fileID: 2336232634354175381, guid: 1f703f72266aa2f409daeaaf2b9b0513, type: 3}
   _pausePanelPrefab: {fileID: 6388070622796903474, guid: b1f959b3bf68c3d4e89d4532c221dc0d, type: 3}
+  _endGamePanelPrefab: {fileID: 7571206962334943787, guid: ad8cfe8e59015534685f018cee51c411, type: 3}
 --- !u!4 &1358931264
 Transform:
   m_ObjectHideFlags: 0

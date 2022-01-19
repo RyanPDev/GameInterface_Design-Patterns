@@ -25,4 +25,3 @@ public class SignInPanelViewModel : ViewModel
            .AddTo(_disposables);
     }
 }
-

@@ -670,8 +670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef96cf0ce4485744881017991b34eff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginButton: {fileID: 8581767913285322354}
-  ID: {fileID: 0}
   repeatTime: 1
   bounceTime: 0.25
   bounceHeight: 50
