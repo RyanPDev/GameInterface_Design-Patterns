@@ -1,26 +1,36 @@
 using UnityEngine;
 using UniRx;
+using System;
 
 class GamePanelPresenter : Presenter
 {
     private readonly IEventDispatcherService eventDispatcherService;
-    private readonly GamePanelViewModel viewModel;
+    private readonly GamePanelViewModel gamePanelViewModel;
+    private readonly EndGamePanelViewModel endGamePanelViewModel;
     private readonly IUpdateGameUseCase updateGameUseCase;
 
-    public GamePanelPresenter(GamePanelViewModel gamePanelViewModel, IUpdateGameUseCase _updateGameUseCase, IEventDispatcherService _eventDispatcher)
+    public GamePanelPresenter(GamePanelViewModel _gamePanelViewModel, EndGamePanelViewModel _endGamePanelViewModel, IUpdateGameUseCase _updateGameUseCase, IEventDispatcherService _eventDispatcher)
     {
-        viewModel = gamePanelViewModel;
+        gamePanelViewModel = _gamePanelViewModel;
+        endGamePanelViewModel = _endGamePanelViewModel;
         eventDispatcherService = _eventDispatcher;
         updateGameUseCase = _updateGameUseCase;
 
         eventDispatcherService.Subscribe<GetLetterEvent>(GetLetters);
         eventDispatcherService.Subscribe<GetWordEvent>(GetWord);
         eventDispatcherService.Subscribe<CheckLetterEvent>(UpdateLetterColor);
+        eventDispatcherService.Subscribe<EndEvent>(EndPanelPopUp);
+    }
+
+    private void EndPanelPopUp(EndEvent obj)
+    {
+        endGamePanelViewModel.gameResult.Value = obj.v;
+        endGamePanelViewModel.IsVisible.Value = true;
     }
 
     private void UpdateLetterColor(CheckLetterEvent obj)
     {
-        foreach (LetterViewModel element in viewModel.letter)
+        foreach (LetterViewModel element in gamePanelViewModel.letter)
         {
             if (element.letterText.Value == obj.l)
             {
@@ -39,7 +49,7 @@ class GamePanelPresenter : Presenter
 
     private void GetWord(GetWordEvent obj)
     {
-        viewModel.word.SetValueAndForceNotify(obj.v);
+        gamePanelViewModel.word.SetValueAndForceNotify(obj.v);
     }
 
     private void GetLetters(GetLetterEvent letter)
@@ -51,6 +61,6 @@ class GamePanelPresenter : Presenter
             updateGameUseCase.CheckLetter(letterViewModel.letterText.Value);
         });
 
-        viewModel.letter.Add(letterViewModel);
+        gamePanelViewModel.letter.Add(letterViewModel);
     }
 }

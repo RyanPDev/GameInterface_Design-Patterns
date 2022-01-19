@@ -46,7 +46,7 @@ public class GameInstaller : MonoBehaviour
         var changeSceneUseCase = new ChangeSceneUseCase(eventDispatcher);
         var updateGameUseCase = new UpdateGameUseCase(eventDispatcher, hangmanService);
 
-        new GamePanelPresenter(gamePanelViewModel, updateGameUseCase, eventDispatcher).AddTo(_disposables);
+        new GamePanelPresenter(gamePanelViewModel, endGamePanelViewModel, updateGameUseCase, eventDispatcher).AddTo(_disposables);
         new GamePanelController(gamePanelViewModel, pausePanelViewModel, endGamePanelViewModel).AddTo(_disposables);
         new PausePanelController(pausePanelViewModel, changeSceneUseCase).AddTo(_disposables);
         new EndGamePanelController(endGamePanelViewModel, changeSceneUseCase).AddTo(_disposables);        

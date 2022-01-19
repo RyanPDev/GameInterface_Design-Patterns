@@ -95,6 +95,7 @@ public class HangmanService : Service, IHangmanService
         if (IsCompleted(response.hangman))
         {
             //WIN DISPATCH
+            eventDispatcher.Dispatch(new EndEvent(true));
             Debug.Log("Complete");
         }
     }
