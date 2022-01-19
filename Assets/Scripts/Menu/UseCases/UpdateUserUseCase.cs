@@ -15,7 +15,9 @@
     public void UpdateOnLogin(UserInfo userData)
     {
         var userEntity = new UserEntity(userData.Name, userData.Audio, userData.Notifications);
-        userRepository.SetLocalUser(userEntity);
+        //userRepository.SetLocalUser(userEntity);
+        UpdateInfo(userEntity);
+        eventDispatcher.Dispatch(userEntity);
     }
 
     public void UpdateUsername(string userName)

@@ -177,8 +177,8 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -505,7 +505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7104558181443595337}
   m_Layer: 5
-  m_Name: ProfileTitle (1)
+  m_Name: Pass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -749,7 +749,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8364562666718214258}
   m_Layer: 5
-  m_Name: ProfileTitle
+  m_Name: Mail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

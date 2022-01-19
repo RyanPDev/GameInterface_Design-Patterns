@@ -21,7 +21,6 @@ class SettingsPanelController : Controller
             {
                 signInViewModel.IsVisible.Value = true;
                 signInViewModel.signInAction.Value = true;
-                settingsPanelViewModel.IsSignOutVisible.Value = true;
             })
             .AddTo(_disposables);
 
@@ -29,11 +28,11 @@ class SettingsPanelController : Controller
             .OnSignOutButtonPressed
             .Subscribe((_) =>
             {
+                accountManagerUseCase.SignOut();
+
                 settingsPanelViewModel.IsLoginVisible.Value = true;
                 settingsPanelViewModel.IsCreateVisible.Value = true;
                 settingsPanelViewModel.IsSignOutVisible.Value = false;
-
-                accountManagerUseCase.SignOut();
             })
             .AddTo(_disposables);
 
@@ -43,7 +42,6 @@ class SettingsPanelController : Controller
             {
                 signInViewModel.IsVisible.Value = true;
                 signInViewModel.signInAction.Value = false;
-                settingsPanelViewModel.IsSignOutVisible.Value = true;
             })
             .AddTo(_disposables);
 

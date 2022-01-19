@@ -60,6 +60,20 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
         Firebase.Auth.FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         auth.SignOut();
         PlayerPrefs.DeleteAll();
+
+        auth.SignInAnonymouslyAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled || task.IsFaulted)
+            {
+                return;
+            }
+
+            Firebase.Auth.FirebaseUser newUser = task.Result;
+            SetData(new User(newUser.UserId, true, false)); //-->Set init data to user on data base
+            userRepository.SetLocalUser(new UserEntity(newUser.UserId, true, false));
+            eventDispatcher.Dispatch(new UserInfo(newUser.UserId, true, false));
+            eventDispatcher.Dispatch(new UserEntity(newUser.UserId, true, false));
+        });
     }
 
     public void LoadUserData()
@@ -76,7 +90,7 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
                     User user = document.ConvertTo<User>();
                     userRepository.SetLocalUser(new UserEntity(user.Name, user.Audio, user.Notifications));
                     eventDispatcher.Dispatch(new UserEntity(user.Name, user.Audio, user.Notifications));
-                    SetData(user);
+                    //SetData(user);
                     eventDispatcher.Dispatch(new NotificationsHandler(user.Notifications));
                     break;
                 }
@@ -97,7 +111,7 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
         DocumentReference docRef = db.Collection("users").Document(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId);
 
         docRef.SetAsync(user).ContinueWithOnMainThread(task =>
-        {
+        {            
         });
     }
 }
