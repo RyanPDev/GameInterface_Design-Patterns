@@ -9,11 +9,14 @@ public class LetterView : View
     [SerializeField] private Button letterButton;
     [SerializeField] private TextMeshProUGUI ButtonText;
 
+    [SerializeField] private Image letterColor;
+
     private LetterViewModel viewModel;
 
     public void SetViewModel(LetterViewModel _viewModel)
     {
         viewModel = _viewModel;
+
 
         letterButton.onClick.AddListener(() =>
         {
@@ -25,5 +28,12 @@ public class LetterView : View
         {
             ButtonText.text = text;
         });
+
+        viewModel.letterColor.Subscribe((color) =>
+        {
+            letterColor.color = color;
+        });
+
+        letterColor.color = new Color(1, 1, 1);
     }
 }

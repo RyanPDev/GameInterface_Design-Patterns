@@ -85,10 +85,7 @@ public class HangmanService : Service, IHangmanService
         //}
 
         var request = new GuessLetterRequest { letter = letter, token = _token };
-        var response = await
-            _restClientAdapter
-                .PutWithParametersOnUrl<GuessLetterRequest, GuessLetterResponse>
-                (
+        var response = await _restClientAdapter.PutWithParametersOnUrl<GuessLetterRequest, GuessLetterResponse>(
                     EndPoints.GuessLetter,
                     request
                 );
@@ -107,7 +104,7 @@ public class HangmanService : Service, IHangmanService
         if (response.correct)
         {
             //DISPATCH TO CHANGE LETTER COLOR TO GREEN
-
+            eventDispatcher.Dispatch(new CheckLetterEvent(true, letter));
             _correctLetters.Append($" {letter}");
 
             //_correctLettersText.SetText(_correctLetters.ToString());
@@ -116,7 +113,7 @@ public class HangmanService : Service, IHangmanService
         {
             //DISPATCH TO LOSE HEALTH
             //DISPATCH TO CHANGE LETTER COLOR TO RED
-
+            eventDispatcher.Dispatch(new CheckLetterEvent(false, letter));
             _incorrectLetters.Append($" {letter}");
 
             //_incorrectLettersText.SetText(_incorrectLetters.ToString());

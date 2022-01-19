@@ -360,3 +360,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   letterButton: {fileID: 3013323299432349521}
   ButtonText: {fileID: 2096636287196560630}
+  letterColor: {fileID: 2077124671985606664}

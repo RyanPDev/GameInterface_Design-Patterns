@@ -1,3 +1,4 @@
+using UnityEngine;
 using UniRx;
 
 class GamePanelPresenter : Presenter
@@ -12,8 +13,28 @@ class GamePanelPresenter : Presenter
         eventDispatcherService = _eventDispatcher;
         updateGameUseCase = _updateGameUseCase;
 
-        eventDispatcherService.Subscribe<GetLetterEvent>(GetLetter);
+        eventDispatcherService.Subscribe<GetLetterEvent>(GetLetters);
         eventDispatcherService.Subscribe<GetWordEvent>(GetWord);
+        eventDispatcherService.Subscribe<CheckLetterEvent>(UpdateLetterColor);
+    }
+
+    private void UpdateLetterColor(CheckLetterEvent obj)
+    {
+        foreach (LetterViewModel element in viewModel.letter)
+        {
+            if (element.letterText.Value == obj.l)
+            {
+                if (obj.v)
+                {
+                    element.letterColor.Value = new Color(0, 1, 0);
+                }
+                else
+                {
+                    element.letterColor.Value = new Color(1, 0, 0);
+                }
+                break;
+            }            
+        }
     }
 
     private void GetWord(GetWordEvent obj)
@@ -21,7 +42,7 @@ class GamePanelPresenter : Presenter
         viewModel.word.SetValueAndForceNotify(obj.v);
     }
 
-    private void GetLetter(GetLetterEvent letter)
+    private void GetLetters(GetLetterEvent letter)
     {
         var letterViewModel = new LetterViewModel(letter.v.ToString());
 
