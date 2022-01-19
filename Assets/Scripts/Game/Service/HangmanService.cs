@@ -34,7 +34,7 @@ public class HangmanService : Service, IHangmanService
     {
         GetLetters();
 
-
+        await StartGame();
         //StartGame
         //await;
     }
@@ -54,6 +54,7 @@ public class HangmanService : Service, IHangmanService
         var request = new NewGameRequest();
         var response = await _restClientAdapter.Post<NewGameRequest, NewGameResponse>(EndPoints.NewGame, request);
         UpdateToken(response.token);
+        eventDispatcher.Dispatch(new GetWordEvent(AddSpacesBetweenLetters(response.hangman)));
         //_hangmanText.SetText(AddSpacesBetweenLetters(response.hangman));
     }
 

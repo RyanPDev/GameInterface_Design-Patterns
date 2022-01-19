@@ -13,6 +13,12 @@ class GamePanelPresenter : Presenter
         updateGameUseCase = _updateGameUseCase;
 
         eventDispatcherService.Subscribe<GetLetterEvent>(GetLetter);
+        eventDispatcherService.Subscribe<GetWordEvent>(GetWord);
+    }
+
+    private void GetWord(GetWordEvent obj)
+    {
+        viewModel.word.SetValueAndForceNotify(obj.v);
     }
 
     private void GetLetter(GetLetterEvent letter)

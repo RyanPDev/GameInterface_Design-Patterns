@@ -11,6 +11,7 @@ public class GameInstaller : MonoBehaviour
     [SerializeField] private EndGamePanelView _endGamePanelPrefab;
 
     HangmanService hangmanService;
+    GamePanelView gamePanelView;
 
     private List<IDisposable> _disposables = new List<IDisposable>();
     private void OnDestroy()
@@ -23,14 +24,14 @@ public class GameInstaller : MonoBehaviour
 
     private void Awake()
     {
-        var userRepository = ServiceLocator.Instance.GetService<IUserDataAccess>();
+        //var userRepository = ServiceLocator.Instance.GetService<IUserDataAccess>();
         var eventDispatcher = ServiceLocator.Instance.GetService<IEventDispatcherService>();
-        var firebaseAccountService = ServiceLocator.Instance.GetService<IFirebaseAccountService>();
-        var firebaseLoginService = ServiceLocator.Instance.GetService<IFirebaseLoginService>();
+        //var firebaseAccountService = ServiceLocator.Instance.GetService<IFirebaseAccountService>();
+        //var firebaseLoginService = ServiceLocator.Instance.GetService<IFirebaseLoginService>();
 
         hangmanService = new HangmanService(eventDispatcher);
 
-        var gamePanelView = Instantiate(_gamePanelPrefab, canvasParent);
+        gamePanelView = Instantiate(_gamePanelPrefab, canvasParent);
         var pausePanelView = Instantiate(_pausePanelPrefab, canvasParent);
         var endGamePanelView = Instantiate(_endGamePanelPrefab, canvasParent);
 
@@ -54,5 +55,7 @@ public class GameInstaller : MonoBehaviour
     private async void Start()
     {
         await hangmanService.InitAsync();
+
+        gamePanelView.loadingScreen.gameObject.SetActive(false);
     }
 }
