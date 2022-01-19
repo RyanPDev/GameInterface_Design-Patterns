@@ -69,21 +69,20 @@ public class HangmanService : Service, IHangmanService
         return string.Join(" ", word.ToCharArray());
     }
 
-    private async void GuessLetter()
+    public async void GuessLetter(string letter)
     {
-        string letter = "";
-        //= _inputField.text;
-        if (string.IsNullOrEmpty(letter))
-        {
-            Debug.LogError("Input text is null");
-            return;
-        }
+        ////= _inputField.text;
+        //if (string.IsNullOrEmpty(letter))
+        //{
+        //    Debug.LogError("Input text is null");
+        //    return;
+        //}
 
-        if (letter.Length > 1)
-        {
-            Debug.LogError("Only 1 letter");
-            return;
-        }
+        //if (letter.Length > 1)
+        //{
+        //    Debug.LogError("Only 1 letter");
+        //    return;
+        //}
 
         var request = new GuessLetterRequest { letter = letter, token = _token };
         var response = await
@@ -98,6 +97,7 @@ public class HangmanService : Service, IHangmanService
         SetGuessResponse(response, letter);
         if (IsCompleted(response.hangman))
         {
+            //WIN DISPATCH
             Debug.Log("Complete");
         }
     }
@@ -106,15 +106,22 @@ public class HangmanService : Service, IHangmanService
     {
         if (response.correct)
         {
+            //DISPATCH TO CHANGE LETTER COLOR TO GREEN
+
             _correctLetters.Append($" {letter}");
+
             //_correctLettersText.SetText(_correctLetters.ToString());
         }
         else
         {
+            //DISPATCH TO LOSE HEALTH
+            //DISPATCH TO CHANGE LETTER COLOR TO RED
+
             _incorrectLetters.Append($" {letter}");
+
             //_incorrectLettersText.SetText(_incorrectLetters.ToString());
         }
-
+        eventDispatcher.Dispatch(new GetWordEvent(AddSpacesBetweenLetters(response.hangman)));
         //_hangmanText.SetText(AddSpacesBetweenLetters(response.hangman));
     }
 

@@ -18,6 +18,7 @@ public class LetterView : View
         letterButton.onClick.AddListener(() =>
         {
             viewModel.OnLetterButtonPressed.Execute();
+            letterButton.interactable = false;
         });
 
         viewModel.letterText.Subscribe((text) =>

@@ -13,7 +13,7 @@ public class UpdateGameUseCase : UseCase, IUpdateGameUseCase
 
     public void CheckLetter(string letter)
     {
-
+        hangmanService.GuessLetter(letter);
     }
 
     //public async Task Init()
