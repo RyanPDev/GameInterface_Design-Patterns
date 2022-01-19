@@ -9,6 +9,7 @@ public class HomePanelView : View
     private HomePanelViewModel viewModel;
 
     [SerializeField] private Button profileButton;
+    [SerializeField] private Button playButton;
     [SerializeField] private TextMeshProUGUI userNameText;
 
     public void SetViewModel(HomePanelViewModel _viewModel)
@@ -29,9 +30,16 @@ public class HomePanelView : View
         })
         .AddTo(_disposables);
 
+        //profile
         profileButton.onClick.AddListener(() =>
         {
             viewModel.ProfileButtonPressed.Execute();
+        });
+
+        //game
+        playButton.onClick.AddListener(() =>
+        {
+            viewModel.PlayButtonPressed.Execute();
         });
     }
 }

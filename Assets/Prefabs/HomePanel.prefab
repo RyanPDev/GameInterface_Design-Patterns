@@ -1093,6 +1093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profileButton: {fileID: 6119511680049529386}
+  playButton: {fileID: 3013323299432349521}
   userNameText: {fileID: 8414311103190872798}
 --- !u!1 &8364562668052706806
 GameObject:

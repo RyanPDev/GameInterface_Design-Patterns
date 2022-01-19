@@ -51,6 +51,7 @@ public class MenuInstaller : MonoBehaviour
         _buttonsView.SetViewModel(buttonsViewModel);
 
         var updateUserUseCase = new UpdateUserUseCase(firebaseLoginService, userRepository, eventDispatcher).AddTo(_disposables);
+        var changeSceneUseCase = new ChangeSceneUseCase(eventDispatcher);
         var accountManager = new AccountManagerUseCase(firebaseAccountService, eventDispatcher).AddTo(_disposables);
 
         new ButtonsController(homePanelViewModel, scorePanelViewModel, settingsPanelViewModel, buttonsViewModel).AddTo(_disposables);
@@ -60,7 +61,7 @@ public class MenuInstaller : MonoBehaviour
         new SettingsPanelPresenter(settingsPanelViewModel, eventDispatcher).AddTo(_disposables);
         new SignInController(signInPanelViewModel, accountManager).AddTo(_disposables);
         new SignInPresenter(signInPanelViewModel, eventDispatcher).AddTo(_disposables);
-        new HomePanelController(homePanelViewModel, profilePanelViewModel).AddTo(_disposables);
+        new HomePanelController(homePanelViewModel, profilePanelViewModel, changeSceneUseCase).AddTo(_disposables);
         new ProfileController(profilePanelViewModel, updateUserUseCase).AddTo(_disposables);
         new HomePanelPresenter(homePanelViewModel, eventDispatcher, userRepository.GetLocalUser()).AddTo(_disposables);
     }
