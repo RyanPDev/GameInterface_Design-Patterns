@@ -36,11 +36,11 @@ class GamePanelPresenter : Presenter
             {
                 if (obj.v)
                 {
-                    element.letterColor.Value = new Color(0, 1, 0);
+                    element.letterColor.Value = new Color(0.18f, 0.5f, 0.18f);
                 }
                 else
                 {
-                    element.letterColor.Value = new Color(1, 0, 0);
+                    element.letterColor.Value = new Color(0.7f, 0, 0);
                 }
                 break;
             }            
