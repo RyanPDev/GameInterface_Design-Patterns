@@ -7,18 +7,17 @@ class EndGamePanelController : Controller
         viewModel.OnContinueButtonPressed.Subscribe((_) =>
         {
             viewModel.IsVisible.Value = false;
-            if (viewModel.gameResult.Value)
-            {
-                //Nuevo juego if gameResult = true
-                gamePanelViewModel.newGame.Value = true;
-                updateGameUseCase.NewGame();
-            }
-            else
-            {
-                //Reiniciar juego if gameResult = false
+            gamePanelViewModel.newGame.Value = true;
+            updateGameUseCase.NewGame();
+            //if (viewModel.gameResult.Value)
+            //{
+            //    //Nuevo juego if gameResult = true
+            //}
+            //else
+            //{
+            //    //Reiniciar juego if gameResult = false
 
-            }
-
+            //}
 
         }).AddTo(_disposables);
 
