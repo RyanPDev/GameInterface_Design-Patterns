@@ -9,7 +9,7 @@ public class HangmanService : Service, IHangmanService
     private string _token;
     private StringBuilder _correctLetters;
     private StringBuilder _incorrectLetters;
-    private RestClientAdapter _restClientAdapter;
+    private HangmanClient _restClientAdapter;
 
     readonly IEventDispatcherService eventDispatcher;
 
@@ -17,7 +17,7 @@ public class HangmanService : Service, IHangmanService
     {
         eventDispatcher = _eventDispatcher;
 
-        _restClientAdapter = new RestClientAdapter();
+        _restClientAdapter = new HangmanClient();
         _correctLetters = new StringBuilder();
         _incorrectLetters = new StringBuilder();
 
@@ -48,8 +48,10 @@ public class HangmanService : Service, IHangmanService
 
     public async Task StartGame()
     {
-        var request = new NewGameRequest();
-        var response = await _restClientAdapter.Post<NewGameRequest, NewGameResponse>(EndPoints.NewGame, request);
+       
+        //var request = new NewGameRequest();
+        var response = await _restClientAdapter
+               .StartGame<NewGameResponse>(EndPoints.NewGame);
         UpdateToken(response.token);
         eventDispatcher.Dispatch(new GetWordEvent(AddSpacesBetweenLetters(response.hangman)));
         //_hangmanText.SetText(AddSpacesBetweenLetters(response.hangman));
@@ -82,10 +84,9 @@ public class HangmanService : Service, IHangmanService
         //}
 
         var request = new GuessLetterRequest { letter = letter, token = _token };
-        var response = await _restClientAdapter.PutWithParametersOnUrl<GuessLetterRequest, GuessLetterResponse>(
-                    EndPoints.GuessLetter,
-                    request
-                );
+        var response = await
+                      _restClientAdapter.GuessLetter<GuessLetterResponse>
+                          (EndPoints.GuessLetter, _token, letter);
 
         UpdateToken(response.token);
         SetGuessResponse(response, letter);
@@ -124,8 +125,8 @@ public class HangmanService : Service, IHangmanService
     {
         var request = new GetSolutionRequest { token = _token };
         var response =
-            await _restClientAdapter.Get<GetSolutionRequest, GetSolutionResponse>(EndPoints.GetSolution,
-                request);
+            await _restClientAdapter.GetSolution<GetSolutionResponse>(EndPoints.GetSolution,
+                        _token);
 
         UpdateToken(response.token);
         //_hangmanText.SetText(response.solution);
