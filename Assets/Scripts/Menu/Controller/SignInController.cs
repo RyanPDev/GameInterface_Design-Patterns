@@ -2,7 +2,7 @@
 
 class SignInController : Controller
 {
-    public SignInController(SignInPanelViewModel viewModel, AccountManagerUseCase ManageAccountUseCase)
+    public SignInController(SignInPanelViewModel viewModel, AccountManagerUseCase accountManagerUseCase)
     {
         viewModel.OnBackButtonPressed.Subscribe((_) =>
         {
@@ -12,9 +12,9 @@ class SignInController : Controller
         viewModel.OnSignInButtonPressed.Subscribe((taskText) =>
         {
             if (viewModel.signInAction.Value)
-                ManageAccountUseCase.SignIn(taskText.mail, taskText.password);
+                accountManagerUseCase.SignIn(taskText.mail, taskText.password);
             else
-                ManageAccountUseCase.CreateAccount(taskText.mail, taskText.password);
+                accountManagerUseCase.CreateAccount(taskText.mail, taskText.password);
         }).AddTo(_disposables);
     }
 }

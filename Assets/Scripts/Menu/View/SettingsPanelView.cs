@@ -8,6 +8,7 @@ public class SettingsPanelView : View
     private SettingsPanelViewModel _viewModel;
     [SerializeField] private Button createButton;
     [SerializeField] private Button signInButton;
+    [SerializeField] private Button signOutButton;
 
     [SerializeField] private Toggle notificationsToggle;
     [SerializeField] private Toggle audioToggle;
@@ -20,7 +21,7 @@ public class SettingsPanelView : View
 
         _viewModel.IsLoginVisible.Value = !PlayerPrefs.HasKey("UserEmail");
         _viewModel.IsCreateVisible.Value = !PlayerPrefs.HasKey("UserEmail");
-
+        _viewModel.IsSignOutVisible.Value = PlayerPrefs.HasKey("UserEmail");
 
         _viewModel.IsVisible.Subscribe((isVisible) =>
         {
@@ -44,6 +45,12 @@ public class SettingsPanelView : View
         })
         .AddTo(_disposables);
 
+        _viewModel.IsSignOutVisible.Subscribe((isVisible) =>
+        {
+            signOutButton.gameObject.SetActive(isVisible);
+        })
+        .AddTo(_disposables);
+
         //Buttons
         createButton.onClick.AddListener(() =>
         {
@@ -53,6 +60,11 @@ public class SettingsPanelView : View
         signInButton.onClick.AddListener(() =>
         {
             _viewModel.OnSignInButtonPressed.Execute();
+        });
+
+        signOutButton.onClick.AddListener(() =>
+        {
+            _viewModel.OnSignOutButtonPressed.Execute();
         });
 
         //Toggles

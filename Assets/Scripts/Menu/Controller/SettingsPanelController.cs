@@ -6,10 +6,12 @@ class SettingsPanelController : Controller
     private readonly SignInPanelViewModel signInViewModel;
 
     private readonly IUpdateUserUseCase updateUserUseCase;
+    private readonly IAccountManagerUseCase accountManagerUseCase;
 
-    public SettingsPanelController(SettingsPanelViewModel _viewModel, SignInPanelViewModel _signInViewModel, IUpdateUserUseCase _updateUserUseCase)
+    public SettingsPanelController(SettingsPanelViewModel _viewModel, SignInPanelViewModel _signInViewModel, IUpdateUserUseCase _updateUserUseCase, IAccountManagerUseCase _accountManagerUseCase)
     {
         updateUserUseCase = _updateUserUseCase;
+        accountManagerUseCase = _accountManagerUseCase;
         settingsPanelViewModel = _viewModel;
         signInViewModel = _signInViewModel;
 
@@ -19,6 +21,18 @@ class SettingsPanelController : Controller
             {
                 signInViewModel.IsVisible.Value = true;
                 signInViewModel.signInAction.Value = true;
+            })
+            .AddTo(_disposables);
+
+        settingsPanelViewModel
+            .OnSignOutButtonPressed
+            .Subscribe((_) =>
+            {
+                accountManagerUseCase.SignOut();
+
+                settingsPanelViewModel.IsLoginVisible.Value = true;
+                settingsPanelViewModel.IsCreateVisible.Value = true;
+                settingsPanelViewModel.IsSignOutVisible.Value = false;
             })
             .AddTo(_disposables);
 

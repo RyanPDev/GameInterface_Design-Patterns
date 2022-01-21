@@ -1,4 +1,5 @@
 ﻿public interface IChangeSceneUseCase
 {
-    void ChangeScene(LoginEvent loginEvent);
+    void ChangeSceneToMenu(LoginEvent loginEvent);
+    void ChangeScene(int scene);
 }

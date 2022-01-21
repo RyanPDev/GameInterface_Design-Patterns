@@ -23,6 +23,7 @@
         {
             viewModel.IsLoginVisible.Value = false;
             viewModel.IsCreateVisible.Value = false;
+            viewModel.IsSignOutVisible.Value = true;
         }
     }
 }

@@ -7,9 +7,6 @@ using System.Collections.Generic;
 
 public class LoginView : View
 {
-    [SerializeField] private Button loginButton;
-    [SerializeField] private TextMeshProUGUI ID;
-
     private LoginViewModel viewModel;
 
     //the total time of the animation
@@ -28,41 +25,13 @@ public class LoginView : View
     public void SetViewModel(LoginViewModel _viewModel)
     {
         viewModel = _viewModel;
-        viewModel.isVisible.Value = true;
-        viewModel.IsAuthenticated.Value = false;
-        loginButton.gameObject.SetActive(false);
 
-        viewModel
-            .isVisible
-            .Subscribe((IsVisible) =>
-            {
-                if (!IsVisible)
-                {
-                    if (repeatTime < dots.Count * bounceTime)
-                    {
-                        repeatTime = dots.Count * bounceTime;
-                    }
-                    InvokeRepeating("Animate", 0, repeatTime);
-                    canvasGroup.DOFade(1, 0.2f);
-                }
-
-            }).AddTo(_disposables);
-
-        viewModel
-          .IsAuthenticated
-          .Subscribe((isAutheticated) =>
-          {
-              if (isAutheticated)
-              {
-                  loginButton.gameObject.SetActive(isAutheticated);
-              }
-
-          }).AddTo(_disposables);
-
-        loginButton.onClick.AddListener(() =>
+        if (repeatTime < dots.Count * bounceTime)
         {
-            _viewModel.LoginButtonPressed.Execute();
-        });
+            repeatTime = dots.Count * bounceTime;
+        }
+        InvokeRepeating("Animate", 0, repeatTime);
+        canvasGroup.DOFade(1, 0.2f);
     }
 
     void Animate() // Codigo de https://gist.github.com/reidscarboro/588911e7bc0e0ad82bfa8a1ad2397bd5

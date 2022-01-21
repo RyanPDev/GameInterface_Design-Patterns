@@ -7,17 +7,22 @@ public class ChangeSceneUseCase : UseCase, IChangeSceneUseCase
     public ChangeSceneUseCase(IEventDispatcherService _eventDispatcherService)
     {
         eventDispatcherService = _eventDispatcherService;
-        eventDispatcherService.Subscribe<LoginEvent>(ChangeScene);
+        eventDispatcherService.Subscribe<LoginEvent>(ChangeSceneToMenu);
     }
 
-    public void ChangeScene(LoginEvent logged)
+    public void ChangeSceneToMenu(LoginEvent logged)
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void ChangeScene(int scene)
+    {
+        SceneManager.LoadScene(scene);
     }
 
     public override void Dispose()
     {
         base.Dispose();
-        eventDispatcherService.Unsubscribe<LoginEvent>(ChangeScene);
+        eventDispatcherService.Unsubscribe<LoginEvent>(ChangeSceneToMenu);
     }
 }

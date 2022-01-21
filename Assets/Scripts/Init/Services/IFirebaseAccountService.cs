@@ -1,5 +1,8 @@
 ﻿public interface IFirebaseAccountService
 {
-    void SignIn(SignInEvent user);
-    void Create(CreateAccountEvent newUser);
+    void SignIn(string mail, string password);
+    void SignOut();
+    void Create(string mail, string password);
+    void LoadUserData();
+    void SetData(User user);
 }

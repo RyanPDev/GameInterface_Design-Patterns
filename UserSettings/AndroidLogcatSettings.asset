@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "e7faa8619516",
+    "m_SelectedDeviceId": "VQTBB19121150627",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "VQTBB19121150627",
+        "name": "com.company",
+        "processId": 16919,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -18,6 +18,78 @@
             "deviceId": "VQTBB19121150627",
             "name": "com.huawei.android.launcher",
             "processId": 21831,
+            "exited": true
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.huawei.android.launcher",
+            "processId": 1684,
+            "exited": false
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 11824,
+            "exited": true
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 12491,
+            "exited": false
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 8039,
+            "exited": false
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 8671,
+            "exited": false
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 11483,
+            "exited": false
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 11767,
+            "exited": false
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 12378,
+            "exited": false
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 12948,
+            "exited": false
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 15956,
+            "exited": false
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 16398,
+            "exited": false
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 16919,
             "exited": false
         },
         {
