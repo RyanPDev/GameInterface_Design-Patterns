@@ -8,6 +8,8 @@ class EndGamePanelView : View
     [SerializeField] private Button continueButton;
     [SerializeField] private Button menuButton;
     [SerializeField] private TextMeshProUGUI ButtonText;
+    [SerializeField] private Image victoryScreen;
+    [SerializeField] private Image defeatScreen;
 
     private EndGamePanelViewModel viewModel;
 
@@ -25,12 +27,20 @@ class EndGamePanelView : View
 
         viewModel
            .gameResult
-           .Subscribe((_signInAction) =>
+           .Subscribe((victory) =>
            {
-               if (_signInAction)
+               if (victory)
+               {
                    ButtonText.SetText("CONTINUE");
+                   defeatScreen.enabled = false;
+                   victoryScreen.enabled = true;
+               }
                else
+               {
                    ButtonText.SetText("RETRY");
+                   defeatScreen.enabled = true;
+                   victoryScreen.enabled = false;
+               }
            })
            .AddTo(_disposables);
 

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class LetterView : View
 {
-
     [SerializeField] private Button letterButton;
     [SerializeField] private TextMeshProUGUI ButtonText;
 
@@ -17,7 +16,6 @@ public class LetterView : View
     {
         viewModel = _viewModel;
 
-
         letterButton.onClick.AddListener(() =>
         {
             viewModel.OnLetterButtonPressed.Execute();
@@ -27,12 +25,12 @@ public class LetterView : View
         viewModel.letterText.Subscribe((text) =>
         {
             ButtonText.text = text;
-        });
+        }).AddTo(_disposables);
 
         viewModel.letterColor.Subscribe((color) =>
         {
             letterColor.color = color;
-        });
+        }).AddTo(_disposables);
 
         letterColor.color = new Color(1, 1, 1);
     }

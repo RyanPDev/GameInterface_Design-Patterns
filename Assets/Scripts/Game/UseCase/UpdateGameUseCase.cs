@@ -16,8 +16,10 @@ public class UpdateGameUseCase : UseCase, IUpdateGameUseCase
         hangmanService.GuessLetter(letter);
     }
 
-    //public async Task Init()
-    //{
-    //    //hangmanService.GetLetters();
-    //}
+    public async void NewGame()
+    {
+       await hangmanService.StartGame();
+
+        //eventDispatcher.Dispatch();
+    }
 }

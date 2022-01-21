@@ -1,6 +1,5 @@
 using UnityEngine;
 using UniRx;
-using System;
 
 class GamePanelPresenter : Presenter
 {
@@ -43,13 +42,14 @@ class GamePanelPresenter : Presenter
                     element.letterColor.Value = new Color(0.7f, 0, 0);
                 }
                 break;
-            }            
+            }
         }
     }
 
     private void GetWord(GetWordEvent obj)
     {
         gamePanelViewModel.word.SetValueAndForceNotify(obj.v);
+        endGamePanelViewModel.IsVisible.Value = false;
     }
 
     private void GetLetters(GetLetterEvent letter)
@@ -62,5 +62,14 @@ class GamePanelPresenter : Presenter
         });
 
         gamePanelViewModel.letter.Add(letterViewModel);
+    }
+    public override void Dispose()
+    {
+        base.Dispose();
+
+        eventDispatcherService.Unsubscribe<GetLetterEvent>(GetLetters);
+        eventDispatcherService.Unsubscribe<GetWordEvent>(GetWord);
+        eventDispatcherService.Unsubscribe<CheckLetterEvent>(UpdateLetterColor);
+        eventDispatcherService.Unsubscribe<EndEvent>(EndPanelPopUp);
     }
 }

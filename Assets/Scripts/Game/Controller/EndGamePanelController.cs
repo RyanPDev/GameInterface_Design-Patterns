@@ -2,14 +2,14 @@ using UniRx;
 
 class EndGamePanelController : Controller
 {
-    public EndGamePanelController(EndGamePanelViewModel viewModel, ChangeSceneUseCase changeSceneUseCase)
+    public EndGamePanelController(EndGamePanelViewModel viewModel, IChangeSceneUseCase changeSceneUseCase, IUpdateGameUseCase updateGameUseCase)
     {
         viewModel.OnContinueButtonPressed.Subscribe((_) =>
         {
             if (viewModel.gameResult.Value)
             {
                 //Nuevo juego if gameResult = true
-
+                updateGameUseCase.NewGame();
             }
             else
             {

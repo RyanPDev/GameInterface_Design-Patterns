@@ -5,4 +5,6 @@ public interface IHangmanService
     public Task InitAsync();
 
     public void GuessLetter(string letter);
+
+    Task StartGame();
 }
