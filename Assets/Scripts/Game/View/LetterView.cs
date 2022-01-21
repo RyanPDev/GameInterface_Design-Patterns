@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class LetterView : View
 {
-    [SerializeField] private Button letterButton;
+    [SerializeField] public Button letterButton;
     [SerializeField] private TextMeshProUGUI ButtonText;
 
-    [SerializeField] private Image letterColor;
+    [SerializeField] public Image letterColor;
 
     private LetterViewModel viewModel;
 
@@ -27,7 +27,7 @@ public class LetterView : View
             ButtonText.text = text;
         }).AddTo(_disposables);
 
-        viewModel.letterColor.Subscribe((color) =>
+        viewModel.lettersColor.Subscribe((color) =>
         {
             letterColor.color = color;
         }).AddTo(_disposables);

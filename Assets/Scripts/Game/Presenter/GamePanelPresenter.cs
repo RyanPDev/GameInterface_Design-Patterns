@@ -35,11 +35,11 @@ class GamePanelPresenter : Presenter
             {
                 if (obj.v)
                 {
-                    element.letterColor.Value = new Color(0.18f, 0.5f, 0.18f);
+                    element.lettersColor.Value = new Color(0.18f, 0.5f, 0.18f);
                 }
                 else
                 {
-                    element.letterColor.Value = new Color(0.7f, 0, 0);
+                    element.lettersColor.Value = new Color(0.7f, 0, 0);
                 }
                 break;
             }
@@ -49,7 +49,6 @@ class GamePanelPresenter : Presenter
     private void GetWord(GetWordEvent obj)
     {
         gamePanelViewModel.word.SetValueAndForceNotify(obj.v);
-        endGamePanelViewModel.IsVisible.Value = false;
     }
 
     private void GetLetters(GetLetterEvent letter)
@@ -59,10 +58,11 @@ class GamePanelPresenter : Presenter
         letterViewModel.OnLetterButtonPressed.Subscribe((_) =>
         {
             updateGameUseCase.CheckLetter(letterViewModel.letterText.Value);
-        });
+        }).AddTo(_disposables);
 
         gamePanelViewModel.letter.Add(letterViewModel);
     }
+
     public override void Dispose()
     {
         base.Dispose();

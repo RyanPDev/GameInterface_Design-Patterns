@@ -13,7 +13,7 @@ public class GamePanelView : View
     [SerializeField] private RectTransform lettersLayout;
 
     [SerializeField] private LetterView _letterViewPrefab;
-    private List<LetterView> letters;
+    public List<LetterView> letters;
 
     [SerializeField] public RectTransform loadingScreen;
 
@@ -57,6 +57,19 @@ public class GamePanelView : View
             wordText.text = word;
         })
         .AddTo(_disposables);
+
+        viewModel.newGame.Subscribe((newGame) =>
+        {
+            if (newGame)
+            {
+                foreach (LetterView element in letters)
+                {
+                    element.letterColor.color = new Color(1, 1, 1);
+                    element.letterButton.interactable = true;
+                }
+                viewModel.newGame.Value = false;
+            }
+        }).AddTo(_disposables);
     }
 
     private void SetLetters(CollectionAddEvent<LetterViewModel> _viewModel)
