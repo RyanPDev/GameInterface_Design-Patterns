@@ -11,8 +11,6 @@ class EndGamePanelPresenter : Presenter
     {
         endGamePanelViewModel = _endGamePanelViewModel;
     }
-
-
     public override void Dispose()
     {
         base.Dispose();

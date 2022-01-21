@@ -13,10 +13,6 @@ class EndGamePanelController : Controller
                 gamePanelViewModel.newGame.Value = true;
                 updateGameUseCase.NewGame();
             }
-            else
-            {
-
-            }
 
         }).AddTo(_disposables);
 
