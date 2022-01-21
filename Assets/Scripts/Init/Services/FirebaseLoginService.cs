@@ -24,20 +24,9 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
                 // where app is a Firebase.FirebaseApp property of your application class.
                 var app = Firebase.FirebaseApp.DefaultInstance;
                 eventDispatcher.Dispatch(new UserInFirebase(Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser != null));
-                //eventDispatcher.Dispatch(new UserInFirebase(false));
             }
-            //else
-            //{
-            //    return;
-            //}
         }); 
     }
-
-    //public override void Dispose()
-    //{
-    //    base.Dispose();
-    //    //eventDispatcher.Unsubscribe<UserEntity>(UpdateData);
-    //}
 
     public void Login()
     {
@@ -60,39 +49,10 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
     {
         return Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId;
     }
-
-    //public void SetDataIfUserExists()
-    //{
-    //    FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-
-    //    CollectionReference usersRef = db.Collection("users");
-
-    //    usersRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
-    //    {
-    //        QuerySnapshot snapshot = task.Result;
-    //        foreach (DocumentSnapshot document in snapshot.Documents)
-    //        {
-    //            if (document.Id == Firebase.Auth.FirebaseAuth.DefaultInstance.CurrentUser.UserId)
-    //            {
-    //                LoadData();
-    //                return;
-    //            }
-    //        }
-    //        SetData(new User(GetID(), true, false), true); //-->Set init data to user on data base
-    //    });
-    //}
-
     public void UpdateData(UserEntity userEntity)
     {
         SetData(new User(userEntity.Name, userEntity.Audio, userEntity.Notifications));
     }
-
-    //Database 
-    //public void InitUserData()
-    //{
-    //    //Initial user info, audio and notificiations set both initially to true        
-    //    SetData(new User(GetID(), true, false), true);
-    //}
 
     public void SetData(User user, bool saveInRepo = false)
     {
@@ -119,7 +79,6 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
 
         if (PlayerPrefs.HasKey("UserEmail"))
         {
-            //eventDispatcher.Dispatch(new SignInEvent(PlayerPrefs.GetString("UserEmail"), PlayerPrefs.GetString("UserPassword")));
             SignInIfUserExists(PlayerPrefs.GetString("UserEmail"), PlayerPrefs.GetString("UserPassword"));
         }
 
@@ -158,8 +117,6 @@ public class FirebaseLoginService : Service, IFirebaseLoginService
             eventDispatcher.Dispatch(new SignInSuccessfully(true));
             Firebase.Auth.FirebaseUser newUser = task.Result;
             Debug.LogFormat(newUser.Email);
-            //SavePlayerPrefs(mail, password);
-            //LoadUserData();
         });
     }
 }

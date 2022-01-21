@@ -10,16 +10,7 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
     {
         userRepository = _userRepository;
         eventDispatcher = _eventDispatcher;
-        //eventDispatcher.Subscribe<SignInEvent>(SignIn);
-        //eventDispatcher.Subscribe<CreateAccountEvent>(Create);
     }
-
-    //public override void Dispose()
-    //{
-    //    base.Dispose();
-    //    eventDispatcher.Unsubscribe<SignInEvent>(SignIn);
-    //    eventDispatcher.Unsubscribe<CreateAccountEvent>(Create);
-    //}
 
     public void Create(string mail, string password)
     {
@@ -89,8 +80,7 @@ public class FirebaseAccountService : Service, IFirebaseAccountService
                 {
                     User user = document.ConvertTo<User>();
                     userRepository.SetLocalUser(new UserEntity(user.Name, user.Audio, user.Notifications));
-                    eventDispatcher.Dispatch(new UserEntity(user.Name, user.Audio, user.Notifications));
-                    //SetData(user);
+                    eventDispatcher.Dispatch(new UserEntity(user.Name, user.Audio, user.Notifications));                
                     eventDispatcher.Dispatch(new NotificationsHandler(user.Notifications));
                     break;
                 }

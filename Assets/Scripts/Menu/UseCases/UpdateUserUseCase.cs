@@ -15,7 +15,6 @@
     public void UpdateOnLogin(UserInfo userData)
     {
         var userEntity = new UserEntity(userData.Name, userData.Audio, userData.Notifications);
-        //userRepository.SetLocalUser(userEntity);
         UpdateInfo(userEntity);
         eventDispatcher.Dispatch(userEntity);
     }
@@ -25,8 +24,6 @@
         // Make the Update with a service;
         var userEntity = new UserEntity(userName, userRepository.GetLocalUser().Audio, userRepository.GetLocalUser().Notifications);
         UpdateInfo(userEntity);
-        //userRepository.SetLocalUser(userEntity);
-        //firebaseLoginService.UpdateData(userEntity);
         eventDispatcher.Dispatch(userEntity);
     }
 
@@ -34,16 +31,12 @@
     {
         var userEntity = new UserEntity(userRepository.GetLocalUser().Name, audio, userRepository.GetLocalUser().Notifications);
         UpdateInfo(userEntity);
-        //userRepository.SetLocalUser(userEntity);
-        //eventDispatcher.Dispatch(userEntity);
     }
 
     public void UpdateNotifications(bool notifications)
     {
         var userEntity = new UserEntity(userRepository.GetLocalUser().Name, userRepository.GetLocalUser().Audio, notifications);
         UpdateInfo(userEntity);
-        //userRepository.SetLocalUser(userEntity);
-        //eventDispatcher.Dispatch(userEntity);
 
         eventDispatcher.Dispatch(new NotificationsHandler(userEntity.Notifications));
     }

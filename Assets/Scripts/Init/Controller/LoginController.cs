@@ -9,11 +9,5 @@ public class LoginController : Controller
     {
         loginPanelViewModel = _loginPanelViewModel;
         loginUseCase = _loginUseCase;
-
-        //loginPanelViewModel.LoginButtonPressed.Subscribe((_) =>
-        //{
-        //    loginUseCase.Login();
-        //    loginPanelViewModel.isVisible.Value = false;
-        //}).AddTo(_disposables);
     }
 }

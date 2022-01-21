@@ -11,8 +11,7 @@
 
     public void SignIn(string mail, string pass)
     {
-        firebaseAccountService.SignIn(mail, pass);
-        //eventDispatcherService.Dispatch(new SignInEvent(mail,pass));    
+        firebaseAccountService.SignIn(mail, pass); 
     }
 
     public void SignOut()
@@ -23,6 +22,5 @@
     public void CreateAccount(string mail, string pass)
     {
         firebaseAccountService.Create(mail, pass);
-        //eventDispatcherService.Dispatch(new CreateAccountEvent(mail,pass));
     }    
 }
