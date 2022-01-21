@@ -32,6 +32,11 @@ public class GamePanelView : View
     public List<Image> Lifes = new List<Image>();
     public CanvasGroup canvasGroup;
     bool firstTime = true;
+
+    public void FixedUpdate()
+    {
+        
+    }
     public void SetViewModel(GamePanelViewModel _viewModel)
     {
         viewModel = _viewModel;
