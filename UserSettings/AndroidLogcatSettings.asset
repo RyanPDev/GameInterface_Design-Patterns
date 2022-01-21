@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "VQTBB19121150627",
         "name": "com.company",
-        "processId": 16398,
+        "processId": 16919,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -84,6 +84,12 @@
             "deviceId": "VQTBB19121150627",
             "name": "com.company",
             "processId": 16398,
+            "exited": false
+        },
+        {
+            "deviceId": "VQTBB19121150627",
+            "name": "com.company",
+            "processId": 16919,
             "exited": false
         },
         {

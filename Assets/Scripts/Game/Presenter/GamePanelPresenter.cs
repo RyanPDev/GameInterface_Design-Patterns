@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UniRx;
 
 class GamePanelPresenter : Presenter
@@ -26,6 +26,8 @@ class GamePanelPresenter : Presenter
     {
         gamePanelViewModel.OnReset.Execute();
         Time.timeScale = 0;
+        endGamePanelViewModel.gameResult.Value = obj.v;
+        endGamePanelViewModel.IsVisible.Value = true;
         if (obj.v)
         {
             gamePanelViewModel.wordsGuessedCorrectly.Value++;
@@ -38,8 +40,6 @@ class GamePanelPresenter : Presenter
                 GetLetters(new GetLetterEvent(letters[i]));
             }
         }
-        endGamePanelViewModel.gameResult.Value = obj.v;
-        endGamePanelViewModel.IsVisible.Value = true;
         endGamePanelViewModel.score.Value = gamePanelViewModel.wordsGuessedCorrectly.Value;
         endGamePanelViewModel.timer.Value = gamePanelViewModel.timer.Value;
         
