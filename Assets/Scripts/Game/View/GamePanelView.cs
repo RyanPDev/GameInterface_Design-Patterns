@@ -18,6 +18,8 @@ public class GamePanelView : View
     [SerializeField] public RectTransform loadingScreen;
 
     [SerializeField] private TextMeshProUGUI wordText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI timeText;
 
     //the total time of the animation
     public float repeatTime = 1;
@@ -32,10 +34,14 @@ public class GamePanelView : View
     public List<Image> Lifes = new List<Image>();
     public CanvasGroup canvasGroup;
     bool firstTime = true;
+    float currentTime;
+  
 
-    public void FixedUpdate()
+    private void Update()
     {
+        currentTime += Time.deltaTime;
         
+        timeText.text = Mathf.Floor(currentTime).ToString();
     }
     public void SetViewModel(GamePanelViewModel _viewModel)
     {
@@ -70,14 +76,17 @@ public class GamePanelView : View
                 loadingScreen.gameObject.SetActive(false);
         })
         .AddTo(_disposables);
+        viewModel.wordsGuessedCorrectly.Subscribe((winStreak) =>
+        {
+           scoreText.text = "Score: " + winStreak * 100;
+
+        }).AddTo(_disposables);
         viewModel.wrongNumLetters.Subscribe((wrongNumLetters) =>
         {
             if (firstTime)
                 firstTime = false;
             else
                 Lifes[wrongNumLetters].enabled = true;
-
-
         }).AddTo(_disposables);
         viewModel.OnReset.Subscribe((_) =>
         {

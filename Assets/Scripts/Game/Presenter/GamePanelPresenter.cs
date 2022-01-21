@@ -27,8 +27,10 @@ class GamePanelPresenter : Presenter
         endGamePanelViewModel.gameResult.Value = obj.v;
         endGamePanelViewModel.IsVisible.Value = true;
         gamePanelViewModel.OnReset.Execute();
+        Time.timeScale = 0;
         if (obj.v)
         {
+            gamePanelViewModel.wordsGuessedCorrectly.Value++;
             gamePanelViewModel.letter.Clear();
             gamePanelViewModel.OnNewWord.Execute();
             char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();

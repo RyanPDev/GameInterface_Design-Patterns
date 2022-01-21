@@ -21,6 +21,8 @@ class EndGamePanelView : View
             .IsVisible
             .Subscribe((isVisible) =>
             {
+                if(!isVisible)
+                    Time.timeScale = 1;
                 gameObject.SetActive(isVisible);
             })
             .AddTo(_disposables);
