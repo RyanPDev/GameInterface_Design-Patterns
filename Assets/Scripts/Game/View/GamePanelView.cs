@@ -35,7 +35,7 @@ public class GamePanelView : View
     public void SetViewModel(GamePanelViewModel _viewModel)
     {
         viewModel = _viewModel;
-        
+
         foreach (Transform child in HangedMan)
         {
             Lifes.Add(child.GetComponent<Image>());
@@ -61,6 +61,8 @@ public class GamePanelView : View
         viewModel.word.Subscribe((word) =>
         {
             wordText.text = word;
+            if (word != string.Empty)
+                loadingScreen.gameObject.SetActive(false);
         })
         .AddTo(_disposables);
         viewModel.wrongNumLetters.Subscribe((wrongNumLetters) =>
@@ -69,11 +71,28 @@ public class GamePanelView : View
                 firstTime = false;
             else
                 Lifes[wrongNumLetters].enabled = true;
-            
+
 
         }).AddTo(_disposables);
+        viewModel.OnReset.Subscribe((_) =>
+        {
+            loadingScreen.gameObject.SetActive(true);
+            Reset();
+
+        }).AddTo(_disposables);
+
+        viewModel.OnNewWord.Subscribe((_) =>
+        {
+            for (int i = 0; i < letters.Count; i++)
+            {
+                Destroy(letters[i].gameObject);
+            }
+            letters.Clear();
+
+        }).AddTo(_disposables);
+
         viewModel.newGame.Subscribe((newGame) =>
-    {
+        {
         if (newGame)
         {
             foreach (LetterView element in letters)
@@ -89,7 +108,7 @@ public class GamePanelView : View
     {
         firstTime = true;
         viewModel.wrongNumLetters.Value = 0;
-        foreach(Image i in Lifes)
+        foreach (Image i in Lifes)
         {
             i.enabled = false;
         }
@@ -101,6 +120,7 @@ public class GamePanelView : View
 
         letters.Add(letterView);
     }
+
 
     void Animate() // Codigo de https://gist.github.com/reidscarboro/588911e7bc0e0ad82bfa8a1ad2397bd5
     {

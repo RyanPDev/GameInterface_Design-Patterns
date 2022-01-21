@@ -18,6 +18,8 @@ public class UpdateGameUseCase : UseCase, IUpdateGameUseCase
 
     public async Task NewGame()
     {
+
         await hangmanService.StartGame();
+
     }
 }

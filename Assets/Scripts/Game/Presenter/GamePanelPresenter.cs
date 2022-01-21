@@ -26,6 +26,19 @@ class GamePanelPresenter : Presenter
     {
         endGamePanelViewModel.gameResult.Value = obj.v;
         endGamePanelViewModel.IsVisible.Value = true;
+        gamePanelViewModel.OnReset.Execute();
+        if (obj.v)
+        {
+            gamePanelViewModel.letter.Clear();
+            gamePanelViewModel.OnNewWord.Execute();
+            char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+
+            for (int i = 0; i < letters.Length; i++)
+            {
+                GetLetters(new GetLetterEvent(letters[i]));
+            }
+        }
+        
     }
 
     private void UpdateLetterColor(CheckLetterEvent obj)
