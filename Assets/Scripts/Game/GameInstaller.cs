@@ -24,10 +24,7 @@ public class GameInstaller : MonoBehaviour
 
     private void Awake()
     {
-        //var userRepository = ServiceLocator.Instance.GetService<IUserDataAccess>();
         var eventDispatcher = ServiceLocator.Instance.GetService<IEventDispatcherService>();
-        //var firebaseAccountService = ServiceLocator.Instance.GetService<IFirebaseAccountService>();
-        //var firebaseLoginService = ServiceLocator.Instance.GetService<IFirebaseLoginService>();
 
         hangmanService = new HangmanService(eventDispatcher);
 
@@ -43,13 +40,13 @@ public class GameInstaller : MonoBehaviour
         pausePanelView.SetViewModel(pausePanelViewModel);
         endGamePanelView.SetViewModel(endGamePanelViewModel);
 
-        var changeSceneUseCase = new ChangeSceneUseCase(eventDispatcher);
+        var changeSceneUseCase = new ChangeSceneUseCase(eventDispatcher).AddTo(_disposables);
         var updateGameUseCase = new UpdateGameUseCase(eventDispatcher, hangmanService);
 
         new GamePanelPresenter(gamePanelViewModel, endGamePanelViewModel, updateGameUseCase, eventDispatcher).AddTo(_disposables);
         new GamePanelController(gamePanelViewModel, pausePanelViewModel, endGamePanelViewModel).AddTo(_disposables);
         new PausePanelController(pausePanelViewModel, changeSceneUseCase).AddTo(_disposables);
-        new EndGamePanelController(endGamePanelViewModel, gamePanelViewModel, changeSceneUseCase, updateGameUseCase).AddTo(_disposables);        
+        new EndGamePanelController(endGamePanelViewModel, gamePanelViewModel, changeSceneUseCase, updateGameUseCase).AddTo(_disposables);
     }
 
     private async void Start()

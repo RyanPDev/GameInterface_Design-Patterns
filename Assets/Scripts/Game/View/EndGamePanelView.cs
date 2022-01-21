@@ -42,7 +42,6 @@ class EndGamePanelView : View
                    defeatScreen.enabled = false;
                    victoryScreen.enabled = true;
                    continueButton.gameObject.SetActive(true);
-                   // SE SUBE A LA BASE DE DATOS
 
                }
                else

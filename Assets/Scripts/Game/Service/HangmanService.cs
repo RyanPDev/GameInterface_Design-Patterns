@@ -20,16 +20,7 @@ public class HangmanService : Service, IHangmanService
         _restClientAdapter = new HangmanClient();
         _correctLetters = new StringBuilder();
         _incorrectLetters = new StringBuilder();
-
-        //_guessLetterButton.onClick.AddListener(GuessLetter);
-        //_getSolutionButton.onClick.AddListener(GetSolution);
     }
-
-    //private async void Start()
-    //{
-    //    await StartGame();
-    //}
-
     public async Task InitAsync()
     {
         GetLetters();
@@ -48,19 +39,15 @@ public class HangmanService : Service, IHangmanService
 
     public async Task StartGame()
     {
-       
-        //var request = new NewGameRequest();
         var response = await _restClientAdapter
                .StartGame<NewGameResponse>(EndPoints.NewGame);
         UpdateToken(response.token);
         eventDispatcher.Dispatch(new GetWordEvent(AddSpacesBetweenLetters(response.hangman)));
-        //_hangmanText.SetText(AddSpacesBetweenLetters(response.hangman));
     }
 
     private void UpdateToken(string token)
     {
         _token = token;
-        //_tokenText.SetText(_token);
     }
 
     private static string AddSpacesBetweenLetters(string word)
@@ -70,20 +57,6 @@ public class HangmanService : Service, IHangmanService
 
     public async void GuessLetter(string letter)
     {
-        ////= _inputField.text;
-        //if (string.IsNullOrEmpty(letter))
-        //{
-        //    Debug.LogError("Input text is null");
-        //    return;
-        //}
-
-        //if (letter.Length > 1)
-        //{
-        //    Debug.LogError("Only 1 letter");
-        //    return;
-        //}
-
-        var request = new GuessLetterRequest { letter = letter, token = _token };
         var response = await
                       _restClientAdapter.GuessLetter<GuessLetterResponse>
                           (EndPoints.GuessLetter, _token, letter);
@@ -105,8 +78,6 @@ public class HangmanService : Service, IHangmanService
             //DISPATCH TO CHANGE LETTER COLOR TO GREEN
             eventDispatcher.Dispatch(new CheckLetterEvent(true, letter));
             _correctLetters.Append($" {letter}");
-
-            //_correctLettersText.SetText(_correctLetters.ToString());
         }
         else
         {
@@ -115,10 +86,8 @@ public class HangmanService : Service, IHangmanService
             eventDispatcher.Dispatch(new CheckLetterEvent(false, letter));
             _incorrectLetters.Append($" {letter}");
 
-            //_incorrectLettersText.SetText(_incorrectLetters.ToString());
         }
         eventDispatcher.Dispatch(new GetWordEvent(AddSpacesBetweenLetters(response.hangman)));
-        //_hangmanText.SetText(AddSpacesBetweenLetters(response.hangman));
     }
 
     private async void GetSolution()
@@ -129,7 +98,6 @@ public class HangmanService : Service, IHangmanService
                         _token);
 
         UpdateToken(response.token);
-        //_hangmanText.SetText(response.solution);
     }
 
     private bool IsCompleted(string hangman)
