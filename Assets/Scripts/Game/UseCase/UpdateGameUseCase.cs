@@ -2,12 +2,10 @@ using System.Threading.Tasks;
 
 public class UpdateGameUseCase : UseCase, IUpdateGameUseCase
 {
-    IEventDispatcherService eventDispatcher;
     IHangmanService hangmanService;
 
-    public UpdateGameUseCase(IEventDispatcherService _eventDispatcher, IHangmanService _hangmanService)
+    public UpdateGameUseCase(IHangmanService _hangmanService)
     {
-        eventDispatcher = _eventDispatcher;
         hangmanService = _hangmanService;
     }
 
@@ -19,8 +17,6 @@ public class UpdateGameUseCase : UseCase, IUpdateGameUseCase
 
     public async Task NewGame()
     {
-
         await hangmanService.StartGame();
-
     }
 }

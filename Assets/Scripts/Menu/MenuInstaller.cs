@@ -28,6 +28,8 @@ public class MenuInstaller : MonoBehaviour
         var eventDispatcher = ServiceLocator.Instance.GetService<IEventDispatcherService>();
         var firebaseAccountService = ServiceLocator.Instance.GetService<IFirebaseAccountService>();
         var firebaseLoginService = ServiceLocator.Instance.GetService<IFirebaseLoginService>();
+        var realTimeDatabaseService = ServiceLocator.Instance.GetService<IRealTimeDatabaseService>();
+
 
         var _settingsPanelView = Instantiate(_settingsPanelPrefab, canvasParent);
         var _signInPanelView = Instantiate(_signInPanelPrefab, canvasParent);

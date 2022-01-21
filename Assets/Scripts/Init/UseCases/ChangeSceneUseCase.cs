@@ -14,6 +14,7 @@ public class ChangeSceneUseCase : UseCase, IChangeSceneUseCase
     {
         SceneManager.LoadScene(1);
     }
+
     public void ChangeScene(int scene)
     {
         SceneManager.LoadScene(scene);

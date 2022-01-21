@@ -28,11 +28,13 @@ public class InitInstaller : MonoBehaviour
 
         firebaseLoginService = new FirebaseLoginService(eventDispatcherService);
         FirebaseAccountService firebaseAccountService = new FirebaseAccountService(eventDispatcherService, userRepository);
+        var realTimeDatabaseService = new RealTimeDatabaseService(eventDispatcherService);
 
         ServiceLocator.Instance.RegisterService<IUserDataAccess>(userRepository);
         ServiceLocator.Instance.RegisterService<IEventDispatcherService>(eventDispatcherService);
         ServiceLocator.Instance.RegisterService<IFirebaseLoginService>(firebaseLoginService);
         ServiceLocator.Instance.RegisterService<IFirebaseAccountService>(firebaseAccountService);
+        ServiceLocator.Instance.RegisterService<IRealTimeDatabaseService>(realTimeDatabaseService);
 
         var loginView = Instantiate(loginPrefab, canvasParent);
         var loginViewModel = new LoginViewModel().AddTo(_disposables);

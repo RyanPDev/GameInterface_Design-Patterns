@@ -7,14 +7,16 @@ class GamePanelPresenter : Presenter
     private readonly GamePanelViewModel gamePanelViewModel;
     private readonly EndGamePanelViewModel endGamePanelViewModel;
     private readonly IUpdateGameUseCase updateGameUseCase;
-    
+    private readonly IUpdateScoreUseCase updateScoreUseCase;
 
-    public GamePanelPresenter(GamePanelViewModel _gamePanelViewModel, EndGamePanelViewModel _endGamePanelViewModel, IUpdateGameUseCase _updateGameUseCase, IEventDispatcherService _eventDispatcher)
+
+    public GamePanelPresenter(GamePanelViewModel _gamePanelViewModel, EndGamePanelViewModel _endGamePanelViewModel, IUpdateGameUseCase _updateGameUseCase, IEventDispatcherService _eventDispatcher, IUpdateScoreUseCase _updateScoreUseCase)
     {
         gamePanelViewModel = _gamePanelViewModel;
         endGamePanelViewModel = _endGamePanelViewModel;
         eventDispatcherService = _eventDispatcher;
         updateGameUseCase = _updateGameUseCase;
+        updateScoreUseCase = _updateScoreUseCase;
 
         eventDispatcherService.Subscribe<GetLetterEvent>(GetLetters);
         eventDispatcherService.Subscribe<GetWordEvent>(GetWord);
@@ -22,7 +24,7 @@ class GamePanelPresenter : Presenter
         eventDispatcherService.Subscribe<EndEvent>(EndPanelPopUp);
     }
 
-    private void EndPanelPopUp(EndEvent obj)
+    private async void EndPanelPopUp(EndEvent obj)
     {
         gamePanelViewModel.OnReset.Execute();
         Time.timeScale = 0;
@@ -42,7 +44,12 @@ class GamePanelPresenter : Presenter
         }
         endGamePanelViewModel.score.Value = gamePanelViewModel.wordsGuessedCorrectly.Value;
         endGamePanelViewModel.timer.Value = gamePanelViewModel.timer.Value;
-        
+
+        var aux = await updateScoreUseCase.GetScore();
+        if (aux < endGamePanelViewModel.score.Value * 100)
+        {
+            updateScoreUseCase.SetScore(endGamePanelViewModel.score.Value * 100);
+        }
     }
 
     private void UpdateLetterColor(CheckLetterEvent obj)
