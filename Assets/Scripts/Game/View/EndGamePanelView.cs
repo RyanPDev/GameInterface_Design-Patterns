@@ -8,21 +8,25 @@ class EndGamePanelView : View
     [SerializeField] private Button continueButton;
     [SerializeField] private Button menuButton;
     [SerializeField] private TextMeshProUGUI ButtonText;
+    [SerializeField] private TextMeshProUGUI Score;
+    [SerializeField] private TextMeshProUGUI Timer;
     [SerializeField] private Image victoryScreen;
     [SerializeField] private Image defeatScreen;
 
     private EndGamePanelViewModel viewModel;
+    private bool firstTime;
 
     public void SetViewModel(EndGamePanelViewModel _viewModel)
     {
         viewModel = _viewModel;
-
+        firstTime = true;
         viewModel
             .IsVisible
             .Subscribe((isVisible) =>
             {
-                if(!isVisible)
+                if (!isVisible)
                     Time.timeScale = 1;
+
                 gameObject.SetActive(isVisible);
             })
             .AddTo(_disposables);
@@ -36,16 +40,27 @@ class EndGamePanelView : View
                    ButtonText.SetText("CONTINUE");
                    defeatScreen.enabled = false;
                    victoryScreen.enabled = true;
+                   // SE SUBE A LA BASE DE DATOS
+
                }
                else
                {
                    ButtonText.SetText("RETRY");
                    defeatScreen.enabled = true;
                    victoryScreen.enabled = false;
+
                }
            })
            .AddTo(_disposables);
+        viewModel.score.Subscribe((winStreak) =>
+        {
+            Score.text = "Score: " + winStreak * 100;
 
+        }).AddTo(_disposables);
+        viewModel.timer.Subscribe((_time) =>
+        {
+            Timer.text = "Time: " + _time;
+        }).AddTo(_disposables);
         continueButton.onClick.AddListener(() =>
         {
             _viewModel.OnContinueButtonPressed.Execute();

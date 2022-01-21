@@ -8,6 +8,7 @@ public class GamePanelViewModel : ViewModel
 
     public readonly ReactiveProperty<int> wrongNumLetters;
     public readonly ReactiveProperty<int> wordsGuessedCorrectly;
+    public readonly ReactiveProperty<int> timer;
 
 
     public readonly ReactiveCollection<LetterViewModel> letter;
@@ -25,6 +26,7 @@ public class GamePanelViewModel : ViewModel
         wrongNumLetters = new ReactiveProperty<int>(0).AddTo(_disposables);
         wordsGuessedCorrectly = new ReactiveProperty<int>(0).AddTo(_disposables);
         word = new ReactiveProperty<string>(string.Empty).AddTo(_disposables);
+        timer = new ReactiveProperty<int>(0).AddTo(_disposables);
         newGame = new ReactiveProperty<bool>().AddTo(_disposables);
     }
 }

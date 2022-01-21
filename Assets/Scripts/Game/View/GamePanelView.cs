@@ -37,11 +37,11 @@ public class GamePanelView : View
     float currentTime;
   
 
-    private void Update()
+    private void FixedUpdate()
     {
-        currentTime += Time.deltaTime;
-        
-        timeText.text = Mathf.Floor(currentTime).ToString();
+        currentTime += Time.fixedDeltaTime;
+        viewModel.timer.Value =(int)Mathf.Floor(currentTime);
+        timeText.text = viewModel.timer.Value.ToString();
     }
     public void SetViewModel(GamePanelViewModel _viewModel)
     {
@@ -121,6 +121,7 @@ public class GamePanelView : View
     public void Reset()
     {
         firstTime = true;
+        
         viewModel.wrongNumLetters.Value = 0;
         foreach (Image i in Lifes)
         {

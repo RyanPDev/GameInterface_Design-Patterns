@@ -24,8 +24,6 @@ class GamePanelPresenter : Presenter
 
     private void EndPanelPopUp(EndEvent obj)
     {
-        endGamePanelViewModel.gameResult.Value = obj.v;
-        endGamePanelViewModel.IsVisible.Value = true;
         gamePanelViewModel.OnReset.Execute();
         Time.timeScale = 0;
         if (obj.v)
@@ -40,6 +38,10 @@ class GamePanelPresenter : Presenter
                 GetLetters(new GetLetterEvent(letters[i]));
             }
         }
+        endGamePanelViewModel.gameResult.Value = obj.v;
+        endGamePanelViewModel.IsVisible.Value = true;
+        endGamePanelViewModel.score.Value = gamePanelViewModel.wordsGuessedCorrectly.Value;
+        endGamePanelViewModel.timer.Value = gamePanelViewModel.timer.Value;
         
     }
 
