@@ -32,6 +32,7 @@ public class HangmanService : Service, IHangmanService
 
     public async Task InitAsync()
     {
+        GetLetters();
         await StartGame();
     }
 
@@ -47,7 +48,6 @@ public class HangmanService : Service, IHangmanService
 
     public async Task StartGame()
     {
-        GetLetters();
         var request = new NewGameRequest();
         var response = await _restClientAdapter.Post<NewGameRequest, NewGameResponse>(EndPoints.NewGame, request);
         UpdateToken(response.token);

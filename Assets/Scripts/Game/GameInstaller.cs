@@ -49,7 +49,7 @@ public class GameInstaller : MonoBehaviour
         new GamePanelPresenter(gamePanelViewModel, endGamePanelViewModel, updateGameUseCase, eventDispatcher).AddTo(_disposables);
         new GamePanelController(gamePanelViewModel, pausePanelViewModel, endGamePanelViewModel).AddTo(_disposables);
         new PausePanelController(pausePanelViewModel, changeSceneUseCase).AddTo(_disposables);
-        new EndGamePanelController(endGamePanelViewModel, changeSceneUseCase, updateGameUseCase).AddTo(_disposables);        
+        new EndGamePanelController(endGamePanelViewModel, gamePanelViewModel, changeSceneUseCase, updateGameUseCase).AddTo(_disposables);        
     }
 
     private async void Start()
