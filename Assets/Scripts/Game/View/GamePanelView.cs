@@ -27,13 +27,19 @@ public class GamePanelView : View
 
     //how far does each dot move
     public float bounceHeight = 10;
-
+    public Transform HangedMan;
     public List<GameObject> dots;
+    public List<Image> Lifes = new List<Image>();
     public CanvasGroup canvasGroup;
-
+    bool firstTime = true;
     public void SetViewModel(GamePanelViewModel _viewModel)
     {
         viewModel = _viewModel;
+        
+        foreach (Transform child in HangedMan)
+        {
+            Lifes.Add(child.GetComponent<Image>());
+        }
 
         if (repeatTime < dots.Count * bounceTime)
         {
@@ -57,21 +63,37 @@ public class GamePanelView : View
             wordText.text = word;
         })
         .AddTo(_disposables);
-
-        viewModel.newGame.Subscribe((newGame) =>
+        viewModel.wrongNumLetters.Subscribe((wrongNumLetters) =>
         {
-            if (newGame)
-            {
-                foreach (LetterView element in letters)
-                {
-                    element.letterColor.color = new Color(1, 1, 1);
-                    element.letterButton.interactable = true;
-                }
-                viewModel.newGame.Value = false;
-            }
-        }).AddTo(_disposables);
-    }
+            if (firstTime)
+                firstTime = false;
+            else
+                Lifes[wrongNumLetters].enabled = true;
+            
 
+        }).AddTo(_disposables);
+        viewModel.newGame.Subscribe((newGame) =>
+    {
+        if (newGame)
+        {
+            foreach (LetterView element in letters)
+            {
+                element.letterColor.color = new Color(1, 1, 1);
+                element.letterButton.interactable = true;
+            }
+            viewModel.newGame.Value = false;
+        }
+    }).AddTo(_disposables);
+    }
+    public void Reset()
+    {
+        firstTime = true;
+        viewModel.wrongNumLetters.Value = 0;
+        foreach(Image i in Lifes)
+        {
+            i.enabled = false;
+        }
+    }
     private void SetLetters(CollectionAddEvent<LetterViewModel> _viewModel)
     {
         var letterView = Instantiate(_letterViewPrefab, lettersLayout);

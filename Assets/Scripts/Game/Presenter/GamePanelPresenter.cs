@@ -7,6 +7,7 @@ class GamePanelPresenter : Presenter
     private readonly GamePanelViewModel gamePanelViewModel;
     private readonly EndGamePanelViewModel endGamePanelViewModel;
     private readonly IUpdateGameUseCase updateGameUseCase;
+    
 
     public GamePanelPresenter(GamePanelViewModel _gamePanelViewModel, EndGamePanelViewModel _endGamePanelViewModel, IUpdateGameUseCase _updateGameUseCase, IEventDispatcherService _eventDispatcher)
     {
@@ -40,6 +41,13 @@ class GamePanelPresenter : Presenter
                 else
                 {
                     element.lettersColor.Value = new Color(0.7f, 0, 0);
+                    gamePanelViewModel.wrongNumLetters.Value++;
+                    if (gamePanelViewModel.wrongNumLetters.Value >= 9)
+                    {
+
+                        // LOSE
+                        eventDispatcherService.Dispatch<EndEvent>(new EndEvent(false));
+                    }
                 }
                 break;
             }
