@@ -26,6 +26,7 @@ class EndGamePanelView : View
             {
                 if (!isVisible)
                     Time.timeScale = 1;
+               
 
                 gameObject.SetActive(isVisible);
             })
@@ -40,14 +41,20 @@ class EndGamePanelView : View
                    ButtonText.SetText("CONTINUE");
                    defeatScreen.enabled = false;
                    victoryScreen.enabled = true;
+                   continueButton.gameObject.SetActive(true);
                    // SE SUBE A LA BASE DE DATOS
 
                }
                else
                {
-                   ButtonText.SetText("RETRY");
+                   ButtonText.SetText("RETRY (AD)");
                    defeatScreen.enabled = true;
                    victoryScreen.enabled = false;
+                   if (!firstTime)
+                   {
+                       continueButton.gameObject.SetActive(false);
+                   }
+                       
 
                }
            })
@@ -64,6 +71,7 @@ class EndGamePanelView : View
         continueButton.onClick.AddListener(() =>
         {
             _viewModel.OnContinueButtonPressed.Execute();
+            firstTime = false;
         });
 
         menuButton.onClick.AddListener(() =>
